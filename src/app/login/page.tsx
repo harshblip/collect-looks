@@ -1,11 +1,14 @@
 'use client'
 import { useState } from "react"
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function Login() {
     const [see, setSee] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+
+    const router = useRouter();
 
     async function submit() {
         const response = await axios.get('http://localhost:3000/user/login', {
@@ -16,7 +19,7 @@ export default function Login() {
 
         if (response.status === 200) {
             console.log("signed in")
-        }else {
+        } else {
             console.log("fas gaya")
         }
     }
@@ -24,7 +27,9 @@ export default function Login() {
     return (
         <>
             <div className="flex justify-center items-center mt-12 flex-col space-y-8">
-                login
+                <div className="flex space-x-4">
+                    <p>login</p> <button onClick={() => router.push('/signup')}>signup</button>
+                </div>
                 <input
                     type="text"
                     className="h-10 w-[20rem] text-md p-2 border border-gray-500 mt-4 rounded-md"
