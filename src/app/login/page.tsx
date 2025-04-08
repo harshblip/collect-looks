@@ -1,14 +1,14 @@
 'use client'
 import { useState } from "react"
 import axios from "axios";
-import { useRouter } from "next/router";
+import PasswordStrengthBar from "react-password-strength-bar";
 
 export default function Login() {
     const [see, setSee] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
 
-    const router = useRouter();
+    // const router = useRouter();
 
     async function submit() {
         const response = await axios.get('http://localhost:3000/user/login', {
@@ -28,7 +28,7 @@ export default function Login() {
         <>
             <div className="flex justify-center items-center mt-12 flex-col space-y-8">
                 <div className="flex space-x-4">
-                    <p>login</p> <button onClick={() => router.push('/signup')}>signup</button>
+                    <p>login</p> <button >signup</button>
                 </div>
                 <input
                     type="text"
@@ -44,6 +44,9 @@ export default function Login() {
                     onClick={() => setSee(!see)}
                     className="hover:cursor-pointer"
                 >👁</button>
+                <div className="w-1/2">
+                    <PasswordStrengthBar password={password} />
+                </div>
                 <button
                     onClick={submit}
                     className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
