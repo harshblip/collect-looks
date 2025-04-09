@@ -1,16 +1,13 @@
 'use client'
 import axios from "axios";
 import { useState } from "react"
-import EmailTemplate from "../components/Emailtemplate";
-import { Resend } from "resend";
 
 export default function Signup() {
     const [see, setSee] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
-
-    const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+    const useremail = "jipkateharsh@gmail.com"
 
     async function signupUser() {
         const response = await axios.post("http://localhost:3000/user/signup", {
@@ -18,30 +15,10 @@ export default function Signup() {
         })
 
         if (response.status === 201) {
-            const response = await resend.emails.send({
-                from: 'Harsh <jipkateh@gmail.com>',
-                to: ['jipkateharsh@gmail.com'],
-                subject: 'Welcome to Collect!',
-                react: <EmailTemplate />,
-            })
+            await axios.post('/api/welcome-email', { useremail })
             console.log("signedup", response)
         } else {
             console.log("user not signedup")
-        }
-    }
-
-    async function sendEmail() {
-        const response = await resend.emails.send({
-            from: 'jipkateh@gmail.com',
-            to: 'jipkateharsh@gmail.com',
-            subject: 'Welcome to Collect!',
-            react: <EmailTemplate />,
-        })
-
-        if (response.data) {
-            console.log("email sent")
-        } else if (response.error) {
-            console.log("email not sent")
         }
     }
 
