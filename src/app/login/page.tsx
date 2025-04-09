@@ -2,13 +2,16 @@
 import { useState } from "react"
 import axios from "axios";
 import PasswordStrengthBar from "react-password-strength-bar";
+import { Resend } from "resend";
+import EmailTemplate from "../components/Emailtemplate";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     const [see, setSee] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-
-    // const router = useRouter();
+    
+    const router = useRouter();
 
     async function submit() {
         const response = await axios.get('http://localhost:3000/user/login', {
@@ -28,7 +31,7 @@ export default function Login() {
         <>
             <div className="flex justify-center items-center mt-12 flex-col space-y-8">
                 <div className="flex space-x-4">
-                    <p>login</p> <button >signup</button>
+                    <p>login</p> <button className="hover:cursor-pointer" onClick={() => router.push('/signup')}>signup</button>
                 </div>
                 <input
                     type="text"
