@@ -1,4 +1,3 @@
-// pages/api/send-welcome-email.js
 import { Resend } from 'resend';
 import EmailTemplate from '@/components/EmailTemplate'; // adjust path as needed
 
