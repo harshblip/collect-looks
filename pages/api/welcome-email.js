@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
-import EmailTemplate from '@/components/EmailTemplate'; // adjust path as needed
+import EmailTemplate from '../../src/app/components/Emailtemplate'; // adjust path as needed
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.SENDGRID_API_KEY);
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -9,15 +9,15 @@ export default async function handler(req, res) {
     }
 
     const { useremail } = req.body;
-
+    console.log(useremail)
     try {
         const data = await resend.emails.send({
-            from: 'Harsh <jipkateh@gmail.com>',
-            to: [useremail],
+            from: 'Harsh <jipkateharsh@gmail.com>',
+            to: ['harsh.jipkate2020@vitbhopal.ac.in'],
             subject: 'Welcome to Collect!',
-            react: EmailTemplate(),
+            react: <EmailTemplate />,
         });
-
+        console.log(data)
         res.status(200).json({ success: true, data });
     } catch (error) {
         console.error("Email error:", error);

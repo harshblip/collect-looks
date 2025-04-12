@@ -1,17 +1,17 @@
-import React from 'react';
+// app/components/EmailTemplate.tsx
+import React from 'react'
 
-const EmailTemplate: React.FC = () => {
-    return (
-        <div style={{ fontFamily: 'Arial, sans-serif', lineHeight: '1.6', color: '#333' }}>
-            <h1 style={{ color: '#4CAF50' }}>Welcome to Our Service!</h1>
-            <p>Hi there,</p>
-            <p>
-                Thank you for signing up for our service. We're excited to have you on board. If you have any questions, feel free to reach out to our support team.
-            </p>
-            <p>Best regards,</p>
-            <p>The Team</p>
-        </div>
-    );
-};
+interface EmailTemplateProps {
+    firstName: string
+}
 
-export default EmailTemplate;
+export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
+    firstName,
+}) => (
+    <div>
+        <h1>Welcome, {firstName}!</h1>
+        <p>This is a test email sent from your Next.js application using Resend.</p>
+    </div>
+)
+
+export default EmailTemplate

@@ -7,15 +7,15 @@ export default function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
-    const useremail = "jipkateharsh@gmail.com"
+    const useremail = "harsh.jipkate2020@vitbhopal.ac.in"
 
     async function signupUser() {
-        const response = await axios.post("http://localhost:3000/user/signup", {
-            username, email, password
-        })
+        // const response = await axios.post("http://localhost:3000/user/signup", {
+        //     username, email, password
+        // })
 
+        const response = await axios.post('/api/welcome-email')
         if (response.status === 201) {
-            await axios.post('/api/welcome-email', { useremail })
             console.log("signedup", response)
         } else {
             console.log("user not signedup")
