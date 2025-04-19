@@ -1,7 +1,10 @@
-import { Resend } from 'resend';
+import sgMail from '@sendgrid/mail'
 import EmailTemplate from '../../src/app/components/Emailtemplate'; // adjust path as needed
+import ReactDOMServer from 'react-dom/server'
 
-const resend = new Resend(process.env.SENDGRID_API_KEY);
+const nodemailer = require('nodemailer')
+
+const htmlContent = ReactDOMServer.renderToStaticMarkup(<EmailTemplate />)
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -11,12 +14,33 @@ export default async function handler(req, res) {
     const { useremail } = req.body;
     console.log(useremail)
     try {
-        const data = await resend.emails.send({
-            from: 'Harsh <jipkateharsh@gmail.com>',
-            to: ['harsh.jipkate2020@vitbhopal.ac.in'],
+        const data = {
+            to: 'harsh.jipkate2020@vitbhopal.ac.in',
+            from: 'jipkateharsh@gmail.com',
             subject: 'Welcome to Collect!',
-            react: <EmailTemplate />,
-        });
+            html: htmlContent,
+        }
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'jipkateharsh@gmail.com',
+                pass: process.env.PASS,
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        })
+
+       await sgMail
+            .send(data)
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+
         console.log(data)
         res.status(200).json({ success: true, data });
     } catch (error) {
