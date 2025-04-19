@@ -18,7 +18,7 @@ export default function Signup() {
         if (response.status === 201) {
             console.log("signedup", response)
         } else {
-            console.log("user not signedup")
+            console.log("user not signedup", response.data)
         }
     }
 
