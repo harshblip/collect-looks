@@ -16,7 +16,7 @@ export default function Login() {
     const router = useRouter();
 
     async function submit() {
-        const response = await axios.get('http://localhost:3000/user/login', {
+        const response = await axios.get('http://localhost:4000/user/login', {
             params: {
                 email, password
             }

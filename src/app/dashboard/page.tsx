@@ -1,13 +1,28 @@
 'use client'
 import { useAppSelector } from "@/lib/store"
 import axios from "axios"
+import { useState } from "react"
 
 export default function Dashboard() {
+
+    type Media = {
+        id: string,
+        user_id: string,
+        created_at: string,
+        display_image_url: string,
+        file_name: string,
+        file_url: string,
+        folder_id: string,
+        size: string,
+        thumbnail_image_url: string
+    }
+
+    const [media, setMedia] = useState<Media[]>([])
+
     const token = useAppSelector((state) => state.auth.authToken);
-    console.log("token", token)
     async function getImages() {
         try {
-            const response = await axios.get('http://localhost:3000/upload/getImages', {
+            const response = await axios.get('http://localhost:4000/upload/getImages', {
                 params: {
                     id: 3
                 },
@@ -16,7 +31,10 @@ export default function Dashboard() {
                 }
             })
             if (response.status === 200) {
-                console.log(response)
+                // console.log(response)
+                if (response.data.images) {
+                    setMedia(response.data.images)
+                }
             } else {
                 console.log("facing error fetching images: ", response.data)
             }
@@ -35,6 +53,20 @@ export default function Dashboard() {
                 >
                     get images
                 </button>
+                <div className="flex space-x-10 p-6">
+                    {
+                        media.map((x, i) => (
+                            <>
+                                <img
+                                    key={i}
+                                    src={x.file_url}
+                                    width={160}
+                                    className="rounded-md"
+                                />
+                            </>
+                        ))
+                    }
+                </div>
             </div>
         </>
     )

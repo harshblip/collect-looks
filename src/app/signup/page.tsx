@@ -10,7 +10,7 @@ export default function Signup() {
     const useremail = "harsh.jipkate2020@vitbhopal.ac.in"
 
     async function signupUser() {
-        // const response = await axios.post("http://localhost:3000/user/signup", {
+        // const response = await axios.post("http://localhost:4000/user/signup", {
         //     username, email, password
         // })
 
