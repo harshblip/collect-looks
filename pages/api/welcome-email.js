@@ -1,50 +1,23 @@
-import sgMail from '@sendgrid/mail'
-import EmailTemplate from '../../src/app/components/Emailtemplate'; // adjust path as needed
-import ReactDOMServer from 'react-dom/server'
+import sendgrid from '@sendgrid/mail';
 
-const nodemailer = require('nodemailer')
-
-const htmlContent = ReactDOMServer.renderToStaticMarkup(<EmailTemplate />)
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method Not Allowed' });
+        return res.status(405).json({ error: 'Only POST requests allowed' });
     }
 
-    const { useremail } = req.body;
-    console.log(useremail)
     try {
-        const data = {
-            to: 'harsh.jipkate2020@vitbhopal.ac.in',
-            from: 'jipkateharsh@gmail.com',
-            subject: 'Welcome to Collect!',
-            html: htmlContent,
-        }
+        await sendgrid.send({
+            to: process.env.TO_EMAIL,
+            from: process.env.FROM_EMAIL,
+            subject: 'Test Email from Next.js App',
+            text: 'This is a test email sent using SendGrid and Next.js!',
+        });
 
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'jipkateharsh@gmail.com',
-                pass: process.env.PASS,
-            },
-            tls: {
-                rejectUnauthorized: false
-            }
-        })
-
-       await sgMail
-            .send(data)
-            .then(() => {
-                console.log('Email sent')
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-
-        console.log(data)
-        res.status(200).json({ success: true, data });
+        res.status(200).json({ success: true, message: 'Email sent successfully!' });
     } catch (error) {
-        console.error("Email error:", error);
-        res.status(500).json({ success: false, error: error.message });
+        console.error('Email send error:', error.response?.body || error.message);
+        res.status(500).json({ success: false, error: 'Failed to send email' });
     }
 }
