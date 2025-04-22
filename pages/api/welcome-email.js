@@ -1,23 +1,37 @@
-import sendgrid from '@sendgrid/mail';
-
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+import nodemailer from 'nodemailer'
+import ReactDOMServer from 'react-dom/server'
+import EmailTemplate from '../../src/app/components/Emailtemplate'
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Only POST requests allowed' });
+        return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    try {
-        await sendgrid.send({
-            to: process.env.TO_EMAIL,
-            from: process.env.FROM_EMAIL,
-            subject: 'Test Email from Next.js App',
-            text: 'This is a test email sent using SendGrid and Next.js!',
-        });
+    const htmlContent = ReactDOMServer.renderToStaticMarkup(
+        <EmailTemplate />
+    );
 
-        res.status(200).json({ success: true, message: 'Email sent successfully!' });
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.FROM_EMAIL,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
+
+    const mailOptions = {
+        from: `Harsh  ${process.env.FROM_EMAIL}`,
+        to: process.env.TO_EMAIL,
+        subject: 'Welcome to Collect !',
+        html: htmlContent
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent:', info.response);
+        res.status(201).json({ success: true, info });
     } catch (error) {
-        console.error('Email send error:', error.response?.body || error.message);
-        res.status(500).json({ success: false, error: 'Failed to send email' });
+        console.error('Email error:', error);
+        res.status(500).json({ success: false, error: error.message });
     }
 }

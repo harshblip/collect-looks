@@ -1,2 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Galada&display=swap');
 @import "tailwindcss";
 
+
+h1 {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.collect {
+    font-family: 'Galada', cursive;
+    color: #FF89B2;
+}
+
+.paragraph {
+    font-family: 'Poppins', Arial, sans-serif;
+    font-weight: 300;
+    margin-top: 8px;
+}

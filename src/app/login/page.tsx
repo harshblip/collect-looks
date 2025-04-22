@@ -62,6 +62,7 @@ export default function Login() {
                     submit
                 </button>
             </div>
+            <EmailTemplate />
         </>
     )
 }
