@@ -1,14 +1,47 @@
 import React from 'react'
+import { Font, CodeBlock, dracula } from '@react-email/components'
 
 export const EmailTemplate: React.FC = ({
 }) => (
-    <div className='w-full flex justify-center items-center flex-col'>
-        <img src = {`https://collect-aws.s3.us-east-1.amazonaws.com/mihir/collect-logo.png/collect-logo.png`} width={550}/>
-        <h1 className='flex justify-center align-middle mt-2 space-x-2'><h1><span className="h1">Welcome to</span></h1> <h1><span className="collect">Collect</span></h1></h1>
-        <div className="paragraph">
-            <p>This is a test email sent from your Next.js application using Resend.</p>
-        </div>
-    </div>
+    <table width="100%">
+        <tr>
+            <td align="center" valign="middle">
+                <div style={{textAlign: 'center'}}>
+                    <img src={`https://collect-aws.s3.us-east-1.amazonaws.com/mihir/collect-logo.png/collect-logo.png`} width={550} style={{ borderRadius: '12px' }} />
+                    <Font
+                        fallbackFontFamily="monospace"
+                        fontFamily="CommitMono"
+                        fontStyle="normal"
+                        fontWeight={400}
+                        webFont={{
+                            url: 'https://react.email/fonts/commit-mono/commit-mono-regular.ttf',
+                            format: 'truetype',
+                        }}
+                    />
+                    <CodeBlock
+                        code={`const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.FROM_EMAIL,
+        pass: process.env.EMAIL_PASS,
+    },
+});
+            
+const mailOptions = {
+    from: Harsh,
+    to: process.env.TO_EMAIL,
+    subject: 'Welcome to Collect !',
+    html: htmlContent
+};`}
+                        fontFamily="'CommitMono', monospace"
+                        language="javascript"
+                        theme={dracula}
+                    />
+                </div>
+            </td>
+        </tr>
+    </table>
+
 )
 
 export default EmailTemplate

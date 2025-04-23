@@ -1,6 +1,7 @@
 'use client'
 import axios from "axios";
 import { useState } from "react"
+import EmailTemplate from "../components/Emailtemplate";
 
 export default function Signup() {
     const [see, setSee] = useState(false);
@@ -61,6 +62,7 @@ export default function Signup() {
                     submit
                 </button>
             </div>
+            <EmailTemplate />
         </>
     )
 }

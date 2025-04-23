@@ -2,7 +2,6 @@
 import { useState } from "react"
 import axios from "axios";
 import PasswordStrengthBar from "react-password-strength-bar";
-import EmailTemplate from "../components/Emailtemplate";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store";
 import { setAuthState } from "@/lib/slice/userSlice";
@@ -62,7 +61,6 @@ export default function Login() {
                     submit
                 </button>
             </div>
-            <EmailTemplate />
         </>
     )
 }
