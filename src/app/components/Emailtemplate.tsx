@@ -145,7 +145,7 @@ export const EmailTemplate: React.FC = ({
                             Your Cloud, Finally Done Right
                         </Text>
                         <Text
-                            style={{ fontSize: '14px' }}
+                            style={{ fontSize: '16px' }}
                         >
                             We didn’t want to build another “meh” storage tool. So we didn’t.
                             We built Collect — a performance-driven, design-conscious, developer-approved platform that feels like a productivity upgrade, not just another app on your tab list.
