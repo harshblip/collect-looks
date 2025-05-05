@@ -11,25 +11,26 @@ export default function Dashboard() {
     const authState = useAppSelector((state) => state.auth.authToken)
     const [media, setMedia] = useState<Media[]>([])
     const [check, setCheck] = useState(false)
-    // const [count, setCount] = useState(3)
+    const [count, setCount] = useState(3)
 
     const router = useRouter();
     const dispatch = useDispatch();
 
-    var count = 3
+    // var count = 3
     useEffect(() => {
         if (authState) {
             setCheck(!check)
             const createInterval = setInterval(() => {
-                count = count - 1
+                setCount(prevCount => prevCount - 1)
                 console.log(count)
-                if (count === 0) {
-                    router.push('/signup')
-                }
             }, 1000)
             return () => clearInterval(createInterval)
         }
     }, [])
+
+    if (count === 0) {
+        router.push('/signup')
+    }
 
 
     type Media = {
