@@ -24,6 +24,7 @@ export default function Login() {
         if (response.status === 200) {
             console.log("signed in", response)
             dispatch(setAuthState(response.data.access_token))
+            router.push('/dashboard')
         } else {
             console.log("fas gaya")
         }

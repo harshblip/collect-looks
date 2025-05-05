@@ -1,9 +1,36 @@
 'use client'
+import { setAuthState } from "@/lib/slice/userSlice"
 import { useAppSelector } from "@/lib/store"
 import axios from "axios"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 
 export default function Dashboard() {
+
+    const authState = useAppSelector((state) => state.auth.authToken)
+    const [media, setMedia] = useState<Media[]>([])
+    const [check, setCheck] = useState(false)
+    // const [count, setCount] = useState(3)
+
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    var count = 3
+    useEffect(() => {
+        if (authState) {
+            setCheck(!check)
+            const createInterval = setInterval(() => {
+                count = count - 1
+                console.log(count)
+                if (count === 0) {
+                    router.push('/signup')
+                }
+            }, 1000)
+            return () => clearInterval(createInterval)
+        }
+    }, [])
+
 
     type Media = {
         id: string,
@@ -17,7 +44,7 @@ export default function Dashboard() {
         thumbnail_image_url: string
     }
 
-    const [media, setMedia] = useState<Media[]>([])
+
 
     const token = useAppSelector((state) => state.auth.authToken);
     async function getImages() {
@@ -43,8 +70,16 @@ export default function Dashboard() {
         }
     }
 
+    function handleLogout() {
+        dispatch(setAuthState(''))
+        router.push('/signup')
+    }
+
     return (
         <>
+            <button
+                onClick={handleLogout}
+                className="absolute p-6 ml-6 border rounded-lg h-[0.2rem] items-center flex">logout</button>
             <div className="mt-[18rem] flex flex-col space-y-4 justify-center items-center">
                 <p> hi i am dashboard </p>
                 <button
@@ -56,17 +91,21 @@ export default function Dashboard() {
                 <div className="flex space-x-10 p-6">
                     {
                         media.map((x, i) => (
-                            <>
+                            <div key={i}>
                                 <img
-                                    key={i}
                                     src={x.file_url}
                                     width={160}
                                     className="rounded-md"
                                 />
-                            </>
+                            </div>
                         ))
                     }
                 </div>
+                {
+                    check ? <div className="bg-red-400 absolute z-50 rounded-lg">
+                        <p className="text-white p-12 font-semibold text-md"> user not logged in redirecting you in {count}s </p>
+                    </div> : ''
+                }
             </div>
         </>
     )

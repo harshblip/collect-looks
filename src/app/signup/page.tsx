@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react"
 import EmailTemplate from "../components/Emailtemplate";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
     const [see, setSee] = useState(false);
@@ -32,10 +33,22 @@ export default function Signup() {
         }
     }
 
+    const router = useRouter()
+
     return (
         <>
             <div className="flex justify-center items-center mt-12 flex-col space-y-8">
-                signup
+                <div className="flex space-x-4">
+                    <button
+                        onClick={() => router.back()}
+                        className="hover:cursor-pointer"
+                    > {`<`} </button>
+                    <p> signup </p>
+                    <button
+                        onClick={() => router.forward()}
+                        className="hover:cursor-pointer"
+                    > {`>`} </button>
+                </div>
                 <input
                     type="text"
                     className="h-10 w-[20rem] text-md p-2 border border-gray-500 mt-4 rounded-md"
