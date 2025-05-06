@@ -22,11 +22,11 @@ type Media = {
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
-    const authState = useAppSelector((state) => state.auth.authToken)
 
     const [media, setMedia] = useState<Media[]>([])
-    const [images, setImages] = useState([""])
+    const [images, setImages] = useState<string[]>([])
     const [check, setCheck] = useState<boolean>(false)
+    const [check1, setCheck1] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
     const [toastMessage, setToastMessage] = useState<string>('')
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -35,7 +35,7 @@ export default function Dashboard() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!authState) {
+        if (!token) {
             setCheck(!check)
             const createInterval = setInterval(() => {
                 setCount(prevCount => prevCount - 1)
@@ -62,6 +62,7 @@ export default function Dashboard() {
             if (response.status === 200) {
                 if (response.data.message) {
                     setMedia(response.data.message)
+                    showToast()
                     setToastMessage("images retrieved")
                 }
             } else {
@@ -74,9 +75,14 @@ export default function Dashboard() {
     }
 
     async function deleteMedia() {
-        const response = await axios.delete('http://localhost:4000/upload/getImages', {
+        const response = await axios.delete('http://localhost:4000/upload/deleteMedia', {
             params: {
-                files: images
+                files: images,
+                username: 'mihir',
+                id: 3
+            },
+            headers: {
+                Authorization: `Bearer ${token}`
             }
         })
 
@@ -93,6 +99,13 @@ export default function Dashboard() {
         } else {
             setImages([...images, name])
         }
+    }
+
+    function showToast() {
+        setCheck1(true)
+        setInterval(() => {
+            setCheck1(false)
+        }, 2000)
     }
 
     function handleLogout() {
@@ -114,10 +127,10 @@ export default function Dashboard() {
                     get images
                 </button>
                 <button
-                    onClick={getImages}
+                    onClick={deleteMedia}
                     className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
                 >
-                    delete {images.length - 1} images
+                    delete {images.length} images
                 </button>
                 <div className="flex space-x-10 p-6">
                     {
@@ -152,22 +165,26 @@ export default function Dashboard() {
                         })
                     }
                 </div>
-                {
-                    errorMessage || toastMessage ?
-                        <div className="bg-red-400 absolute z-50 rounded-lg">
-                            <div className="p-6 flex items-center space-x-4">
-                                {
-                                    errorMessage ? <ExclamationTriangleIcon
-                                        className="text-white w-8"
-                                    /> : <CheckCircleIcon
-                                        className="text-white w-8"
-                                    />
-                                }
-                                <p className="text-white flex font-semibold text-md"> <span></span>{toastMessage ? toastMessage : errorMessage} </p>
-                            </div>
-                        </div> : ' '
-                }
             </div>
+            {
+                check1 ? <div className="top-0 right-0 mt-12 absolute w-[24rem]">
+                    {
+                        errorMessage || toastMessage ?
+                            <div className={`${errorMessage ? `bg-red-400` : `bg-[#52b788]`} w-[14rem] absolute z-50 rounded-lg`}>
+                                <div className="p-4 flex items-center space-x-4">
+                                    {
+                                        errorMessage ? <ExclamationTriangleIcon
+                                            className="text-white w-8"
+                                        /> : <CheckCircleIcon
+                                            className="text-white w-8"
+                                        />
+                                    }
+                                    <p className="text-white flex font-semibold text-md"> <span></span>{toastMessage ? toastMessage : errorMessage} </p>
+                                </div>
+                            </div> : ' '
+                    }
+                </div> : ''
+            }
         </>
     )
 }
