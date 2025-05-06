@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid"
+import { setLoadingState } from "@/lib/slice/statesSlice"
+import { deleteMedia, getImages } from "@/utils/apiCalls"
 
 type Media = {
     id: string,
@@ -22,8 +24,8 @@ type Media = {
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
+    const media = useAppSelector(state => state.states.media);
 
-    const [media, setMedia] = useState<Media[]>([])
     const [images, setImages] = useState<string[]>([])
     const [check, setCheck] = useState<boolean>(false)
     const [check1, setCheck1] = useState<boolean>(false)
@@ -48,64 +50,12 @@ export default function Dashboard() {
         router.push('/signup')
     }
 
-    async function getImages() {
-        try {
-            const response = await axios.get('http://localhost:4000/upload/getImages', {
-                params: {
-                    id: 3
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            console.log(response.data.message[0])
-            if (response.status === 200) {
-                if (response.data.message) {
-                    setMedia(response.data.message)
-                    showToast()
-                    setToastMessage("images retrieved")
-                }
-            } else {
-                console.log("facing error fetching images: ", response.data)
-                setErrorMessage("facing error getting images")
-            }
-        } catch (err) {
-            console.log("error fetching images: ", err)
-        }
-    }
-
-    async function deleteMedia() {
-        const response = await axios.delete('http://localhost:4000/upload/deleteMedia', {
-            params: {
-                files: images,
-                username: 'mihir',
-                id: 3
-            },
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-
-        if (response.status === 204) {
-            setToastMessage("images deleted :)")
-        } else {
-            setErrorMessage("images weren't deleted due to some error")
-        }
-    }
-
     function addImage(name: string) {
         if (images.includes(name)) {
             setImages(prevImages => prevImages.filter(x => x !== name))
         } else {
             setImages([...images, name])
         }
-    }
-
-    function showToast() {
-        setCheck1(true)
-        setInterval(() => {
-            setCheck1(false)
-        }, 2000)
     }
 
     function handleLogout() {
@@ -127,7 +77,7 @@ export default function Dashboard() {
                     get images
                 </button>
                 <button
-                    onClick={deleteMedia}
+                    onClick={() => deleteMedia(images)}
                     className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
                 >
                     delete {images.length} images

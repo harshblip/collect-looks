@@ -4,15 +4,17 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { statesReducer } from "./slice/statesSlice";
 
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["auth"],
+    whitelist: ["auth", "states"],
 };
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    states: statesReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
