@@ -1,7 +1,6 @@
 'use client'
 import axios from "axios";
 import { useState } from "react"
-import EmailTemplate from "../components/Emailtemplate";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
@@ -75,7 +74,6 @@ export default function Signup() {
                     submit
                 </button>
             </div>
-            <EmailTemplate />
         </>
     )
 }
