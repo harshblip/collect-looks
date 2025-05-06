@@ -1,17 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-type Media = {
-    id: string,
-    user_id: string,
-    created_at: string,
-    display_image_url: string,
-    file_name: string,
-    file_url: string,
-    folder_id: string,
-    size: string,
-    thumbnail_image_url: string
-}
+import { Media } from "@/tyoes/mediaTypes";
 
 export interface StateManager {
     loading: boolean;

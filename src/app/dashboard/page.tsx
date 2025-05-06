@@ -9,18 +9,6 @@ import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/so
 import { setLoadingState } from "@/lib/slice/statesSlice"
 import { deleteMedia, getImages } from "@/utils/apiCalls"
 
-type Media = {
-    id: string,
-    user_id: string,
-    created_at: string,
-    display_image_url: string,
-    file_name: string,
-    file_url: string,
-    folder_id: string,
-    size: string,
-    thumbnail_image_url: string
-}
-
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);

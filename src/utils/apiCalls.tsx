@@ -3,7 +3,6 @@ import { useAppSelector } from "@/lib/store";
 import axios from "axios"
 import { useDispatch } from "react-redux"
 
-
 export async function deleteMedia(images: string[]) {
     const dispatch = useDispatch();
     const token = useAppSelector(state => state.auth.authToken)
@@ -26,23 +25,10 @@ export async function deleteMedia(images: string[]) {
     }
 }
 
-type Media = {
-    id: string,
-    user_id: string,
-    created_at: string,
-    display_image_url: string,
-    file_name: string,
-    file_url: string,
-    folder_id: string,
-    size: string,
-    thumbnail_image_url: string
-}
-
 export async function getImages() {
-
     const dispatch = useDispatch();
     const token = useAppSelector(state => state.auth.authToken)
-        
+
     try {
         const response = await axios.get('http://localhost:4000/upload/getImages', {
             params: {
