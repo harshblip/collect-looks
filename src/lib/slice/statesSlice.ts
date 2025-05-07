@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Media } from "@/tyoes/mediaTypes";
+import { Media } from "@/types/mediaTypes";
 
 export interface StateManager {
     loading: boolean;

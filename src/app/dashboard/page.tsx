@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid"
-import { setLoadingState } from "@/lib/slice/statesSlice"
-import { deleteMedia, getImages } from "@/utils/apiCalls"
+import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
+import { useMedia } from "@/hooks/apiCalls"
 
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
     const media = useAppSelector(state => state.states.media);
+    const { getImages } = useMedia()
 
     const [images, setImages] = useState<string[]>([])
     const [check, setCheck] = useState<boolean>(false)
@@ -32,6 +33,7 @@ export default function Dashboard() {
             }, 1000)
             return () => clearInterval(createInterval)
         }
+        dispatch(setMedia([]))
     }, [])
 
     if (count === 0) {
@@ -65,7 +67,7 @@ export default function Dashboard() {
                     get images
                 </button>
                 <button
-                    onClick={() => deleteMedia(images)}
+                    // onClick={() => deleteMedia(images)}
                     className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
                 >
                     delete {images.length} images
