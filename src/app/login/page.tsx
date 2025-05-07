@@ -20,9 +20,9 @@ export default function Login() {
                 email, password
             }
         })
-        console.log(response)
+        console.log("login", response)
         if (response.status === 200) {
-            console.log("signed in", response)
+            console.log("signed in")
             dispatch(setAuthState(response.data.access_token))
             router.push('/dashboard')
         } else {

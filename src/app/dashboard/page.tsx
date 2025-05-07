@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
-import { useMedia } from "@/hooks/apiCalls"
+import { useMedia } from "../hooks/useMedia"
 
 export default function Dashboard() {
 

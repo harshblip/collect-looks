@@ -50,5 +50,5 @@ export const useMedia = () => {
         }
     }
 
-    return { getImages }
+    return { getImages, deleteMedia }
 }
