@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Media } from "@/types/mediaTypes";
+import { Media, Folder } from "@/types/mediaTypes";
 
 export interface StateManager {
     loading: boolean;
-    media: Media[]
+    media: Media[],
+    folders: Folder[]
 }
 
 const initialState: StateManager = {
     loading: true,
-    media: []
+    media: [],
+    folders: []
 };
 
 export const statesSlice = createSlice({
@@ -21,9 +23,12 @@ export const statesSlice = createSlice({
         },
         setMedia: (state, action: PayloadAction<Media[]>) => {
             state.media = action.payload
+        },
+        setFolders: (state, action: PayloadAction<Folder[]>) => {
+            state.folders = action.payload
         }
     },
 });
 
-export const { setLoadingState, setMedia } = statesSlice.actions;
+export const { setLoadingState, setMedia, setFolders } = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;

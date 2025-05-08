@@ -10,3 +10,14 @@ export interface Media {
     size: string,
     thumbnail_image_url: string
 }
+
+export interface Folder {
+    id: string,
+    user_id: string,
+    name: string,
+    description: string,
+    is_locked: string,
+    hashed_lock_password: string,
+    created_at: Date,
+    updated_at: Date,
+}

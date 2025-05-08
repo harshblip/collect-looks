@@ -8,16 +8,23 @@ import { useDispatch } from "react-redux"
 import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useMedia } from "../hooks/useMedia"
+import { useFolder } from "../hooks/useFolder"
 
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
     const media = useAppSelector(state => state.states.media);
+    const folders = useAppSelector(state => state.states.folders)
     const { getImages } = useMedia()
+    const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
+    const [name, setName] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
+    const [is_locked, setIsLocked] = useState<boolean>(false)
     const [check, setCheck] = useState<boolean>(false)
     const [check1, setCheck1] = useState<boolean>(false)
+    const [show, setShow] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
     const [toastMessage, setToastMessage] = useState<string>('')
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -60,18 +67,31 @@ export default function Dashboard() {
                 className="absolute p-6 ml-6 border rounded-lg h-[0.2rem] items-center flex">logout</button>
             <div className="mt-[14rem] flex flex-col space-y-4 justify-center items-center">
                 <p> hi i am dashboard </p>
-                <button
-                    onClick={getImages}
-                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
-                >
-                    get images
-                </button>
-                <button
-                    // onClick={() => deleteMedia(images)}
-                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
-                >
-                    delete {images.length} images
-                </button>
+                <div className="flex space-x-4">
+                    <button
+                        onClick={getImages}
+                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                    >
+                        get images
+                    </button>
+                    <button
+                        // onClick={() => deleteMedia(images)}
+                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                    >
+                        delete {images.length} images
+                    </button>
+                    <button
+                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        onClick={() => setShow(!show)}
+                    >
+                        create folder
+                    </button>
+                    <button
+                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        onClick={() => getFolder(4)}>
+                        get folders
+                    </button>
+                </div>
                 <div className="flex space-x-10 p-6">
                     {
                         media.map((x, i) => (
@@ -125,6 +145,39 @@ export default function Dashboard() {
                     }
                 </div> : ''
             }
+            {
+                show ? <div className="absolute w-full bg-black/50">
+                    <div className="bg-white rounded-lg">
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <input
+                            type="checkbox"
+                            onClick={() => setCheck(!check)}
+                        />
+                        <button onClick={() => createFolder(name, description, check, 4)}>create</button>
+                    </div>
+                </div> : ''
+            }
+
+            <div className="flex flex-col space-y-4 p-8">
+                <p className="text-lg">folders</p>
+                {
+                    folders ? folders.map((x, i) => {
+                        return <div key={i} className="w-26 h-26 border border-cyan-400 rounded-lg flex items-center justify-center">
+                            <p className="text-slate-500 text-md font-semibold"> {x.name} </p>
+                        </div>
+                    }) : ''
+                }
+            </div>
+
         </>
     )
 }
