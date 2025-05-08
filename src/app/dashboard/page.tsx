@@ -145,24 +145,52 @@ export default function Dashboard() {
                     }
                 </div> : ''
             }
+            <div className="absolute ">
+
+            </div>
             {
-                show ? <div className="absolute w-full bg-black/50">
-                    <div className="bg-white rounded-lg">
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                        <input
-                            type="checkbox"
-                            onClick={() => setCheck(!check)}
-                        />
-                        <button onClick={() => createFolder(name, description, check, 4)}>create</button>
+                show ? <div className="absolute bg-black/50 w-full top-0 bottom-0 flex items-center justify-center">
+                    <div className="bg-white w-[28rem] h-[32rem] rounded-lg flex flex-col items-center justify-center">
+                        <p className="-mt-[0rem] mb-[4rem] text-xl">create a new folder</p>
+                        <div className="p-0 flex flex-col space-y-10 w-[20rem]">
+                            <div className="flex flex-col space-y-2">
+                                <p className="text-slate-500 font-semibold">folder name</p>
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="rounded-md shadow-md outline-none h-10 p-2"
+                                />
+                            </div>
+                            <div className="flex flex-col space-y-2">
+                                <p className="text-slate-500 font-semibold">description</p>
+                                <input
+                                    type="text"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    className="rounded-md shadow-md outline-none h-10 p-2"
+                                />
+                            </div>
+                            <div className="flex space-x-2">
+                                <input
+                                    type="checkbox"
+                                    onClick={() => setCheck(!check)}
+                                />
+                                <p> is locked ? </p>
+                            </div>
+                            <div>
+                                <button
+                                    onClick={() => createFolder(name, description, check, 4)}
+                                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[8rem]"
+                                >create</button>
+                                <button
+                                    onClick={() => setShow(!show)}
+                                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[8rem] ml-12"
+                                >
+                                    cancel
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div> : ''
             }
