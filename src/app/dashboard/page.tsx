@@ -5,7 +5,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid"
+import { Bars3Icon, CheckCircleIcon, ExclamationTriangleIcon, TableCellsIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
@@ -91,17 +91,20 @@ export default function Dashboard() {
                         onClick={() => getFolder(4)}>
                         get folders
                     </button>
+                    <TableCellsIcon className="text-slate-500 ml-4 w-10" />
+                    <Bars3Icon className="text-slate-500 w-10" />
                 </div>
                 <div className="flex space-x-10 p-6">
                     {
                         media.map((x, i) => (
-                            <div key={i} className="h-44 w-44">
+                            <div key={i} className="h-44 w-44 flex flex-col">
                                 <img
                                     src={x.file_url}
                                     width={160}
                                     onClick={() => addImage(x.file_name)}
                                     className="rounded-md hover:cursor-pointer"
                                 />
+                                <p> {x.file_name} </p>
                             </div>
                         ))
                     }
