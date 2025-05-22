@@ -1,7 +1,6 @@
 import { setFolders, setLoadingState } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
 import axios from "axios"
-import { useState } from "react";
 import { useDispatch } from "react-redux"
 
 export const useFolder = () => {
