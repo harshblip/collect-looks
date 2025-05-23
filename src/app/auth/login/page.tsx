@@ -15,19 +15,20 @@ export default function Login() {
     const router = useRouter();
 
     async function submit() {
-        const response = await axios.get('http://localhost:4000/user/login', {
-            params: {
-                email, password
-            }
-        })
-        console.log("login", response)
-        if (response.status === 200) {
-            console.log("signed in")
-            dispatch(setAuthState(response.data.access_token))
-            router.push('/dashboard')
-        } else {
-            console.log("fas gaya")
-        }
+        // const response = await axios.get('http://localhost:4000/user/login', {
+        //     params: {
+        //         email, password
+        //     }
+        // })
+        // console.log("login", response)
+        // if (response.status === 200) {
+        //     console.log("signed in")
+        //     dispatch(setAuthState(response.data.access_token))
+        //     router.push('/dashboard')
+        // } else {
+        //     console.log("fas gaya")
+        // }
+        console.log("submit func called")
     }
 
     const token = useAppSelector((state) => state.auth.authToken);
