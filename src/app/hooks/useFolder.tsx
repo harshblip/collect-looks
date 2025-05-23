@@ -7,7 +7,12 @@ export const useFolder = () => {
     const dispatch = useDispatch();
     const token = useAppSelector(state => state.auth.authToken)
 
-    async function createFolder(name: string, description: string, is_locked: boolean, id: number) {
+    async function createFolder(
+        name: string,
+        description: string,
+        is_locked: boolean,
+        id: number
+    ) {
         try {
             const response = await axios.post('http://localhost:4000/upload/createFolder', {
                 name, description, is_locked, id
