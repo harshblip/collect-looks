@@ -1,8 +1,13 @@
-import { Gochi_Hand } from "next/font/google"
+import { Gloock, Gochi_Hand } from "next/font/google"
 
 const gochi_hand = Gochi_Hand({
     weight: ['400'],
     subsets: ['latin']
+})
+
+const glook = Gloock({
+    weight: ['400'],
+    subsets: ['cyrillic-ext']
 })
 
 export default function AuthInput({
@@ -24,7 +29,9 @@ export default function AuthInput({
                     type={type}
                     value={value}
                     onChange={onChange}
-                    className="h-10 w-[20rem] text-md p-2 border border-gray-500 mt-2 rounded-md"
+                    className={`h-10 w-[20rem] text-md p-2 border border-none bg-white border-none outline-none
+    transition-all duration-300 ease-in-out
+    focus:shadow-md mt-2 rounded-md ${glook.className}`}
                 />
             </div>
         </>

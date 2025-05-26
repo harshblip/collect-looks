@@ -27,7 +27,7 @@ function AuthForm({
 
     return (
         <>
-            <div className="bg-[#EFEFEF] h-full flex justify-center items-center mt-12 flex-col space-y-8">
+            <div className="bg-[#EFEFEF] h-full flex justify-start mt-14 flex-col space-y-8">
                 {
                     type === 'signup' && username !== undefined && (
                         <AuthInput
@@ -44,16 +44,18 @@ function AuthForm({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <AuthInput
-                    label="Password"
-                    type={`${see ? `text` : `password`}`}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button
-                    onClick={() => setSee(!see)}
-                    className="hover:cursor-pointer"
-                >👁</button>
+                <div className="flex space-x-8">
+                    <AuthInput
+                        label="Password"
+                        type={`${see ? `text` : `password`}`}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        onClick={() => setSee(!see)}
+                        className="hover:cursor-pointer mt-8"
+                    >👁</button>
+                </div>
                 <div className="w-1/2">
                     <PasswordStrengthBar
                         password={password}

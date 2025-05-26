@@ -6,6 +6,12 @@
     animation: forwards;
 }
 
+::selection {
+    background: #353535;
+    color: #DEE2E6;
+}
+
+
 h1 {
     font-family: 'Poppins', Arial, sans-serif;
 }
@@ -20,3 +26,4 @@ h1 {
     font-weight: 300;
     margin-top: 8px;
 }
+

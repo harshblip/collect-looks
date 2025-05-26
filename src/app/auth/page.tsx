@@ -4,45 +4,62 @@ import AuthForm from "@/app/components/AuthForm";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
 import { signin, signup } from "../utils/auth";
-import { setMode } from "@/lib/slice/statesSlice";
+import { Gloock, Gochi_Hand } from "next/font/google";
+import SmallLogo from "../components/SmallLogo";
+
+const glook = Gloock({
+    weight: ['400'],
+    subsets: ['cyrillic-ext']
+})
+
+const gochi_hand = Gochi_Hand({
+    weight: ['400'],
+    subsets: ['latin']
+})
 
 export default function Auth() {
+
+    const dispatch = useDispatch()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
-    const dispatch = useDispatch()
 
-    const mode = useAppSelector(state => state.states.mode) || 'signup'
-    console.log(mode)
+    const mode = useAppSelector(state => state.states.mode) || 'Create an account'
 
     return (
         <>
-            <button
+            {/* <button
                 onClick={() => mode === 'signup' ? dispatch(setMode('login')) : dispatch(setMode('signup'))}
                 className="hover:cursor-pointer"
-            >switch</button>
-            {
-                mode === 'signup' ? <AuthForm
-                    type="signup"
-                    email={email}
-                    password={password}
-                    setEmail={setEmail}
-                    setPassword={setPassword}
-                    username={username}
-                    setUsername={setUsername}
-                    submit={() => signup(username, email, password)}
-                /> : <AuthForm
-                    type="login"
-                    email={email}
-                    password={password}
-                    setEmail={setEmail}
-                    setPassword={setPassword}
-                    username={username}
-                    setUsername={setUsername}
-                    submit={() => signin(email, password)}
-                />
-            }
+            >switch</button> */}
+            <div className="bg-[#EFEFEF] flex flex-col">
+                <div className="p-32 flex flex-col">
+                    <SmallLogo />
+                    <p className={`${glook.className} text-3xl mt-8`}>Sign in</p>
+                    {
+                        mode === 'signup' ? <AuthForm
+                            type="signup"
+                            email={email}
+                            password={password}
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                            username={username}
+                            setUsername={setUsername}
+                            submit={() => signup(username, email, password)}
+                        /> : <AuthForm
+                            type="login"
+                            email={email}
+                            password={password}
+                            setEmail={setEmail}
+                            setPassword={setPassword}
+                            username={username}
+                            setUsername={setUsername}
+                            submit={() => signin(email, password)}
+                        />
+                    }
+                </div>
 
+            </div>
         </>
     )
 }
