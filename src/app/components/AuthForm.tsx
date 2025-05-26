@@ -1,6 +1,6 @@
 import PasswordStrengthBar from "react-password-strength-bar";
 import AuthInput from "./AuthInput";
-import { useState } from "react";
+import React, { useState } from "react";
 
 type AuthForm = {
     email: string,
@@ -13,7 +13,7 @@ type AuthForm = {
     submit: () => void,
 }
 
-export default function AuthForm({
+function AuthForm({
     email,
     password,
     setEmail,
@@ -69,3 +69,5 @@ export default function AuthForm({
         </>
     )
 }
+
+export default React.memo(AuthForm)
