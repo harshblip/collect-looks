@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { signin, signup } from "../utils/auth";
 import { Gloock, Gochi_Hand } from "next/font/google";
 import SmallLogo from "../components/SmallLogo";
+import { Metadata } from "next";
+import { setMode } from "@/lib/slice/statesSlice";
 
 const glook = Gloock({
     weight: ['400'],
@@ -28,17 +30,17 @@ export default function Auth() {
 
     return (
         <>
-            {/* <button
-                onClick={() => mode === 'signup' ? dispatch(setMode('login')) : dispatch(setMode('signup'))}
+            <button
+                onClick={() => mode === 'Create an account' ? dispatch(setMode('Sign in')) : dispatch(setMode('Create an account'))}
                 className="hover:cursor-pointer"
-            >switch</button> */}
-            <div className="bg-[#EFEFEF] md:mt-0 mt-24 lg::items-start justify-center    items-center flex flex-col">
+            >switch</button>
+            <div className="bg-[#EFEFEF] md:mt-0 mt-24 lg:items-start justify-center    items-center flex flex-col h-screen">
                 <div className="md:p-32 flex flex-col p-24">
                     <SmallLogo />
-                    <p className={`${glook.className} text-3xl mt-8`}>Sign in</p>
+                    <p className={`${glook.className} text-[#495057] text-3xl mt-8`}>{mode}</p>
                     {
-                        mode === 'signup' ? <AuthForm
-                            type="signup"
+                        mode === 'Create an account' ? <AuthForm
+                            mode={mode}
                             email={email}
                             password={password}
                             setEmail={setEmail}
@@ -47,7 +49,7 @@ export default function Auth() {
                             setUsername={setUsername}
                             submit={() => signup(username, email, password)}
                         /> : <AuthForm
-                            type="login"
+                            mode={mode}
                             email={email}
                             password={password}
                             setEmail={setEmail}
