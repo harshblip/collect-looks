@@ -29,9 +29,7 @@ export default function AuthInput({
                     type={type}
                     value={value}
                     onChange={onChange}
-                    className={`h-10 w-[20rem] text-md p-2 border border-none bg-white border-none outline-none
-    transition-all duration-300 ease-in-out
-    focus:shadow-md mt-2 rounded-md ${glook.className}`}
+                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md ${glook.className}`}
                 />
             </div>
         </>

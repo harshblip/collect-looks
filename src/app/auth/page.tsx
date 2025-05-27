@@ -32,8 +32,8 @@ export default function Auth() {
                 onClick={() => mode === 'signup' ? dispatch(setMode('login')) : dispatch(setMode('signup'))}
                 className="hover:cursor-pointer"
             >switch</button> */}
-            <div className="bg-[#EFEFEF] flex flex-col">
-                <div className="p-32 flex flex-col">
+            <div className="bg-[#EFEFEF] md:mt-0 mt-24 lg::items-start justify-center    items-center flex flex-col">
+                <div className="md:p-32 flex flex-col p-24">
                     <SmallLogo />
                     <p className={`${glook.className} text-3xl mt-8`}>Sign in</p>
                     {

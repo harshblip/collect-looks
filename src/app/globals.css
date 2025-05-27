@@ -6,6 +6,12 @@
     animation: forwards;
 }
 
+@theme {
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+}
+
 ::selection {
     background: #353535;
     color: #DEE2E6;
@@ -26,4 +32,3 @@ h1 {
     font-weight: 300;
     margin-top: 8px;
 }
-

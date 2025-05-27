@@ -44,7 +44,7 @@ function AuthForm({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className="flex space-x-8">
+                <div className="flex space-x-2 md:space-x-8">
                     <AuthInput
                         label="Password"
                         type={`${see ? `text` : `password`}`}

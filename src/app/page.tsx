@@ -1,10 +1,10 @@
-import Image from "next/image";
-import Login from "./auth/login/page";
+import AuthLayout from "./auth/layout";
+import Auth from "./auth/page";
 
 export default function Home() {
   return (
     <>
-      <Login />
+      <AuthLayout children={<Auth />} />
     </>
   );
 }
