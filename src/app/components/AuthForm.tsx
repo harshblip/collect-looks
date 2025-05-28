@@ -5,6 +5,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { Gloock } from "next/font/google";
 import { setMode } from "@/lib/slice/statesSlice";
 import { useDispatch } from "react-redux";
+import Checkbox from "./Checkbox";
 
 const glook = Gloock({
     weight: ['400'],
@@ -82,9 +83,9 @@ function AuthForm({
                         password={password}
                     />
                 </div>
-                <div className="flex space-x-2 -mt-6">
-                    <div className="checkbox-wrapper-29"><label className="checkbox"><input type="checkbox" className="checkbox__input" /><span className="checkbox__label"></span> </label></div>
-                    <p className={`text-sm ${glook.className} text-[#495057]`}> Remember me </p>
+                <div className="flex items-center space-x-4 -mt-6">
+                    <Checkbox />
+                    <p className={`${glook.className} text-[#495057]`}> Remember me </p>
                 </div>
                 <button
                     onClick={submit}
