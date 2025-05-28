@@ -13,9 +13,9 @@ export default function Checkbox() {
                                 className="check-path"
                                 d="M4 12L10 18L20 6"
                                 stroke="currentColor"
-                                stroke-width="3"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth={3}
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             ></path>
                         </svg>
                     </div>

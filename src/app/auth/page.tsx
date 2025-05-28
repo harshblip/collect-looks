@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react"
 import AuthForm from "@/app/components/AuthForm";
 import { useAppSelector } from "@/lib/store";
-import { useDispatch } from "react-redux";
 import { signin, signup } from "../utils/auth";
-import { Gloock, Gochi_Hand } from "next/font/google";
+import { Gloock } from "next/font/google";
 import SmallLogo from "../components/SmallLogo";
 
 const glook = Gloock({
@@ -12,17 +11,12 @@ const glook = Gloock({
     subsets: ['latin']
 })
 
-const gochi_hand = Gochi_Hand({
-    weight: ['400'],
-    subsets: ['latin']
-})
-
 export default function Auth() {
 
-    const dispatch = useDispatch()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
+    const [error, setError] = useState('')
 
     const mode = useAppSelector(state => state.states.mode) || 'Create an account'
 
@@ -37,7 +31,7 @@ export default function Auth() {
                     <SmallLogo />
                     <p className={`${glook.className} text-[#495057] text-3xl mt-8`}>{mode}</p>
                     {
-                        mode === 'Create an account' ? <AuthForm
+                        mode === 'Create an account' ? <div className="fade-in"> <AuthForm
                             mode={mode}
                             email={email}
                             password={password}
@@ -45,8 +39,8 @@ export default function Auth() {
                             setPassword={setPassword}
                             username={username}
                             setUsername={setUsername}
-                            submit={() => signup(username, email, password)}
-                        /> : <AuthForm
+                            submit={() => signup(username, email, password, setError)}
+                        /> </div>: <div className="fade-in"> <AuthForm
                             mode={mode}
                             email={email}
                             password={password}
@@ -55,7 +49,7 @@ export default function Auth() {
                             username={username}
                             setUsername={setUsername}
                             submit={() => signin(email, password)}
-                        />
+                        /> </div>
                     }
                 </div>
 

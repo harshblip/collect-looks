@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-export async function signup(username: string, email: string, password: string) {
+export async function signup(username: string, email: string, password: string, setError: React.Dispatch<React.SetStateAction<string>>) {
     try {
         const response = await axios.post("http://localhost:4000/user/signup", {
             username, email, password
