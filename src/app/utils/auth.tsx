@@ -1,9 +1,14 @@
 import { setAuthState } from "@/lib/slice/userSlice";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import { Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Router } from "next/router";
 
-export async function signup(username: string, email: string, password: string, setError: React.Dispatch<React.SetStateAction<string>>) {
+export const Signup = async (
+    username: string,
+    email: string,
+    password: string,
+    setError: React.Dispatch<React.SetStateAction<string>>,
+) => {
     try {
         const response = await axios.post("http://localhost:4000/user/signup", {
             username, email, password
@@ -27,11 +32,15 @@ export async function signup(username: string, email: string, password: string, 
     }
 }
 
-export async function signin(email: string, password: string) {
 
-    const router = useRouter()
-    const dispatch = useDispatch()
-
+export const Signin = async (
+    email: string,
+    password: string,
+    setError: React.Dispatch<React.SetStateAction<string>>,
+    dispatch: Dispatch,
+    router: Router
+) => {
+    
     try {
         const response = await axios.get('http://localhost:4000/user/login', {
             params: {
@@ -42,7 +51,7 @@ export async function signin(email: string, password: string) {
         if (response.status === 200) {
             console.log("signed in")
             dispatch(setAuthState(response.data.access_token))
-            router.push('/dashboard')
+            // router.push('/dashboard')
         } else {
             console.log("fas gaya")
         }

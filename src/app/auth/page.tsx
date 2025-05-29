@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react"
 import AuthForm from "@/app/components/AuthForm";
 import { useAppSelector } from "@/lib/store";
-import { signin, signup } from "../utils/auth";
+import { Signin, Signup } from "../utils/auth";
 import { Gloock } from "next/font/google";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import SmallLogo from "../components/SmallLogo";
 
 const glook = Gloock({
@@ -17,6 +19,9 @@ export default function Auth() {
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
     const [error, setError] = useState('')
+
+    const router = useRouter()
+    const dispatch = useDispatch()
 
     const mode = useAppSelector(state => state.states.mode) || 'Create an account'
 
@@ -35,11 +40,11 @@ export default function Auth() {
                             mode={mode}
                             email={email}
                             password={password}
-                            setEmail={setEmail}
+                            setEmail={setEmail} 
                             setPassword={setPassword}
                             username={username}
                             setUsername={setUsername}
-                            submit={() => signup(username, email, password, setError)}
+                            submit={() => Signup(username, email, password, setError)}
                         /> </div>: <div className="fade-in"> <AuthForm
                             mode={mode}
                             email={email}
@@ -48,7 +53,7 @@ export default function Auth() {
                             setPassword={setPassword}
                             username={username}
                             setUsername={setUsername}
-                            submit={() => signin(email, password)}
+                            submit={() => Signin(email, password, setError, router, dispatch)}
                         /> </div>
                     }
                 </div>
