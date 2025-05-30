@@ -2,11 +2,12 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import AuthInput from "./AuthInput";
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { Gloock } from "next/font/google";
+import { Gloock, Gochi_Hand } from "next/font/google";
 import { setMode } from "@/lib/slice/statesSlice";
 import { useDispatch } from "react-redux";
 import Checkbox from "./Checkbox";
 import { motion, AnimatePresence } from 'framer-motion';
+import ForgotModal from "./ForgotModal";
 
 const glook = Gloock({
     weight: ['400'],
@@ -34,11 +35,21 @@ function AuthForm({
     mode,
     submit
 }: AuthForm) {
+
     const [see, setSee] = useState(false)
+    const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
 
     return (
         <>
+            {
+                visible && <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40" >
+                    <ForgotModal
+                        visible={visible}
+                        setVisible={setVisible}
+                    />
+                </div>
+            }
             <AnimatePresence mode='wait'>
                 <motion.div
                     className="bg-[#EFEFEF] flex justify-start mt-10 flex-col space-y-8"
@@ -95,6 +106,14 @@ function AuthForm({
                             className="h-4 rounded-[6px]"
                         />
                     </div>
+                    {
+                        mode === 'Sign in' && <div className="text-sm flex items-center space-x-4 -mt-6">
+                            <a
+                                className={`${glook.className} text-[#6C757D] mb-2 hover:cursor-pointer`}
+                                onClick={() => setVisible(true)}
+                            > Forgot password ? </a>
+                        </div>
+                    }
                     {
                         mode === 'Sign in' && <div className="flex items-center space-x-4 -mt-6">
                             <Checkbox />
