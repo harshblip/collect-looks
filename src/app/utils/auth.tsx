@@ -1,6 +1,7 @@
 import { setAuthState } from "@/lib/slice/userSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { Router } from "next/router";
 
 export const Signup = async (
@@ -37,10 +38,10 @@ export const Signin = async (
     email: string,
     password: string,
     setError: React.Dispatch<React.SetStateAction<string>>,
-    dispatch: Dispatch,
-    router: Router
+    router: AppRouterInstance,
+    dispatch: Dispatch
 ) => {
-    
+
     try {
         const response = await axios.get('http://localhost:4000/user/login', {
             params: {
@@ -55,7 +56,8 @@ export const Signin = async (
         } else {
             console.log("fas gaya")
         }
-    } catch (err) {
+    } catch (err: any) {
+        setError(err.response.data.message)
         console.error("error in signin function", err);
     }
 }
