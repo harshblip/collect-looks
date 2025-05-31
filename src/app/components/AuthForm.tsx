@@ -2,17 +2,11 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import AuthInput from "./AuthInput";
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { Gloock, Gochi_Hand } from "next/font/google";
 import { setMode } from "@/lib/slice/statesSlice";
 import { useDispatch } from "react-redux";
 import Checkbox from "./Checkbox";
 import { motion, AnimatePresence } from 'framer-motion';
 import ForgotModal from "./ForgotModal";
-
-const glook = Gloock({
-    weight: ['400'],
-    subsets: ['cyrillic-ext']
-})
 
 type AuthForm = {
     email: string,
@@ -111,7 +105,7 @@ function AuthForm({
                     {
                         mode === 'Sign in' && <div className="text-sm flex items-center space-x-4 -mt-6">
                             <a
-                                className={`${glook.className} text-secondary mb-2 hover:cursor-pointer`}
+                                className={`font-glook text-secondary mb-2 hover:cursor-pointer`}
                                 onClick={() => setVisible(true)}
                             > Forgot password ? </a>
                         </div>
@@ -119,19 +113,19 @@ function AuthForm({
                     {
                         mode === 'Sign in' && <div className="flex items-center space-x-4 -mt-6">
                             <Checkbox />
-                            <p className={`${glook.className} text-primary`}> Remember me </p>
+                            <p className={`font-glook text-primary`}> Remember me </p>
                         </div>
                     }
                     <button
                         onClick={submit}
-                        className={` hover:cursor-pointer ${glook.className} bg-[#495057] text-white p-2 rounded-md w-[20rem] -mt-4`}
+                        className={` hover:cursor-pointer font-glook bg-[#495057] text-white p-2 rounded-md w-[20rem] -mt-4`}
                     >
                         {mode}
                     </button>
                     {
                         mode === 'Sign in' ?
                             <p
-                                className={`${glook.className} text-sm text-secondary -mt-6`}>
+                                className={`font-glook text-sm text-secondary -mt-6`}>
                                 Don't have an account?
                                 <a
                                     onClick={() => dispatch(setMode('Create an account'))}>
@@ -141,7 +135,7 @@ function AuthForm({
                                     </span>
                                 </a></p> :
                             <p
-                                className={`${glook.className} text-sm text-secondary -mt-6`}>
+                                className={`font-glook text-sm text-secondary -mt-6`}>
                                 Already have an account?
                                 <a
                                     onClick={() => dispatch(setMode('Sign in'))}>

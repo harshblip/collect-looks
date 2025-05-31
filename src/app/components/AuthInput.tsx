@@ -1,14 +1,3 @@
-import { Gloock, Gochi_Hand } from "next/font/google"
-
-const gochi_hand = Gochi_Hand({
-    weight: ['400'],
-    subsets: ['latin']
-})
-
-const glook = Gloock({
-    weight: ['400'],
-    subsets: ['cyrillic-ext']
-})
 
 export default function AuthInput({
     label,
@@ -24,12 +13,12 @@ export default function AuthInput({
     return (
         <>
             <div className="flex flex-col">
-                <label className={`${gochi_hand.className} text-xl font-medium`}>{label}</label>
+                <label className={`font-gochi text-xl font-medium`}>{label}</label>
                 <input
                     type={type}
                     value={value}
                     onChange={onChange}
-                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md ${glook.className}`}
+                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md font-glook`}
                 />
             </div>
         </>

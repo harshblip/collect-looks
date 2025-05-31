@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/lib/reduxProvider";
+import { Gloock, Gochi_Hand } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const glook = Gloock({
+  weight: ['400'],
+  subsets: ['cyrillic-ext'],
+  variable: '--font-glook', // <- add variable
+})
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const gochi = Gochi_Hand({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-gochi', // <- add variable
+})
 
 export const metadata: Metadata = {
   title: "collect",
@@ -26,8 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+        className={`${gochi.variable} ${glook.variable} antialiased`}>
         <ReduxProvider>
           {children}
         </ReduxProvider>
