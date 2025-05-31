@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import SmallLogo from "../components/SmallLogo";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from 'framer-motion';
+import ForgotModal from "../components/ForgotModal";
 
 const glook = Gloock({
     weight: ['400'],
@@ -22,6 +23,7 @@ export default function Auth() {
     const [password, setPassword] = useState<string>('')
     const [username, setUsername] = useState<string>('')
     const [error, setError] = useState<any>()
+    const [visible, setVisible] = useState<boolean>(false)
 
     const router = useRouter()
     const dispatch = useDispatch()
@@ -30,10 +32,17 @@ export default function Auth() {
 
     return (
         <>
-            <div className="bg-[#EFEFEF] md:mt-0 mt-24 lg:items-start justify-center    items-center flex flex-col h-screen">
+            {
+                visible && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-center justify-center" >
+                    <ForgotModal
+                        setVisible={setVisible}
+                    />
+                </div>
+            }
+            <div className="primary-bg md:mt-0 mt-24 lg:items-start justify-center    items-center flex flex-col h-screen">
                 <div className="md:p-32 flex flex-col p-24">
                     <SmallLogo />
-                    <p className={`${glook.className} text-[#495057] text-3xl mt-8`}>{mode}</p>
+                    <p className={`${glook.className} text-primary text-3xl mt-8`}>{mode}</p>
                     {
                         error && <motion.div
                             key="error-container"
@@ -60,6 +69,8 @@ export default function Auth() {
                             setPassword={setPassword}
                             username={username}
                             setUsername={setUsername}
+                            visible={visible}
+                            setVisible={setVisible}
                             submit={() => Signup(username, email, password, setError)}
                         /> </div> : <div className="fade-in"> <AuthForm
                             mode={mode}
@@ -69,6 +80,8 @@ export default function Auth() {
                             setPassword={setPassword}
                             username={username}
                             setUsername={setUsername}
+                            visible={visible}
+                            setVisible={setVisible}
                             submit={() => Signin(email, password, setError, router, dispatch)}
                         /> </div>
                     }

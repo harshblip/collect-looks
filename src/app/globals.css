@@ -10,12 +10,29 @@
     --mid-dark: #6C757D;
     --dark: #495057;
     --off-white: #DEE2E6;
+    --primary-bg: #efefef
 }
 
 @theme {
     --breakpoint-sm: 640px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 1024px;
+}
+
+.off-white {
+    color: var(--off-white)
+}
+
+.text-primary {
+    color: var(--dark)
+}
+
+.text-secondary {
+    color: var(--mid-dark)
+}
+
+.primary-bg {
+    background-color: var(--primary-bg);
 }
 
 ::selection {

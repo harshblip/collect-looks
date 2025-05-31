@@ -30,7 +30,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-[#EFEFEF] rounded-md h-screen md:w-1/2">
+                <div className="primary-bg rounded-md h-screen md:w-1/2">
                     {children}
                 </div>
             </div>

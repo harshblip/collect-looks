@@ -22,6 +22,8 @@ type AuthForm = {
     username: string,
     setUsername: React.Dispatch<React.SetStateAction<string>>,
     mode: string,
+    visible: boolean,
+    setVisible: React.Dispatch<React.SetStateAction<boolean>>,
     submit: () => void,
 }
 
@@ -32,27 +34,27 @@ function AuthForm({
     setPassword,
     username,
     setUsername,
+    visible,
+    setVisible,
     mode,
     submit
 }: AuthForm) {
 
     const [see, setSee] = useState(false)
-    const [visible, setVisible] = useState(false)
     const dispatch = useDispatch()
 
     return (
         <>
-            {
-                visible && <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40" >
-                    <ForgotModal
-                        visible={visible}
-                        setVisible={setVisible}
-                    />
-                </div>
-            }
+            {/* {
+                visible &&
+                <ForgotModal
+                    visible={visible}
+                    setVisible={setVisible}
+                />
+            } */}
             <AnimatePresence mode='wait'>
                 <motion.div
-                    className="bg-[#EFEFEF] flex justify-start mt-10 flex-col space-y-8"
+                    className="primary-bg flex justify-start mt-10 flex-col space-y-8"
                 >
                     {
                         mode === 'Create an account' && username !== undefined && (
@@ -109,7 +111,7 @@ function AuthForm({
                     {
                         mode === 'Sign in' && <div className="text-sm flex items-center space-x-4 -mt-6">
                             <a
-                                className={`${glook.className} text-[#6C757D] mb-2 hover:cursor-pointer`}
+                                className={`${glook.className} text-secondary mb-2 hover:cursor-pointer`}
                                 onClick={() => setVisible(true)}
                             > Forgot password ? </a>
                         </div>
@@ -117,7 +119,7 @@ function AuthForm({
                     {
                         mode === 'Sign in' && <div className="flex items-center space-x-4 -mt-6">
                             <Checkbox />
-                            <p className={`${glook.className} text-[#495057]`}> Remember me </p>
+                            <p className={`${glook.className} text-primary`}> Remember me </p>
                         </div>
                     }
                     <button
@@ -129,22 +131,22 @@ function AuthForm({
                     {
                         mode === 'Sign in' ?
                             <p
-                                className={`${glook.className} text-sm text-[#6C757D] -mt-6`}>
+                                className={`${glook.className} text-sm text-secondary -mt-6`}>
                                 Don't have an account?
                                 <a
                                     onClick={() => dispatch(setMode('Create an account'))}>
                                     <span
-                                        className="text-[#495057] hover:cursor-pointer">
+                                        className="text-primary hover:cursor-pointer">
                                         Sign up
                                     </span>
                                 </a></p> :
                             <p
-                                className={`${glook.className} text-sm text-[#6C757D] -mt-6`}>
+                                className={`${glook.className} text-sm text-secondary -mt-6`}>
                                 Already have an account?
                                 <a
                                     onClick={() => dispatch(setMode('Sign in'))}>
                                     <span
-                                        className="text-[#495057] hover:cursor-pointer">Sign in
+                                        className="text-primary hover:cursor-pointer">Sign in
                                     </span>
                                 </a></p>
                     }

@@ -5,30 +5,34 @@ const gochi = Gochi_Hand({
     subsets: ['latin']
 })
 
-export default function ForgotModal({ visible, setVisible }: {
-    visible: boolean,
+export default function ForgotModal({ setVisible }: {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }) {
     return (
         <>
-            <div className="bg-[#EFEFEF] relative z-50 flex flex-col p-4 space-y-4 rounded-md">
-                <p className={`${gochi.className} text-lg text-[#495057]`}> Enter your mail id </p>
-                <p className="text-sm text-[#6C757D] -mt-4"></p>
+            <div className="primary-bg relative z-50 flex flex-col p-4 space-y-4 rounded-md w-[90%] max-w-md mx-auto">
+                <p className={`${gochi.className} text-lg text-primary`}>
+                    Enter your mail id
+                </p>
+                <p className="text-sm text-secondary -mt-4"></p>
                 <div className="flex space-x-4">
                     <input
                         type="email"
-                        className="bg-white text-md p-2 border-none outline-none transition-all focus:shadow-md rounded-md"
+                        className="bg-white text-md p-2 border-none outline-none transition-all focus:shadow-md rounded-md flex-1"
                     />
-                    <button className="hover:cursor-pointer ${glook.className} bg-[#495057] text-white p-2 rounded-md w-24">
-                        submit
+                    <button
+                        className={`${gochi.className} hover:cursor-pointer bg-[#495057] text-white p-2 rounded-md w-24`}
+                    >
+                        Submit
                     </button>
                 </div>
-            </div>
-            <div>
-                <a
-                    className="absolute right-0 top-0 hover:cursor-pointer"
+
+                <button
+                    className="absolute top-2 right-2 text-xl text-primary hover:text-black hover:scale-110 transition-transform"
                     onClick={() => setVisible(false)}
-                > x </a>
+                >
+                    ×
+                </button>
             </div>
         </>
     )
