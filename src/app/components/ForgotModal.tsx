@@ -1,7 +1,10 @@
+import { useState } from "react"
+import { ForgotPassword } from "../utils/auth"
 
 export default function ForgotModal({ setVisible }: {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+    const [email, setEmail] = useState<string>('')
     return (
         <>
             <div className="primary-bg relative z-50 flex flex-col p-8 space-y-4 rounded-md w-[32rem] mx-auto">
@@ -15,9 +18,11 @@ export default function ForgotModal({ setVisible }: {
                     <input
                         type="email"
                         className={`bg-white text-md p-2 border-none outline-none transition-all focus:shadow-md font-gochi rounded-md flex-1`}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <button
                         className={`font-gochi hover:cursor-pointer bg-[#495057] text-white p-2 rounded-md w-24 active:scale-95 transition-transform duration-150 ease-in-out`}
+                        onClick={() => ForgotPassword(email)}
                     >
                         Submit
                     </button>

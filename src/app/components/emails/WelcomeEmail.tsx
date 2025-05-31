@@ -1,5 +1,5 @@
 import React from 'react'
-import { Font, CodeBlock, dracula, Section, Link, Img, Text, Heading, Button, Row, Hr, Column, darcula, oneLight } from '@react-email/components'
+import { Font, CodeBlock, Section, Img, Text, Heading, Row, Hr, Column, oneLight } from '@react-email/components'
 
 export const EmailTemplate: React.FC = ({
 }) => (
@@ -11,7 +11,7 @@ export const EmailTemplate: React.FC = ({
                         style={{ marginBlock: '16px', }}
                     >
                         <img
-                            src="https://collect-aws.s3.us-east-1.amazonaws.com/mihir/collect-logo.png/collect-logo.png"
+                            src="small-logo.png"
                             alt="collect"
                             height="250"
                             width="550"
@@ -163,18 +163,19 @@ export const EmailTemplate: React.FC = ({
                         />
                         <CodeBlock
                             code={`function startCompany() {
-  const idea = "Make money by watching ads and tapping buttons";
-  const ui = loadUI("copied-from-dream11-but-worse");
-  const backend = new Promise((resolve, reject) => reject("500 Internal Server Error"));
+                                const idea = "Make money by watching ads and tapping buttons";
+                                const ui = loadUI("copied-from-dream11-but-worse");
+                                const backend = new Promise((resolve, reject) => reject("500 Internal Server Error"));
 
-  if (userIQ > 60) {
-    return console.warn("Please reconsider your life choices");
-  }
+                                if (userIQ > 60) {
+                                    return console.warn("Please reconsider your life choices");
+                                }
 
-  return "🔥 Let's burn some investor money!";
-}
-' }),
-});`}
+                                return "🔥 Let's burn some investor money!";
+                                }
+                                ' }),
+                                });`
+                            }
                             fontFamily="'CommitMono', monospace"
                             language="javascript"
                             theme={oneLight}
@@ -223,13 +224,5 @@ export const EmailTemplate: React.FC = ({
     </table >
 
 )
-
-/*
-articles
-features
-text
-code block
-footers
-*/
 
 export default EmailTemplate

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 import ReactDOMServer from 'react-dom/server'
-import EmailTemplate from '../../src/app/components/Emailtemplate'
+import EmailTemplate from '../../src/app/components/emails/WelcomeEmail'
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
