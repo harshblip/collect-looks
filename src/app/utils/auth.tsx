@@ -1,3 +1,4 @@
+import { setMail } from "@/lib/slice/statesSlice";
 import { setAuthState } from "@/lib/slice/userSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -52,6 +53,7 @@ export const Signin = async (
         if (response.status === 200) {
             console.log("signed in")
             dispatch(setAuthState(response.data.access_token))
+            dispatch(setMail(email))
             // router.push('/dashboard')
         } else {
             console.log("fas gaya")

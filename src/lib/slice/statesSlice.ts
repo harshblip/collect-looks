@@ -6,14 +6,16 @@ export interface StateManager {
     loading: boolean
     media: Media[],
     folders: Folder[],
-    mode: string
+    mode: string,
+    email: string
 }
 
 const initialState: StateManager = {
     loading: true,
     media: [],
     folders: [],
-    mode: "signup"
+    mode: "signup",
+    email: 'gajmohan@gmail.com'
 };
 
 export const statesSlice = createSlice({
@@ -31,9 +33,12 @@ export const statesSlice = createSlice({
         },
         setMode: (state, action: PayloadAction<string>) => {
             state.mode = action.payload
+        },
+        setMail: (state, action: PayloadAction<string>) => {
+            state.email = action.payload
         }
     },
 });
 
-export const { setLoadingState, setMedia, setFolders, setMode } = statesSlice.actions;
+export const { setLoadingState, setMedia, setFolders, setMode, setMail } = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;
