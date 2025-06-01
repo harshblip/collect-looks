@@ -1,7 +1,7 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { ForgotPassword } from "../utils/auth"
 
-export default function ForgotModal({ setVisible }: {
+function ForgotModal({ setVisible }: {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>
 }) {
     const [email, setEmail] = useState<string>('')
@@ -45,3 +45,5 @@ export default function ForgotModal({ setVisible }: {
         </>
     )
 }
+
+export default React.memo(ForgotModal)

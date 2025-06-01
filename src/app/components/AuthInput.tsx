@@ -1,5 +1,6 @@
+import React from "react"
 
-export default function AuthInput({
+function AuthInput({
     label,
     type = "text",
     value,
@@ -24,3 +25,5 @@ export default function AuthInput({
         </>
     )
 }
+
+export default React.memo(AuthInput)

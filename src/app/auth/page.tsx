@@ -18,9 +18,12 @@ export default function Auth() {
     const [username, setUsername] = useState<string>('')
     const [error, setError] = useState<any>()
     const [visible, setVisible] = useState<boolean>(false)
+    const [checked, setChecked] = useState<boolean>(false)
 
     const router = useRouter()
     const dispatch = useDispatch()
+
+    console.log(checked)
 
     const mode = useAppSelector(state => state.states.mode) || 'Create an account'
 
@@ -55,29 +58,35 @@ export default function Auth() {
                         </motion.div>
                     }
                     {
-                        mode === 'Create an account' ? <div className="fade-in"> <AuthForm
-                            mode={mode}
-                            email={email}
-                            password={password}
-                            setEmail={setEmail}
-                            setPassword={setPassword}
-                            username={username}
-                            setUsername={setUsername}
-                            visible={visible}
-                            setVisible={setVisible}
-                            submit={() => Signup(username, email, password, setError)}
-                        /> </div> : <div className="fade-in"> <AuthForm
-                            mode={mode}
-                            email={email}
-                            password={password}
-                            setEmail={setEmail}
-                            setPassword={setPassword}
-                            username={username}
-                            setUsername={setUsername}
-                            visible={visible}
-                            setVisible={setVisible}
-                            submit={() => Signin(email, password, setError, router, dispatch)}
-                        /> </div>
+                        mode === 'Create an account' ? <div className="fade-in">
+                            <AuthForm
+                                mode={mode}
+                                email={email}
+                                password={password}
+                                setEmail={setEmail}
+                                setPassword={setPassword}
+                                username={username}
+                                setUsername={setUsername}
+                                visible={visible}
+                                setVisible={setVisible}
+                                setChecked={setChecked}
+                                submit={() => Signup(username, email, password, setError)}
+                            />
+                        </div> : <div className="fade-in">
+                            <AuthForm
+                                mode={mode}
+                                email={email}
+                                password={password}
+                                setEmail={setEmail}
+                                setPassword={setPassword}
+                                username={username}
+                                setUsername={setUsername}
+                                visible={visible}
+                                setVisible={setVisible}
+                                setChecked={setChecked}
+                                submit={() => Signin(email, password, setError, router, dispatch, checked)}
+                            />
+                        </div>
                     }
                 </div>
 

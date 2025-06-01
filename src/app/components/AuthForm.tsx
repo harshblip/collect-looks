@@ -18,6 +18,7 @@ type AuthForm = {
     mode: string,
     visible: boolean,
     setVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>,
     submit: () => void,
 }
 
@@ -31,10 +32,11 @@ function AuthForm({
     visible,
     setVisible,
     mode,
+    setChecked,
     submit
 }: AuthForm) {
 
-    const [see, setSee] = useState(false)
+    const [see, setSee] = useState<boolean>(false)
     const dispatch = useDispatch()
 
     return (
@@ -112,7 +114,9 @@ function AuthForm({
                     }
                     {
                         mode === 'Sign in' && <div className="flex items-center space-x-4 -mt-6">
-                            <Checkbox />
+                            <Checkbox 
+                                setChecked={setChecked}
+                            />
                             <p className={`font-glook text-primary`}> Remember me </p>
                         </div>
                     }

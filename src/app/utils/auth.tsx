@@ -40,13 +40,14 @@ export const Signin = async (
     password: string,
     setError: React.Dispatch<React.SetStateAction<string>>,
     router: AppRouterInstance,
-    dispatch: Dispatch
+    dispatch: Dispatch,
+    checked: boolean
 ) => {
 
     try {
         const response = await axios.get('http://localhost:4000/user/login', {
             params: {
-                email, password
+                email, password, checked
             }
         })
         console.log("login", response)
