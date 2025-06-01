@@ -26,7 +26,7 @@ export const useMedia = () => {
         }
     }
 
-    async function getImages() {
+    async function getImages(setError: React.Dispatch<React.SetStateAction<string>>) {
         try {
             const response = await axios.get('http://localhost:4000/upload/getImages', {
                 params: {
@@ -45,7 +45,8 @@ export const useMedia = () => {
                 console.log("facing error fetching images: ", response.data)
                 // setErrorMessage("facing error getting images")
             }
-        } catch (err) {
+        } catch (err: any) {
+            setError(err.response.data.message)
             console.log("error fetching images: ", err)
         }
     }

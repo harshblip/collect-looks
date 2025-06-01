@@ -9,6 +9,7 @@ import { Bars3Icon, CheckCircleIcon, ExclamationTriangleIcon, TableCellsIcon } f
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Dashboard() {
 
@@ -20,14 +21,15 @@ export default function Dashboard() {
 
     const [images, setImages] = useState<string[]>([])
     const [name, setName] = useState<string>('')
+    const [toastMessage, setToastMessage] = useState<string>('')
+    const [errorMessage, setErrorMessage] = useState<string>('')
     const [description, setDescription] = useState<string>('')
+    const [error, setError] = useState<string>('')
     const [is_locked, setIsLocked] = useState<boolean>(false)
     const [check, setCheck] = useState<boolean>(false)
     const [check1, setCheck1] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
-    const [toastMessage, setToastMessage] = useState<string>('')
-    const [errorMessage, setErrorMessage] = useState<string>('')
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -42,6 +44,16 @@ export default function Dashboard() {
         }
         dispatch(setMedia([]))
     }, [])
+
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('')
+            }, 3000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [error])
 
     if (count === 0) {
         router.push('/signup')
@@ -62,6 +74,23 @@ export default function Dashboard() {
 
     return (
         <>
+            <AnimatePresence>
+                {error && (
+                    <motion.div
+                        key="error-container"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 20 }}
+                        exit={{ opacity: 0, y: -40}}
+                        transition={{ duration: 0.2 }}
+                        className="bg-red-200 text-red-500 w-[20rem] rounded-md top-0 left-[40%] mt-8 flex justify-center mx-auto absolute"
+                    >
+                        <div className="p-4 flex justify-center items-center space-x-4">
+                            <ExclamationTriangleIcon className="w-8 h-8" />
+                            <p className="text-md font-glook">{error}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <button
                 onClick={handleLogout}
                 className="absolute p-6 ml-6 border rounded-lg h-[0.2rem] items-center flex">logout</button>
@@ -69,7 +98,7 @@ export default function Dashboard() {
                 <p> hi i am dashboard </p>
                 <div className="flex space-x-4">
                     <button
-                        onClick={getImages}
+                        onClick={() => getImages(setError)}
                         className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
                     >
                         get images
