@@ -6,7 +6,6 @@ import { setMode } from "@/lib/slice/statesSlice";
 import { useDispatch } from "react-redux";
 import Checkbox from "./Checkbox";
 import { motion, AnimatePresence } from 'framer-motion';
-import ForgotModal from "./ForgotModal";
 
 type AuthForm = {
     email: string,

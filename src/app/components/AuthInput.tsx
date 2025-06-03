@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 function AuthInput({
     label,
@@ -11,6 +11,7 @@ function AuthInput({
     value: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
+    const [a, setA] = useState('')
     return (
         <>
             <div className="flex flex-col">
