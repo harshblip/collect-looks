@@ -1,4 +1,7 @@
+'use client'
+
 import { CircleStackIcon, ClockIcon, FolderIcon, HomeIcon, RectangleStackIcon, SparklesIcon, TrashIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import SidebarButton from "./shared/SidebarButtons";
 
 export default function Sidebar() {
     return (
@@ -8,60 +11,53 @@ export default function Sidebar() {
                     <p className="text-xl"> + </p>
                     <p className="text-lg mt-1"> New </p>
                 </button>
-                <button className="mt-8 flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <HomeIcon
-                        className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Home </p>
-                </button>
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <FolderIcon
-                        className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> My drive </p>
-                </button>
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <RectangleStackIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Shared Drives </p>
-                </button>
+                <div className="mt-2" />
+                <SidebarButton
+                    label="Home"
+                    icon={<HomeIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Home")}
+                />
+                <SidebarButton
+                    label="My Drive"
+                    icon={<FolderIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to My Drive")}
+                />
+                <SidebarButton
+                    label="Shared Drives"
+                    icon={<RectangleStackIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Shared Drives")}
+                />
                 <hr
                     className="text-secondary opacity-40 w-[14rem] mt-2"
                 />
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <UserGroupIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Shared with me </p>
-                </button>
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <ClockIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Recent </p>
-                </button>
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <SparklesIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Starred </p>
-                </button>
+                <SidebarButton
+                    label="Shared with me"
+                    icon={<UserGroupIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Shared with me")}
+                />
+                <SidebarButton
+                    label="Recent"
+                    icon={<ClockIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to recent")}
+                />
+                <SidebarButton
+                    label="Starred"
+                    icon={<SparklesIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Starred")}
+                />
                 <hr
                     className="text-secondary opacity-40 w-[14rem] mt-2"
                 />
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <TrashIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Trash </p>
-                </button>
-                <button className="flex items-center w-[14rem] space-x-1 hover:cursor-pointer hover:bg-gray-200 transition-all ">
-                    <CircleStackIcon
-                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 transition-all text-primary ml-4"
-                    />
-                    <p className="font-product font-medium text-primary"> Storage </p>
-                </button>
+                <SidebarButton
+                    label="Trash"
+                    icon={<TrashIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Trash")}
+                />
+                <SidebarButton
+                    label="Storage"
+                    icon={<CircleStackIcon className="w-full h-full" />}
+                    onClick={() => console.log("Go to Storage")}
+                />
             </div>
         </>
     )
