@@ -33,10 +33,6 @@
     font-style: normal;
 }
 
-.font-product {
-    font-family: 'ProductSans', sans-serif;
-}
-
 :root {
     --mid-dark: #6C757D;
     --dark: #495057;
@@ -48,6 +44,10 @@
     --breakpoint-sm: 640px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 1024px;
+}
+
+.font-product {
+    font-family: 'ProductSans', sans-serif;
 }
 
 .font-glook {
