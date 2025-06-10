@@ -4,7 +4,7 @@ import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { updatePassword } from "../utils/useful";
 import { useAppSelector } from "@/lib/store";
-import ResetForm from "../components/ResetForm";
+import ResetForm from "../components/auth/ResetForm";
 
 export default function ResetPassword() {
     const [see, setSee] = useState<boolean>(false)

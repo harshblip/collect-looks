@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ForgotPassword } from "../utils/auth"
+import { ForgotPassword } from "../../utils/auth"
 
 function ForgotModal({ setVisible }: {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>

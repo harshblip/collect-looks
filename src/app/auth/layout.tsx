@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import Logo from "../components/logo"
+import Logo from "../components/shared/logo"
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (

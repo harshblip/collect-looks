@@ -1,15 +1,15 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import AuthForm from "@/app/components/AuthForm";
+import AuthForm from "@/app/components/auth/AuthForm";
 import { useAppSelector } from "@/lib/store";
 import { Signin, Signup } from "../utils/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import SmallLogo from "../components/SmallLogo";
+import SmallLogo from "../components/shared/SmallLogo";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from 'framer-motion';
-import ForgotModal from "../components/ForgotModal";
+import ForgotModal from "../components/auth/ForgotModal";
 
 export default function Auth() {
 
