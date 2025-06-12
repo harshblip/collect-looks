@@ -6,6 +6,7 @@ import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@hero
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import FilterModal from "../FilterModal";
 
 export default function SearchBar() {
 
@@ -13,6 +14,7 @@ export default function SearchBar() {
     const dispatch = useDispatch()
     const [visible, setVisible] = useState<boolean>(false)
     const [searchQuery, setSearchQuery] = useState<string>('')
+    const [show, setShow] = useState<boolean>(false)
 
     console.log(searchSuggestions)
 
@@ -30,6 +32,12 @@ export default function SearchBar() {
 
     return (
         <>
+            {
+                show && <FilterModal
+                    setShow={setShow}
+                    show={show}
+                />
+            }
             <div className="relative w-[30rem]">
                 <MagnifyingGlassIcon
                     className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
@@ -87,7 +95,8 @@ export default function SearchBar() {
                     </AnimatePresence>
                 </div>
                 <AdjustmentsHorizontalIcon
-                    className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute right-4 top-1/2 transform -translate-y-1/2"
+                    className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 active:scale-95 rounded-lg p-2 transition-all text-primary absolute right-4 top-1/2 transform -translate-y-1/2"
+                    onClick={() => setShow(true)}
                 />
             </div>
         </>

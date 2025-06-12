@@ -12,7 +12,7 @@ const SidebarButton: React.FC<Props> = ({ label, icon, onClick, className }) => 
     <button
         onClick={onClick}
         className={twMerge(
-            "flex items-center w-[14rem] space-x-1 px-4 hover:cursor-pointer hover:bg-gray-200 transition-all rounded-lg",
+            "flex items-center w-[14rem] space-x-1 px-4 hover:cursor-pointer transition-all rounded-lg hover:bg-gray-200 active:scale-95",
             className
         )}
     >

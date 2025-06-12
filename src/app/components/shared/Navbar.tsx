@@ -27,7 +27,7 @@ export default function Navbar() {
                 <div className="flex space-x-8">
                     <button className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"> <Cog6ToothIcon />  </button>
                     <button 
-                        className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"> <CubeTransparentIcon /> </button>
+                        className="w-10 h-10 hover:cursor-pointer rounded-lg p-2 text-primary "> <CubeTransparentIcon /> </button>
                     <div className="flex flex-col">
                         <button
                             className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"
