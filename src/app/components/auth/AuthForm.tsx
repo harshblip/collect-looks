@@ -84,7 +84,7 @@ function AuthForm({
                         />
                         <button
                             onClick={() => setSee(!see)}
-                            className="hover:cursor-pointer mt-8 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75 transition-transform duration-150 ease-in-out"
+                            className="hover:cursor-pointer mt-8 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
                         >
                             {
                                 see ? <EyeIcon
