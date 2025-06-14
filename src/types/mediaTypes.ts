@@ -1,4 +1,3 @@
-
 export interface Media {
     id: string,
     user_id: string,
@@ -20,4 +19,16 @@ export interface Folder {
     hashed_lock_password: string,
     created_at: Date,
     updated_at: Date,
+}
+
+export interface AllFiles {
+    file_type: string,
+    file_id: string,
+    file_url: string,
+    created_at: string
+}
+
+export interface FormData {
+    username: string,
+    
 }
