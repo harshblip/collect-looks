@@ -84,8 +84,8 @@ export default function Dashboard() {
     return (
         <>
             <div className="flex flex-col space-y-10 mt-4 p-8 font-product">
-                <p className="text-4xl fixed font-medium text-primary"> Welcome to Collect </p>
-                <div className="flex flex-col mt-16 space-y-0">
+                <p className="text-4xl fixed font-medium h-44 pt-14 -mt-12 text-primary bg-white w-full "> Welcome to Collect </p>
+                <div className="flex flex-col mt-16 space-y-0 bg-white">
                     <div
                         className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-full"
                         onClick={() => setShow(!show)}
@@ -99,27 +99,38 @@ export default function Dashboard() {
                         <p className="text-xl text-primary"> Your files </p>
                     </div>
                     <AnimatePresence>
-                        {
-                            show && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -20 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="p-6"
-                                >
-                                    <div className="flex flex-col divide-gray-100 mt-8">
-                                        {
-                                            data.length && data.map((x, i) => <div key={i}>
+                        {show && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.2 }}
+                                className="p-6"
+                            >
+                                {/* Column Headers */}
+                                <div className="grid grid-cols-3 gap-4 px-4 py-2 border-b border-gray-200 mt-8">
+                                    <p className="text-gray-500 font-semibold">Name</p>
+                                    <div className="flex justify-end mr-22">
+                                        <p className="text-gray-500 font-semibold">Date</p>
+                                    </div>
+                                    <div className="flex space-x-4 justify-end">
+                                        <p className="text-gray-500 font-semibold">Size</p>
+                                    </div>
+                                </div>
+
+                                {/* Rows */}
+                                <div className="flex flex-col divide-y divide-gray-100 mt-4">
+                                    {data.length > 0 &&
+                                        data.map((x, i) => (
+                                            <div key={i}>
                                                 <Card data={x} />
                                             </div>
-                                            )
-                                        }
-                                    </div>
-                                </motion.div>
-                            )
-                        }
+                                        ))}
+                                </div>
+                            </motion.div>
+                        )}
                     </AnimatePresence>
+
                 </div>
             </div>
         </>

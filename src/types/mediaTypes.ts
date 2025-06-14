@@ -26,5 +26,6 @@ export interface AllFiles {
     file_name: string,
     file_type: string,
     file_url: string,
+    size: string,
     created_at: string
 }
