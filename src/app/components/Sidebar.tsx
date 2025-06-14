@@ -2,8 +2,12 @@
 
 import { CircleStackIcon, ClockIcon, FolderIcon, HomeIcon, RectangleStackIcon, SparklesIcon, TrashIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 import SidebarButton from "./shared/SidebarButtons";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+
+    const router = useRouter()
+
     return (
         <>
             <div className=" flex flex-col justify-start space-y-4">
@@ -15,7 +19,7 @@ export default function Sidebar() {
                 <SidebarButton
                     label="Home"
                     icon={<HomeIcon className="w-full h-full" />}
-                    onClick={() => console.log("Go to Home")}
+                    onClick={() => router.push("/dashboard")}
                 />
                 <SidebarButton
                     label="My Drive"
@@ -38,12 +42,12 @@ export default function Sidebar() {
                 <SidebarButton
                     label="Recent"
                     icon={<ClockIcon className="w-full h-full" />}
-                    onClick={() => console.log("Go to recent")}
+                    onClick={() => router.push('/dashboard/recent')}
                 />
                 <SidebarButton
                     label="Starred"
                     icon={<SparklesIcon className="w-full h-full" />}
-                    onClick={() => console.log("Go to Starred")}
+                    onClick={() => router.push("/dashboard/starred")}
                 />
                 <hr
                     className="text-secondary opacity-40 w-[14rem] mt-2"
@@ -51,12 +55,12 @@ export default function Sidebar() {
                 <SidebarButton
                     label="Trash"
                     icon={<TrashIcon className="w-full h-full" />}
-                    onClick={() => console.log("Go to Trash")}
+                    onClick={() => router.push("/dashboard/trash")}
                 />
                 <SidebarButton
                     label="Storage"
                     icon={<CircleStackIcon className="w-full h-full" />}
-                    onClick={() => console.log("Go to Storage")}
+                    onClick={() => router.push("/dashboard/storage")}
                 />
             </div>
         </>

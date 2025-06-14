@@ -4,7 +4,7 @@ import { setSearchSuggestions } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import FilterModal from "../FilterModal";
 
@@ -17,6 +17,21 @@ export default function SearchBar() {
     const [show, setShow] = useState<boolean>(false)
 
     console.log(searchSuggestions)
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                inputRef.current?.focus();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
 
     function addToSuggesstions(x: string) {
         if (searchSuggestions) {
@@ -44,6 +59,7 @@ export default function SearchBar() {
                 />
                 <div className="flex flex-col">
                     <input
+                        ref={inputRef}
                         className={`bg-white font-product text-primary rounded-xl focus:shadow-md py-2 pl-14 pr-10 w-full outline-none h-14`}
                         placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
@@ -64,7 +80,7 @@ export default function SearchBar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2"
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-10"
                                 >
                                     {
                                         searchSuggestions.map((x, i) => <button
