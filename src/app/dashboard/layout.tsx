@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     <Navbar />
                     <div className="flex">
                         <Sidebar />
-                        <div className="rounded-3xl bg-white h-full w-full ml-16 mt-12">
+                        <div className="rounded-3xl bg-white h-[38rem] overflow-auto w-full ml-16 mt-12">
                             {children}
                         </div>
                     </div>

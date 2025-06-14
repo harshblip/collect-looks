@@ -81,7 +81,8 @@ export const useMedia = () => {
             })
 
             if (response.status === 200) {
-                setData(response.data)
+                console.log(response.data)
+                setData(response.data.message)
             } else {
                 console.error(response.data)
                 setError(response.data)

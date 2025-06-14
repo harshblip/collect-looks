@@ -22,13 +22,9 @@ export interface Folder {
 }
 
 export interface AllFiles {
-    file_type: string,
     file_id: string,
+    file_name: string,
+    file_type: string,
     file_url: string,
     created_at: string
-}
-
-export interface FormData {
-    username: string,
-    
 }

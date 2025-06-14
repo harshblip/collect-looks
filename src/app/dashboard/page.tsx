@@ -10,13 +10,15 @@ import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
 import { motion, AnimatePresence } from 'framer-motion';
+import { AllFiles } from "@/types/mediaTypes"
+import Card from "../components/shared/Card"
 
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
     const media = useAppSelector(state => state.states.media);
     const folders = useAppSelector(state => state.states.folders)
-    const { getImages } = useMedia()
+    const { getImages, getAllFiles } = useMedia()
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
@@ -31,6 +33,7 @@ export default function Dashboard() {
     const [check1, setCheck1] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
+    const [data, setData] = useState<AllFiles[]>([])
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -56,9 +59,14 @@ export default function Dashboard() {
         }
     }, [error])
 
+    useEffect(() => {
+        getAllFiles("manan2@gmail.com", setError, setData)
+    }, [])
+
     if (count === 0) {
         router.push('/signup')
     }
+
 
     function addImage(name: string) {
         if (images.includes(name)) {
@@ -76,10 +84,10 @@ export default function Dashboard() {
     return (
         <>
             <div className="flex flex-col space-y-10 mt-4 p-8 font-product">
-                <p className="text-4xl font-medium text-primary"> Welcome to Collect </p>
-                <div className="flex flex-col space-y-0">
+                <p className="text-4xl fixed font-medium text-primary"> Welcome to Collect </p>
+                <div className="flex flex-col mt-16 space-y-0">
                     <div
-                        className="flex space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3"
+                        className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-full"
                         onClick={() => setShow(!show)}
                     >
                         <div
@@ -100,7 +108,14 @@ export default function Dashboard() {
                                     transition={{ duration: 0.2 }}
                                     className="p-6"
                                 >
-                                    <p className="text-xl font-medium text-primary">Welcome to Collect</p>
+                                    <div className="flex flex-col divide-gray-100 mt-8">
+                                        {
+                                            data.length && data.map((x, i) => <div key={i}>
+                                                <Card data={x} />
+                                            </div>
+                                            )
+                                        }
+                                    </div>
                                 </motion.div>
                             )
                         }
