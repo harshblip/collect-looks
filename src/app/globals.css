@@ -79,6 +79,10 @@
     color: #DEE2E6;
 }
 
+.hover:hover {
+    cursor: pointer;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

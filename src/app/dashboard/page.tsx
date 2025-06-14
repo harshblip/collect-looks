@@ -5,7 +5,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { Bars3Icon, CheckCircleIcon, ExclamationTriangleIcon, TableCellsIcon } from "@heroicons/react/24/solid"
+import { ArrowRightIcon, Bars3Icon, CheckCircleIcon, ExclamationTriangleIcon, TableCellsIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
@@ -74,8 +74,16 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className="">
-
+            <div className="flex flex-col space-y-12 mt-4 p-8 font-product">
+                <p className="text-4xl font-medium text-primary"> Welcome to Collect </p>
+                <div className="flex flex-col">
+                    <div className="flex space-x-4 text-primary hover:bg-gray-200 transition-all rounded-lg hover">
+                        <ArrowRightIcon 
+                            className="w-7"
+                        />
+                        <p className="text-xl"> Your files </p>
+                    </div>
+                </div>
             </div>
         </>
     )

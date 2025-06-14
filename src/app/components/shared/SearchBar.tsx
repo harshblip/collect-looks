@@ -40,12 +40,12 @@ export default function SearchBar() {
             }
             <div className="relative w-[30rem]">
                 <MagnifyingGlassIcon
-                    className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
+                    className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
                 />
                 <div className="flex flex-col">
                     <input
                         className={`bg-white font-product text-primary rounded-xl focus:shadow-md py-2 pl-14 pr-10 w-full outline-none h-14`}
-                        placeholder="Search in Collect"
+                        placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 addToSuggesstions((e.target as HTMLInputElement).value);
@@ -69,7 +69,7 @@ export default function SearchBar() {
                                     {
                                         searchSuggestions.map((x, i) => <button
                                             key={i}
-                                            className="flex items-center justify-between hover:cursor-pointer hover:bg-gray-100 p-2 rounded-lg transition-all w-full"
+                                            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full"
                                             onClick={() => setSearchQuery(searchSuggestions[i])}
                                         >
                                             <div className="flex items-center space-x-3">
@@ -95,7 +95,7 @@ export default function SearchBar() {
                     </AnimatePresence>
                 </div>
                 <AdjustmentsHorizontalIcon
-                    className="w-10 h-10 hover:cursor-pointer hover:bg-gray-200 active:scale-95 rounded-lg p-2 transition-all text-primary absolute right-4 top-1/2 transform -translate-y-1/2"
+                    className="w-10 h-10 hover hover:bg-gray-200 active:scale-95 rounded-lg p-2 transition-all text-primary absolute right-4 top-1/2 transform -translate-y-1/2"
                     onClick={() => setShow(true)}
                 />
             </div>

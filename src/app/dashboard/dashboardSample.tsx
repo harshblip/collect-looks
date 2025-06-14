@@ -99,24 +99,24 @@ export default function DashboardSample() {
                 <div className="flex space-x-4">
                     <button
                         onClick={() => getImages(setError)}
-                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        className="hover border border-gray-500 p-2 rounded-md w-[10rem]"
                     >
                         get images
                     </button>
                     <button
                         // onClick={() => deleteMedia(images)}
-                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        className="hover border border-gray-500 p-2 rounded-md w-[10rem]"
                     >
                         delete {images.length} images
                     </button>
                     <button
-                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        className="hover border border-gray-500 p-2 rounded-md w-[10rem]"
                         onClick={() => setShow(!show)}
                     >
                         create folder
                     </button>
                     <button
-                        className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[10rem]"
+                        className="hover border border-gray-500 p-2 rounded-md w-[10rem]"
                         onClick={() => getFolder(4)}>
                         get folders
                     </button>
@@ -131,7 +131,7 @@ export default function DashboardSample() {
                                     src={x.file_url}
                                     width={160}
                                     onClick={() => addImage(x.file_name)}
-                                    className="rounded-md hover:cursor-pointer"
+                                    className="rounded-md hover"
                                 />
                                 <p> {x.file_name} </p>
                             </div>
@@ -213,11 +213,11 @@ export default function DashboardSample() {
                             <div>
                                 <button
                                     onClick={() => createFolder(name, description, check, 4)}
-                                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[8rem]"
+                                    className="hover border border-gray-500 p-2 rounded-md w-[8rem]"
                                 >create</button>
                                 <button
                                     onClick={() => setShow(!show)}
-                                    className="hover:cursor-pointer border border-gray-500 p-2 rounded-md w-[8rem] ml-12"
+                                    className="hover border border-gray-500 p-2 rounded-md w-[8rem] ml-12"
                                 >
                                     cancel
                                 </button>

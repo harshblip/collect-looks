@@ -21,7 +21,7 @@ function ForgotModal({ setVisible }: {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <button
-                        className={`font-gochi hover:cursor-pointer bg-[#495057] text-white p-2 rounded-md w-24 active:scale-95 transition-transform duration-150 ease-in-out`}
+                        className={`font-gochi hover bg-[#495057] text-white p-2 rounded-md w-24 active:scale-95 transition-transform duration-150 ease-in-out`}
                         onClick={() => ForgotPassword(email)}
                     >
                         Submit

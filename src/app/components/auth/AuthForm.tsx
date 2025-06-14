@@ -84,14 +84,14 @@ function AuthForm({
                         />
                         <button
                             onClick={() => setSee(!see)}
-                            className="hover:cursor-pointer mt-8 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
+                            className="hover mt-8 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
                         >
                             {
                                 see ? <EyeIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 /> : <EyeSlashIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 />
                             }
@@ -106,7 +106,7 @@ function AuthForm({
                     {
                         mode === 'Sign in' && <div className="text-sm flex items-center space-x-4 -mt-6">
                             <a
-                                className={`font-glook text-secondary mb-2 hover:cursor-pointer`}
+                                className={`font-glook text-secondary mb-2 hover`}
                                 onClick={() => setVisible(true)}
                             > Forgot password ? </a>
                         </div>
@@ -121,7 +121,7 @@ function AuthForm({
                     }
                     <button
                         onClick={submit}
-                        className={` hover:cursor-pointer font-glook bg-[#495057] text-white p-2 rounded-md w-[20rem] -mt-4`}
+                        className={` hover font-glook bg-[#495057] text-white p-2 rounded-md w-[20rem] -mt-4`}
                     >
                         {mode}
                     </button>
@@ -133,7 +133,7 @@ function AuthForm({
                                 <a
                                     onClick={() => dispatch(setMode('Create an account'))}>
                                     <span
-                                        className="text-primary hover:cursor-pointer">
+                                        className="text-primary hover">
                                         Sign up
                                     </span>
                                 </a></p> :
@@ -143,7 +143,7 @@ function AuthForm({
                                 <a
                                     onClick={() => dispatch(setMode('Sign in'))}>
                                     <span
-                                        className="text-primary hover:cursor-pointer">Sign in
+                                        className="text-primary hover">Sign in
                                     </span>
                                 </a></p>
                     }

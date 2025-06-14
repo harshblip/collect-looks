@@ -12,7 +12,7 @@ const CardButton: React.FC<Props> = ({ label, icon, onClick, className }) => (
     <button
         onClick={onClick}
         className={twMerge(
-            "hover:cursor-pointer hover:bg-gray-100 rounded-lg transition-all flex items-center space-x-1",
+            "hover hover:bg-gray-100 rounded-lg transition-all flex items-center space-x-1",
             className
         )}
     >

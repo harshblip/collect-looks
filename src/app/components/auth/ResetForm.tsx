@@ -22,14 +22,14 @@ function ResetForm({ setA, setB, setSee, see, submit }: {
                         />
                         <button
                             onClick={() => setSee(!see)}
-                            className="hover:cursor-pointer mt-1 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
+                            className="hover mt-1 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
                         >
                             {
                                 see ? <EyeIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 /> : <EyeSlashIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 />
                             }
@@ -47,14 +47,14 @@ function ResetForm({ setA, setB, setSee, see, submit }: {
                         />
                         <button
                             onClick={() => setSee(!see)}
-                            className="hover:cursor-pointer mt-1 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
+                            className="hover mt-1 w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-75"
                         >
                             {
                                 see ? <EyeIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 /> : <EyeSlashIcon
-                                    className="hover:cursor-pointer w-6"
+                                    className="hover w-6"
                                     onClick={() => setSee(!see)}
                                 />
                             }
@@ -63,7 +63,7 @@ function ResetForm({ setA, setB, setSee, see, submit }: {
                 </div>
                 <button
                     onClick={submit}
-                    className={` hover:cursor-pointer font-glook bg-[#495057] text-white p-2 rounded-md w-[24rem] mt-2`}
+                    className={` hover font-glook bg-[#495057] text-white p-2 rounded-md w-[24rem] mt-2`}
                 >
                     change password
                 </button>
