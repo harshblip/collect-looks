@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import FilterModal from "../FilterModal";
+import SuggestionButtons from "./SuggestionButtons";
 
 export default function SearchBar() {
 
@@ -45,6 +46,10 @@ export default function SearchBar() {
         dispatch(setSearchSuggestions(searchSuggestions.filter((_, i) => i !== x)))
     }
 
+    function justChecking(i: number) {
+        console.log(`clicked suggestion ${i}`)
+    }
+
     return (
         <>
             {
@@ -81,28 +86,16 @@ export default function SearchBar() {
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                                     className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-10"
+                                    onClick={() => console.log("clicked div")}
                                 >
                                     {
-                                        searchSuggestions.map((x, i) => <button
+                                        searchSuggestions.map((_, i) => <SuggestionButtons
                                             key={i}
-                                            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full"
-                                            onClick={() => setSearchQuery(searchSuggestions[i])}
-                                        >
-                                            <div className="flex items-center space-x-3">
-                                                <MagnifyingGlassIcon
-                                                    className="w-6 h-6 text-gray-400"
-                                                />
-                                                <p
-                                                    className="text-secondary font-normal "
-                                                > {x} </p>
-                                            </div>
-                                            <div>
-                                                <XMarkIcon
-                                                    className="w-6 h-6 text-gray-400"
-                                                    onClick={() => removeSuggestion(i)}
-                                                />
-                                            </div>
-                                        </button>
+                                            index={i}
+                                            searchSuggestions={searchSuggestions}
+                                            setSearchQuery={setSearchQuery}
+                                            removeSuggestion={removeSuggestion}
+                                        />
                                         )
                                     }
                                 </motion.div>

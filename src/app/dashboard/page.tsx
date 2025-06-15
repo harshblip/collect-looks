@@ -118,7 +118,6 @@ export default function Dashboard() {
                                     </div>
                                 </div>
 
-                                {/* Rows */}
                                 <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                     {data.length > 0 &&
                                         data.map((x, i) => (

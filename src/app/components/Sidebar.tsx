@@ -3,18 +3,28 @@
 import { CircleStackIcon, ClockIcon, FolderIcon, HomeIcon, RectangleStackIcon, SparklesIcon, TrashIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 import SidebarButton from "./shared/SidebarButtons";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import UploadModal from "./navbar/UploadModal";
 
 export default function Sidebar() {
 
+    const [show, setShow] = useState<boolean>(false)
     const router = useRouter()
 
     return (
         <>
             <div className=" flex flex-col justify-start space-y-4">
-                <button className="active:scale-95 mt-14 flex justify-center items-center p-2 w-32 bg-white rounded-lg font-product text-primary shadow-md space-x-2 hover">
+                <button
+                    className="active:scale-95 mt-14 flex justify-center items-center p-2 w-32 bg-white rounded-lg font-product text-primary shadow-md space-x-2 hover"
+                    onClick={() => setShow(true)}
+                    onBlur={() => setShow(false)}
+                >
                     <p className="text-xl"> + </p>
                     <p className="text-lg mt-1"> New </p>
                 </button>
+                {
+                    show && <UploadModal />
+                }
                 <div className="mt-0" />
                 <SidebarButton
                     label="Home"

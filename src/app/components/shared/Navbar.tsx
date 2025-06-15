@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import SearchBar from "./SearchBar";
+import SearchBar from "../navbar/SearchBar";
 import { BeakerIcon, Cog6ToothIcon, CubeTransparentIcon, FingerPrintIcon, FireIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";

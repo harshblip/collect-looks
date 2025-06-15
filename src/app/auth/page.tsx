@@ -6,7 +6,7 @@ import { useAppSelector } from "@/lib/store";
 import { Signin, Signup } from "../utils/auth";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import SmallLogo from "../components/shared/SmallLogo";
+import SmallLogo from "../components/widgets/SmallLogo";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from 'framer-motion';
 import ForgotModal from "../components/auth/ForgotModal";
