@@ -23,7 +23,7 @@ export default function CreateFolder() {
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-col space-y-2 mt-4">
                         <p className="text-secondary text-sm"> about </p>
                         <input
                             type="text"
@@ -38,7 +38,7 @@ export default function CreateFolder() {
                             setChecked={setLocked}
                         />
                     </div>
-                    <div className="flex justify-around w-full items-center mt-16">
+                    <div className="flex justify-around w-full items-center mt-14">
                         <button className="text-primary rounded-md w-[10rem] border-2 border-gray-200 p-3 hover">
                             cancel
                         </button>
