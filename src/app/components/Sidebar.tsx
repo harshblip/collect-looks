@@ -14,6 +14,7 @@ export default function Sidebar() {
     return (
         <>
             <div className=" flex flex-col justify-start space-y-4">
+                <UploadModal />
                 <button
                     className="active:scale-95 mt-14 flex justify-center items-center p-2 w-32 bg-white rounded-lg font-product text-primary shadow-md space-x-2 hover"
                     onClick={() => setShow(true)}

@@ -1,4 +1,4 @@
-import '../checkbox.css'
+import './checkbox.css'
 
 export default function Checkbox({ setChecked }: {
     setChecked: React.Dispatch<React.SetStateAction<boolean>>
