@@ -12,7 +12,7 @@ export default function UploadModal() {
         <>
             {
                 show && <CreateFolder 
-                    
+
                 />
             }
             <AnimatePresence>
@@ -22,7 +22,7 @@ export default function UploadModal() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     onClick={() => console.log("clicked div")}
-                    className="bg-white  font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2">
+                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2">
                     <div
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2"
                         onClick={() => setShow(true)}
