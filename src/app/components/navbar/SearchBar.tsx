@@ -46,10 +46,6 @@ export default function SearchBar() {
         dispatch(setSearchSuggestions(searchSuggestions.filter((_, i) => i !== x)))
     }
 
-    function justChecking(i: number) {
-        console.log(`clicked suggestion ${i}`)
-    }
-
     return (
         <>
             {
@@ -62,7 +58,9 @@ export default function SearchBar() {
                 <MagnifyingGlassIcon
                     className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
                 />
-                <div className="flex flex-col">
+                <div
+                    className="flex flex-col"
+                >
                     <input
                         ref={inputRef}
                         className={`bg-white font-product text-primary rounded-xl focus:shadow-md py-2 pl-14 pr-10 w-full outline-none h-14`}
@@ -74,8 +72,7 @@ export default function SearchBar() {
                         }}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         value={searchQuery}
-                        onFocus={() => setVisible(true)}
-                        onBlur={() => setVisible(false)}
+                        onFocus={() => setVisible(!visible)}  
                     />
                     <AnimatePresence>
                         {
@@ -85,7 +82,7 @@ export default function SearchBar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-10"
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2"
                                     onClick={() => console.log("clicked div")}
                                 >
                                     {

@@ -17,13 +17,15 @@ export default function Sidebar() {
                 <button
                     className="active:scale-95 mt-14 flex justify-center items-center p-2 w-32 bg-white rounded-lg font-product text-primary shadow-md space-x-2 hover"
                     onClick={() => setShow(true)}
-                    onBlur={() => setShow(false)}
+                    // onBlur={() => setShow(false)}
                 >
                     <p className="text-xl"> + </p>
                     <p className="text-lg mt-1"> New </p>
                 </button>
                 {
-                    show && <UploadModal />
+                    show && <UploadModal 
+                        setShow={setShow}
+                    />
                 }
                 <div className="mt-0" />
                 <SidebarButton

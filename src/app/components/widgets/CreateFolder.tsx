@@ -3,7 +3,11 @@
 import { useState } from "react"
 import Checkbox from "./Checkbox"
 
-export default function CreateFolder() {
+interface PropTypes {
+    showMe: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function CreateFolder({ showMe }: PropTypes) {
 
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -34,12 +38,15 @@ export default function CreateFolder() {
                     </div>
                     <div className="flex items-center space-x-2">
                         <p className="text-secondary text-md"> locked ? </p>
-                        <Checkbox 
+                        <Checkbox
                             setChecked={setLocked}
                         />
                     </div>
                     <div className="flex justify-around w-full items-center mt-14">
-                        <button className="text-primary rounded-md w-[10rem] border-2 border-gray-200 p-3 hover">
+                        <button
+                            className="text-primary rounded-md w-[10rem] border-2 border-gray-200 p-3 hover"
+                            onClick={() => showMe((show) => !show)}
+                        >
                             cancel
                         </button>
                         <button className=" rounded-md w-[10rem] border-none bg-gray-600 text-white p-3 hover">
