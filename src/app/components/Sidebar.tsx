@@ -5,10 +5,13 @@ import SidebarButton from "./shared/SidebarButtons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import UploadModal from "./navbar/UploadModal";
+import CreateFolder from "./widgets/CreateFolder";
 
 export default function Sidebar() {
 
     const [show, setShow] = useState<boolean>(false)
+    const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
+
     const router = useRouter()
 
     return (
@@ -17,14 +20,20 @@ export default function Sidebar() {
                 <button
                     className="active:scale-95 mt-14 flex justify-center items-center p-2 w-32 bg-white rounded-lg font-product text-primary shadow-md space-x-2 hover"
                     onClick={() => setShow(true)}
-                    // onBlur={() => setShow(false)}
+                // onBlur={() => setShow(false)}
                 >
                     <p className="text-xl"> + </p>
                     <p className="text-lg mt-1"> New </p>
                 </button>
                 {
-                    show && <UploadModal 
+                    show && <UploadModal
                         setShow={setShow}
+                        setShowCreateFolder={setShowCreateFolder}
+                    />
+                }
+                {
+                    showCreateFolder && <CreateFolder
+                        showMe={setShowCreateFolder}
                     />
                 }
                 <div className="mt-0" />

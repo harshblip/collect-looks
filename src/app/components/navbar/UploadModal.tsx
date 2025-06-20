@@ -2,23 +2,18 @@
 
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateFolder from "../widgets/CreateFolder";
 
 interface PropTypes {
     setShow: React.Dispatch<React.SetStateAction<boolean>>
+    setShowCreateFolder: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function UploadModal({ setShow }: PropTypes) {
-    const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
-    console.log(showCreateFolder)
+export default function UploadModal({ setShow, setShowCreateFolder }: PropTypes) {
+    // console.log(showCreateFolder)
     return (
         <>
-            {
-                showCreateFolder && <CreateFolder
-                    showMe={setShowCreateFolder}
-                />
-            }
             <AnimatePresence>
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -26,14 +21,14 @@ export default function UploadModal({ setShow }: PropTypes) {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2"
-                    onBlur={() => setShow((show) => !show)}
+                // onBlur={() => setShow((show) => !show)}
                 >
                     <div
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95"
                         onClick={() => {
                             setShowCreateFolder(true)
-                            setShow(false)}
-                        }
+                            setShow(false)
+                        }}
                     >
                         <PlusIcon className="w-4" />
                         <p> create new folder </p>
