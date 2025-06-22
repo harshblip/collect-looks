@@ -84,10 +84,10 @@ export default function Dashboard() {
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
-                <p className="text-4xl font-medium h-40 pt-10 -mt-12 text-primary bg-white w-full "> Welcome to Collect </p>
-                <div className="flex flex-col mt-0 space-y-0 bg-white">
+                <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white "> Welcome to Collect </p>
+                <div className="flex flex-col mt-16 bg-white">
                     <div
-                        className="flex space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3"
+                        className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
                         onClick={() => setShow(!show)}
                     >
                         <div

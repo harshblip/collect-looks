@@ -1,5 +1,5 @@
 import { AllFiles } from "@/types/mediaTypes";
-import { DocumentDuplicateIcon, PhotoIcon, PlayIcon, SignalIcon } from "@heroicons/react/24/solid";
+import { DocumentDuplicateIcon, EllipsisVerticalIcon, PhotoIcon, PlayIcon, SignalIcon } from "@heroicons/react/24/solid";
 
 export default function Card({ data }: {
     data: AllFiles
@@ -19,9 +19,9 @@ export default function Card({ data }: {
                 <div className="flex justify-end">
                     <p className="text-lg font-medium"> {data.created_at.substring(0, 10)} </p>
                 </div>
-                <div className="flex space-x-4 justify-end">
+                <div className="flex items-center space-x-4 justify-end">
                     <p className="text-lg font-medium"> {data.size} </p>
-                    <p className="text-lg font-medium"> : </p>
+                    <p className="text-lg font-medium"> <EllipsisVerticalIcon className="w-5"/> </p>
                 </div>
             </div>
         </>
