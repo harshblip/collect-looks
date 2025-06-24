@@ -4,6 +4,14 @@ import { DocumentDuplicateIcon, EllipsisVerticalIcon, PhotoIcon, PlayIcon, Signa
 export default function Card({ data }: {
     data: AllFiles
 }) {
+
+    function byteToSize(kb: number) {
+        const arr = ['bytes', 'KB', 'MB']
+        const i = parseInt(Math.floor(Math.log(kb) / Math.log(1024)), 10)
+        if (i === 0) return i;
+        return `${(kb / (1024 ** i)).toFixed(1)}${arr[i]}`
+    }
+
     return (
         <>
             <div className="bg-white rounded-lg p-3 space-x-4 font-product hover:bg-gray-100 transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center">
@@ -21,7 +29,7 @@ export default function Card({ data }: {
                 </div>
                 <div className="flex items-center space-x-4 justify-end">
                     <p className="text-lg font-medium"> {data.size} </p>
-                    <p className="text-lg font-medium"> <EllipsisVerticalIcon className="w-5"/> </p>
+                    <p className="text-lg font-medium"> <EllipsisVerticalIcon className="w-5" /> </p>
                 </div>
             </div>
         </>
