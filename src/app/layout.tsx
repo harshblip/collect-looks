@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProvider from "@/lib/reduxProvider";
 import { Gloock, Gochi_Hand } from "next/font/google";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const glook = Gloock({
   weight: ['400'],
@@ -25,13 +26,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const queryClient = new QueryClient()
   return (
     <html lang="en">
       <body
         className={`${gochi.variable} ${glook.variable} antialiased`}>
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReduxProvider>
+            {children}
+          </ReduxProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

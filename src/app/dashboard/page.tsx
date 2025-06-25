@@ -19,21 +19,17 @@ export default function Dashboard() {
     const media = useAppSelector(state => state.states.media);
     const folders = useAppSelector(state => state.states.folders)
     const { getImages, getAllFiles } = useMedia()
+    const {data, error, isLoading} = getAllFiles("manan2@gmail.com")
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
     // folders
-    const [name, setName] = useState<string>('')
-    const [description, setDescription] = useState<string>('')
-    const [is_locked, setIsLocked] = useState<boolean>(false)
-    const [toastMessage, setToastMessage] = useState<string>('')
-    const [errorMessage, setErrorMessage] = useState<string>('')
-    const [error, setError] = useState<string>('')
+    // const [error, setError] = useState<string>('')
     const [check, setCheck] = useState<boolean>(false)
     const [check1, setCheck1] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
-    const [data, setData] = useState<AllFiles[]>([])
+    // const [data, setData] = useState<AllFiles[]>([])
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -52,16 +48,12 @@ export default function Dashboard() {
     useEffect(() => {
         if (error) {
             const timer = setTimeout(() => {
-                setError('')
+                // setError('')
             }, 3000)
 
             return () => clearTimeout(timer)
         }
     }, [error])
-
-    useEffect(() => {
-        getAllFiles("manan2@gmail.com", setError, setData)
-    }, [])
 
     if (count === 0) {
         router.push('/signup')

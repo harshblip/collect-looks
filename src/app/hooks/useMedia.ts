@@ -1,8 +1,11 @@
+import { BASE_URL } from "@/lib/constants";
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
 import { AllFiles } from "@/types/mediaTypes";
 import axios from "axios"
 import { useDispatch } from "react-redux"
+import { useQuery } from '@tanstack/react-query'
+import { fetchAllFiles } from "../api/files";
 
 export const useMedia = () => {
     const dispatch = useDispatch();
@@ -68,29 +71,14 @@ export const useMedia = () => {
         }
     }
 
-    async function getAllFiles(
-        email: string,
-        setError: React.Dispatch<React.SetStateAction<string>>,
-        setData: React.Dispatch<React.SetStateAction<AllFiles[]>>
-    ) {
-        try {
-            const response = await axios.get('http://localhost:4000/upload/getAllFiles', {
-                params: {
-                    email
-                }
-            })
-
-            if (response.status === 200) {
-                console.log(response.data)
-                setData(response.data.message)
-            } else {
-                console.error(response.data)
-                setError(response.data)
-            }
-        } catch (err: any) {
-            setError(err.response.data.message)
-            console.log("error fetching images: ", err)
-        }
+    function getAllFiles(email: string) {
+        return useQuery({
+            queryKey: ['allFiles', email],
+            queryFn: () => fetchAllFiles(email),
+            enabled: !!email,
+            staleTime: 1000 * 60 * 5,
+            retry: 2
+        })
     }
 
     return { getImages, deleteMedia, getAllFiles, uploadFile }

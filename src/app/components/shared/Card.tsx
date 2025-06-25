@@ -5,10 +5,10 @@ export default function Card({ data }: {
     data: AllFiles
 }) {
 
-    function byteToSize(kb: number) {
+    function byteToSize(kb: number): string {
+        if (kb === 0) return `0 bytes`;
         const arr = ['bytes', 'KB', 'MB']
-        const i = parseInt(Math.floor(Math.log(kb) / Math.log(1024)), 10)
-        if (i === 0) return i;
+        const i = (Math.floor(Math.log(kb) / Math.log(1024)), 10)
         return `${(kb / (1024 ** i)).toFixed(1)}${arr[i]}`
     }
 
