@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { ArrowRightIcon, Bars3Icon, CheckCircleIcon, ChevronRightIcon, ExclamationTriangleIcon, TableCellsIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
-import { useMedia } from "../hooks/useMedia"
+import { useGetAllFiles, useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
 import { motion, AnimatePresence } from 'framer-motion';
 import { AllFiles } from "@/types/mediaTypes"
@@ -18,8 +18,8 @@ export default function Dashboard() {
     const token = useAppSelector((state) => state.auth.authToken);
     const media = useAppSelector(state => state.states.media);
     const folders = useAppSelector(state => state.states.folders)
-    const { getImages, getAllFiles } = useMedia()
-    const {data, error, isLoading} = getAllFiles("manan2@gmail.com")
+    const { getImages } = useMedia()
+    // const {data, error, isLoading} = useGetAllFiles("manan2@gmail.com")
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
@@ -45,15 +45,15 @@ export default function Dashboard() {
         dispatch(setMedia([]))
     }, [])
 
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                // setError('')
-            }, 3000)
+    // useEffect(() => {
+    //     if (error) {
+    //         const timer = setTimeout(() => {
+    //             // setError('')
+    //         }, 3000)
 
-            return () => clearTimeout(timer)
-        }
-    }, [error])
+    //         return () => clearTimeout(timer)
+    //     }
+    // }, [error])
 
     if (count === 0) {
         router.push('/signup')

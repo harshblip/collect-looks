@@ -72,14 +72,18 @@ export const useMedia = () => {
     }
 
     function getAllFiles(email: string) {
-        return useQuery({
-            queryKey: ['allFiles', email],
-            queryFn: () => fetchAllFiles(email),
-            enabled: !!email,
-            staleTime: 1000 * 60 * 5,
-            retry: 2
-        })
+
     }
 
     return { getImages, deleteMedia, getAllFiles, uploadFile }
+}
+
+export const useGetAllFiles = (email: string) => {
+    return useQuery({
+        queryKey: ['allFiles', email],
+        queryFn: () => fetchAllFiles(email),
+        enabled: !!email,
+        staleTime: 1000 * 60 * 5,
+        retry: 2
+    })
 }
