@@ -20,3 +20,11 @@ export const updatePassword = async (
         console.log("internal server error", err)
     }
 }
+
+export function byteToSize(kb: number): string {
+    if (kb === 0) return `0 bytes`;
+
+    const arr = ['bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(kb) / Math.log(1024));
+    return `${(kb / (1024 ** i)).toFixed(0)} ${arr[i]}`;
+}

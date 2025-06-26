@@ -12,22 +12,22 @@ export default function MoreDialog() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2"
+                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36"
                 // onBlur={() => setShow((show) => !show)}
                 >
                     <div
-                        className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95"
+                        className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-30"
                         onClick={() => {}}
                     >
-                        <StarIcon className="w-4" />
+                        <StarIcon className="w-5 text-amber-400" />
                         <p> star </p>
                     </div>
-                    <div className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95">
-                        <InformationCircleIcon className="w-4" />
+                    <div className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30">
+                        <InformationCircleIcon className="w-5" />
                         <p> info </p>
                     </div>
-                    <div className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95">
-                        <TrashIcon className="w-4" />
+                    <div className="flex hover hover:bg-red-400 hover:text-white rounded-lg space-x-2 p-2 items-center active:scale-95 w-30">
+                        <TrashIcon className="w-5" />
                         <p> delete </p>
                     </div>
                 </motion.div>

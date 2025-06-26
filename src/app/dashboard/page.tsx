@@ -19,14 +19,13 @@ export default function Dashboard() {
     const media = useAppSelector(state => state.states.media);
     const folders = useAppSelector(state => state.states.folders)
     const { getImages } = useMedia()
-    // const {data, error, isLoading} = useGetAllFiles("manan2@gmail.com")
+    const { data, error, isLoading } = useGetAllFiles("manan2@gmail.com")
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
     // folders
     // const [error, setError] = useState<string>('')
     const [check, setCheck] = useState<boolean>(false)
-    const [check1, setCheck1] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
     // const [data, setData] = useState<AllFiles[]>([])
@@ -76,7 +75,7 @@ export default function Dashboard() {
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
-                <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white "> Welcome to Collect </p>
+                <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </p>
                 <div className="flex flex-col mt-16 bg-white">
                     <div
                         className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
@@ -111,12 +110,13 @@ export default function Dashboard() {
                                 </div>
 
                                 <div className="flex flex-col divide-y divide-gray-100 mt-4">
-                                    {data.length > 0 &&
-                                        data.map((x, i) => (
+                                    {
+                                        data?.map((x, i) => (
                                             <div key={i}>
                                                 <Card data={x} />
                                             </div>
-                                        ))}
+                                        ))
+                                    }
                                 </div>
                             </motion.div>
                         )}
