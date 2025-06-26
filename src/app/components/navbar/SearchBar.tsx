@@ -82,7 +82,7 @@ export default function SearchBar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2"
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-2"
                                     onClick={() => console.log("clicked div")}
                                 >
                                     {

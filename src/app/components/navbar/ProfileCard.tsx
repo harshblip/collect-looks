@@ -11,7 +11,7 @@ export default function ProfileCard() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.1, ease: 'easeInOut' }}
-                className="absolute mt-10 -ml-[22rem]"
+                className="absolute mt-10 -ml-[22rem] z-1"
             >
                 <div className="bg-gray-200 h-[29rem] w-[25rem] rounded-xl p-4">
                     <div className="bg-white h-[27rem] w-[23rem] flex flex-col rounded-xl p-4">
