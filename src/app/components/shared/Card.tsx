@@ -6,13 +6,26 @@ import { DocumentDuplicateIcon, EllipsisVerticalIcon, PhotoIcon, PlayIcon, Signa
 import { useState } from "react";
 import MoreDialog from "./MoreDialog";
 
-export default function Card({ data }: {
+export default function Card({ data, setFiles, files }: {
     data: AllFiles
+    setFiles: React.Dispatch<React.SetStateAction<AllFiles[]>>
+    files: AllFiles[]
 }) {
     const [show, setShow] = useState<boolean>(false)
+
+    function addOrRemove(data: AllFiles) {
+        if (files.includes(data)) {
+            setFiles((files) => files.filter(x => x.file_name !== data.file_name))
+        } else {
+            setFiles((files) => [...files, data])
+        }
+    }
+
     return (
         <>
-            <div className="bg-white rounded-lg p-3 space-x-4 font-product hover:bg-gray-100 transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center">
+            <div
+                onClick={() => addOrRemove(data)}
+                className={`${files.includes(data) ? `bg-[#f8edeb]` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center`}>
                 <div className="flex space-x-4">
                     {
                         data.file_type === "images" ? <PhotoIcon className="text-emerald-500 w-6" /> :

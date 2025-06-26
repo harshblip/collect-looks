@@ -6,7 +6,7 @@ import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { ArrowRightIcon, Bars3Icon, CheckCircleIcon, ChevronRightIcon, ExclamationTriangleIcon, TableCellsIcon } from "@heroicons/react/24/solid"
+import { ArrowDownTrayIcon, ArrowRightIcon, Bars3Icon, CheckCircleIcon, ChevronRightIcon, ExclamationTriangleIcon, PlusCircleIcon, TableCellsIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useGetAllFiles, useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
@@ -24,10 +24,12 @@ export default function Dashboard() {
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
+    const [files, setFiles] = useState<AllFiles[]>([])
     // folders
     // const [error, setError] = useState<string>('')
     const [check, setCheck] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
+    const [omg, setOmg] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
     // const [data, setData] = useState<AllFiles[]>([])
 
@@ -78,18 +80,43 @@ export default function Dashboard() {
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                 <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </p>
                 <div className="flex flex-col mt-16 bg-white">
-                    <div
-                        className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
-                        onClick={() => setShow(!show)}
-                    >
-                        <div
-                            className={`transition-transform duration-300 ease-in-out ${show ? 'rotate-90' : 'rotate-0'}`}
+                    {
+                        files.length ? <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex justify-between fixed space-x-4 text-primary transition-all rounded-lg hover p-3 w-[75%] bg-[url('https://cdn.dribbble.com/userupload/36271059/file/original-cbbe37d7a258e4acb0d9c6ac94e7f4c8.jpg?resize=2048x1365&vertical=center')] bg-center">
+                            <div className="flex space-x-2">
+                                <button onClick={() => setFiles([])}>
+                                    <XMarkIcon className="w-6 hover" />
+                                </button>
+                                <p className="p-2"> {files.length} selected </p>
+                            </div>
+                            <div className="flex space-x-6 mr-6">
+                                <div className="flex space-x-2 active:scale-95">
+                                    <TrashIcon className={`w-6 hover`} />
+                                </div>
+                                <div className="flex space-x-2 active:scale-95">
+                                    <PlusCircleIcon className="w-6 hover" />
+                                </div>
+                                <div className="flex space-x-2 active:scale-95">
+                                    <ArrowDownTrayIcon className="w-6 hover" />
+                                </div>
+                            </div>
+                        </motion.div> : <div
+                            className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
+                            onClick={() => setShow(!show)}
                         >
-                            <ChevronRightIcon className="w-6" />
-                        </div>
+                            <div
+                                className={`transition-transform duration-300 ease-in-out ${show ? 'rotate-90' : 'rotate-0'}`}
+                            >
+                                <ChevronRightIcon className="w-6" />
+                            </div>
 
-                        <p className="text-xl text-primary"> Your files </p>
-                    </div>
+                            <p className="text-xl text-primary"> Your files </p>
+                        </div>
+                    }
                     <AnimatePresence>
                         {show && (
                             <motion.div
@@ -114,7 +141,11 @@ export default function Dashboard() {
                                     {
                                         data?.map((x, i) => (
                                             <div key={i}>
-                                                <Card data={x} />
+                                                <Card
+                                                    data={x}
+                                                    setFiles={setFiles}
+                                                    files={files}
+                                                />
                                             </div>
                                         ))
                                     }

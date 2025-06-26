@@ -5,7 +5,7 @@ import { useGetStarredFiles } from "@/app/hooks/useMedia";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Starred() {
-    const { data, error } = useGetStarredFiles(3)
+    const { data, error } = useGetStarredFiles(3) // send userId as parameter
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
