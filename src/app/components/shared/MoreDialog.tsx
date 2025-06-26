@@ -2,8 +2,12 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useStarFile } from "@/app/hooks/useMedia";
 
 export default function MoreDialog() {
+
+    const { mutate: starFile } = useStarFile(3, 5);
+
     return (
         <>
             <AnimatePresence>
@@ -17,7 +21,7 @@ export default function MoreDialog() {
                 >
                     <div
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-30"
-                        onClick={() => {}}
+                        onClick={() => starFile}
                     >
                         <StarIcon className="w-5 text-amber-400" />
                         <p> star </p>

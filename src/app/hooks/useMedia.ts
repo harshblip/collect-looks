@@ -4,8 +4,9 @@ import { useAppSelector } from "@/lib/store";
 import { AllFiles } from "@/types/mediaTypes";
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { useQuery } from '@tanstack/react-query'
-import { fetchAllFiles } from "../api/files";
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import { fetchAllFiles, getStarFile, starFile } from "../api/files";
+
 
 export const useMedia = () => {
     const dispatch = useDispatch();
@@ -79,6 +80,32 @@ export const useGetAllFiles = (email: string) => {
         queryKey: ['allFiles', email],
         queryFn: () => fetchAllFiles(email),
         enabled: !!email,
+        staleTime: 1000 * 60 * 1,
+        retry: 2
+    })
+}
+
+export const useStarFile = (userId: number, id: number) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => starFile(userId, id),
+        onMutate: async (id) => {
+            console.log(`marked file ${id} as starred`);
+        },
+        onError: (error) => {
+            console.error("Failed to mark file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allFiles", "starFiles"] });
+        },
+    });
+}
+
+export const useGetStarredFiles = (userId: number) => {
+    return useQuery({
+        queryKey: ['starFiles', userId],
+        queryFn: () => getStarFile(userId),
+        enabled: !!userId,
         staleTime: 1000 * 60 * 1,
         retry: 2
     })
