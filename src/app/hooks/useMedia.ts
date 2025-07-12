@@ -1,7 +1,7 @@
 import { BASE_URL } from "@/lib/constants";
 import { setLoadingState, setMedia } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
-import { AllFiles } from "@/types/mediaTypes";
+import { Files } from "@/types/mediaTypes";
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'

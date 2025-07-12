@@ -21,11 +21,13 @@ export interface Folder {
     updated_at: Date,
 }
 
-export interface AllFiles {
+export interface Files {
     file_id: string,
     file_name: string,
     file_type: string,
     file_url: string,
     size: string,
-    created_at: string
+    created_at: string,
+    starred: boolean,
+    is_trashed: boolean,
 }

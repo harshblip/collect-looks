@@ -2,10 +2,13 @@
 
 import Card from "@/app/components/shared/Card";
 import { useGetStarredFiles } from "@/app/hooks/useMedia";
+import { Files } from "@/types/mediaTypes";
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Starred() {
     const { data, error } = useGetStarredFiles(3) // send userId as parameter
+    const [files, setFiles] = useState<Files[]>([])
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
@@ -34,7 +37,11 @@ export default function Starred() {
                                 {
                                     data?.map((x, i) => (
                                         <div key={i}>
-                                            <Card data={x} />
+                                            <Card
+                                                data={x}
+                                                setFiles={setFiles}
+                                                files={files}
+                                            />
                                         </div>
                                     ))
                                 }

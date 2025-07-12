@@ -11,7 +11,7 @@ import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
 import { useGetAllFiles, useMedia } from "../hooks/useMedia"
 import { useFolder } from "../hooks/useFolder"
 import { motion, AnimatePresence } from 'framer-motion';
-import { AllFiles } from "@/types/mediaTypes"
+import { Files } from "@/types/mediaTypes"
 import Card from "../components/shared/Card"
 
 export default function Dashboard() {
@@ -24,14 +24,14 @@ export default function Dashboard() {
     const { createFolder, getFolder } = useFolder()
 
     const [images, setImages] = useState<string[]>([])
-    const [files, setFiles] = useState<AllFiles[]>([])
+    const [files, setFiles] = useState<Files[]>([])
     // folders
     // const [error, setError] = useState<string>('')
     const [check, setCheck] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const [omg, setOmg] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
-    // const [data, setData] = useState<AllFiles[]>([])
+    // const [data, setData] = useState<Files[]>([])
 
     const router = useRouter();
     const dispatch = useDispatch();
