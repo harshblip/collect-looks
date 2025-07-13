@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux"
 import { ArrowDownTrayIcon, ChevronRightIcon, PlusCircleIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { useGetAllFiles, useMedia } from "../hooks/useMedia"
 import { motion, AnimatePresence } from 'framer-motion';
-import { AllFiles } from "@/types/mediaTypes"
+import { Files } from "@/types/mediaTypes"
 import Card from "../components/shared/Card"
 
 export default function Dashboard() {
@@ -18,7 +18,7 @@ export default function Dashboard() {
     const { data, isLoading } = useGetAllFiles("3")
 
     const [images, setImages] = useState<string[]>([])
-    const [files, setFiles] = useState<AllFiles[]>([])
+    const [files, setFiles] = useState<Files[]>([])
     // folders
     const [check, setCheck] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)

@@ -50,7 +50,7 @@ export default function Card({ data, setFiles, files }: {
                     <button
                         className="hover text-lg font-medium"
                         onClick={() => setShow(true)}
-                        // onBlur={() => setShow(false)}
+                        onBlur={() => setShow(false)}
                     > <EllipsisVerticalIcon className="w-5" /> </button>
                 </div>
             </div>

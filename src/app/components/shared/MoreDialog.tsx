@@ -3,9 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { prefetchInfo, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
-import InfoCard from "./InfoCard";
 import { useState } from "react";
-import { Files } from "@/types/mediaTypes";
 
 export default function MoreDialog({ id }: { id: string }) {
 
