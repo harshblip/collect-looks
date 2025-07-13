@@ -1,33 +1,17 @@
-export interface Media {
-    id: string,
-    user_id: string,
-    created_at: string,
-    display_image_url: string,
-    file_name: string,
-    file_url: string,
-    folder_id: string,
-    size: string,
-    thumbnail_image_url: string
-}
-
-export interface Folder {
-    id: string,
-    user_id: string,
-    name: string,
-    description: string,
-    is_locked: string,
-    hashed_lock_password: string,
-    created_at: Date,
-    updated_at: Date,
-}
 
 export interface Files {
-    file_id: string,
+    id: string,
+    user_id: string,
     file_name: string,
+    file_url?: string,
     file_type: string,
-    file_url: string,
     size: string,
     created_at: string,
-    starred: boolean,
-    is_trashed: boolean,
+    starred: string,
+    is_trashed: string,
+    folder_id: number,
+    description?: string,
+    is_locked?: string,
+    hashed_lock_password?: string,
+    updated_at?: string,
 }

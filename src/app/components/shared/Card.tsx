@@ -26,7 +26,7 @@ export default function Card({ data, setFiles, files }: {
             <div
                 onClick={() => addOrRemove(data)}
                 className={`${files.includes(data) ? `bg-[#f8edeb]` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center`}>
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 items-center">
                     {
                         data.file_type === "image" ? <PhotoIcon className="text-emerald-500 w-6" /> :
                             data.file_type === "video" ?
@@ -34,7 +34,7 @@ export default function Card({ data, setFiles, files }: {
                     }
                     <p className="text-lg font-medium"> {data.file_name} </p>
                     {
-                        data.starred ? <p className="text-lg font-medium"> <StarIcon className="w-4 text-gray-300"/> </p> : ''
+                        data.starred ? <p className="text-lg font-medium -ml-1 mt-[0.2rem]"> <StarIcon className="w-4 text-gray-400" /> </p> : ''
                     }
                 </div>
                 <div className="flex justify-end">
@@ -45,12 +45,12 @@ export default function Card({ data, setFiles, files }: {
                         {data.size && byteToSize(parseInt(data.size))}
                     </p>
                     {
-                        show && <MoreDialog />
+                        show && <MoreDialog id={data.id} />
                     }
                     <button
                         className="hover text-lg font-medium"
                         onClick={() => setShow(true)}
-                        onBlur={() => setShow(false)}
+                        // onBlur={() => setShow(false)}
                     > <EllipsisVerticalIcon className="w-5" /> </button>
                 </div>
             </div>

@@ -1,12 +1,8 @@
-import { BASE_URL } from "@/lib/constants";
-import { setLoadingState, setMedia } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
-import { Files } from "@/types/mediaTypes";
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { fetchAllFiles, getStarFile, starFile } from "../api/files";
-
+import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, starFile } from "../api/files";
 
 export const useMedia = () => {
     const dispatch = useDispatch();
@@ -16,7 +12,6 @@ export const useMedia = () => {
         try {
             const response = await axios.post('http://localhost:4000/upload', formData)
             if (response.status === 200) {
-                // dispatch(setMedia(response.data.message))
                 console.log(response.data)
             } else {
                 console.log("facing error fetching images: ", response.data)
@@ -28,69 +23,44 @@ export const useMedia = () => {
         }
     }
 
-    async function deleteMedia(images: string[]) {
-        const response = await axios.delete('http://localhost:4000/upload/deleteMedia', {
-            params: {
-                files: images,
-                username: 'mihir',
-                id: 3
-            },
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-
-        if (response.status === 204) {
-            dispatch(setLoadingState(false))
-        } else {
-            // setErrorMessage("images weren't deleted due to some error")
-        }
-    }
-
-    async function getImages(setError: React.Dispatch<React.SetStateAction<string>>) {
-        try {
-            const response = await axios.get('http://localhost:4000/upload/getImages', {
-                params: {
-                    id: 3
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            console.log(response.data.message[0])
-            if (response.status === 200) {
-                if (response.data.message) {
-                    dispatch(setMedia(response.data.message))
-                }
-            } else {
-                console.log("facing error fetching images: ", response.data)
-                // setErrorMessage("facing error getting images")
-            }
-        } catch (err: any) {
-            setError(err.response.data.message)
-            console.log("error fetching images: ", err)
-        }
-    }
-
-    return { getImages, deleteMedia, uploadFile }
+    return { uploadFile }
 }
 
-export const useGetAllFiles = (email: string) => {
+export const useDeleteMedia = (images: string[], username: string, id: string) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => deleteFiles(id, username, images),
+        onMutate: async (id) => {
+            console.log(`${username}, files were successfully deleted`)
+        },
+        onError: (error) => {
+            console.error("Failed to delete file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allFiles"] });
+        },
+    })
+}
+
+export const useGetAllFiles = (user_id: string) => {
     return useQuery({
-        queryKey: ['allFiles', email],
-        queryFn: () => fetchAllFiles(email),
-        enabled: !!email,
+        queryKey: ['allFiles', user_id],
+        queryFn: () => fetchAllFiles(user_id),
+        enabled: !!user_id,
         staleTime: 1000 * 60 * 1,
         retry: 2
     })
 }
 
-export const useStarFile = (userId: number, id: number) => {
+export const useStarFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: () => starFile(userId, id),
-        onMutate: async (id) => {
-            console.log(`marked file ${id} as starred`);
+        mutationFn: async ({ userId, fileId }: { userId: string, fileId: string }) => {
+            console.log("mutationFn called")
+            return await starFile(userId, fileId)
+        },
+        onMutate: async ({ userId, fileId }: { userId: string, fileId: string }) => {
+            console.log(`marked file ${fileId} of user ${userId} as starred`);
         },
         onError: (error) => {
             console.error("Failed to mark file:", error);
@@ -101,11 +71,31 @@ export const useStarFile = (userId: number, id: number) => {
     });
 }
 
-export const useGetStarredFiles = (userId: number) => {
+export const useGetStarredFiles = (userId: string) => {
     return useQuery({
         queryKey: ['starFiles', userId],
         queryFn: () => getStarFile(userId),
         enabled: !!userId,
+        staleTime: 1000 * 60 * 1,
+        retry: 2
+    })
+}
+
+export const prefetchInfo = (user_id: string, id: string) => {
+    const queryClient = useQueryClient()
+    return queryClient.prefetchQuery({
+        queryKey: ['fileInfo', user_id],
+        queryFn: () => getFileInfo(user_id, id),
+        staleTime: 1000 * 60 * 1,
+        retry: 2
+    })
+}
+
+export const useGetFileInfo = (user_id: string, id: string) => {
+    return useQuery({
+        queryKey: ['fileInfo', user_id],
+        queryFn: () => getFileInfo(user_id, id),
+        enabled: !!user_id,
         staleTime: 1000 * 60 * 1,
         retry: 2
     })

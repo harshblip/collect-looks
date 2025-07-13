@@ -2,14 +2,21 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useStarFile } from "@/app/hooks/useMedia";
+import { prefetchInfo, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
+import InfoCard from "./InfoCard";
+import { useState } from "react";
+import { Files } from "@/types/mediaTypes";
 
-export default function MoreDialog() {
+export default function MoreDialog({ id }: { id: string }) {
 
-    const { mutate: starFile } = useStarFile(3, 5);
+    const { mutate: starFile } = useStarFile();
+    const [show, setShow] = useState<boolean>(false)
 
     return (
         <>
+            {
+                // show && <InfoCard data={data} />
+            }
             <AnimatePresence>
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -17,19 +24,22 @@ export default function MoreDialog() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36"
-                // onBlur={() => setShow((show) => !show)}
+                    onBlur={() => setShow(false)}
                 >
                     <div
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-30"
-                        onClick={() => starFile}
+                        onClick={() => starFile({ userId: "3", fileId: "5" })}
                     >
                         <StarIcon className="w-5 text-amber-400" />
                         <p> star </p>
                     </div>
-                    <div className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30">
+                    <button
+                        className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30"
+                        onClick={() => setShow(!show)}
+                    >
                         <InformationCircleIcon className="w-5" />
                         <p> info </p>
-                    </div>
+                    </button>
                     <div className="flex hover hover:bg-red-400 hover:text-white rounded-lg space-x-2 p-2 items-center active:scale-95 w-30">
                         <TrashIcon className="w-5" />
                         <p> delete </p>

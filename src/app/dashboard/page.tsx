@@ -2,36 +2,27 @@
 
 import { setAuthState } from "@/lib/slice/userSlice"
 import { useAppSelector } from "@/lib/store"
-import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { ArrowDownTrayIcon, ArrowRightIcon, Bars3Icon, CheckCircleIcon, ChevronRightIcon, ExclamationTriangleIcon, PlusCircleIcon, TableCellsIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid"
-import { setLoadingState, setMedia } from "@/lib/slice/statesSlice"
+import { ArrowDownTrayIcon, ChevronRightIcon, PlusCircleIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { useGetAllFiles, useMedia } from "../hooks/useMedia"
-import { useFolder } from "../hooks/useFolder"
 import { motion, AnimatePresence } from 'framer-motion';
-import { Files } from "@/types/mediaTypes"
+import { AllFiles } from "@/types/mediaTypes"
 import Card from "../components/shared/Card"
 
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
-    const media = useAppSelector(state => state.states.media);
     const folders = useAppSelector(state => state.states.folders)
-    const { getImages } = useMedia()
-    const { data, error, isLoading } = useGetAllFiles("manan2@gmail.com")
-    const { createFolder, getFolder } = useFolder()
+    const { data, isLoading } = useGetAllFiles("3")
 
     const [images, setImages] = useState<string[]>([])
-    const [files, setFiles] = useState<Files[]>([])
+    const [files, setFiles] = useState<AllFiles[]>([])
     // folders
-    // const [error, setError] = useState<string>('')
     const [check, setCheck] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
-    const [omg, setOmg] = useState<boolean>(false)
     const [count, setCount] = useState<number>(3)
-    // const [data, setData] = useState<Files[]>([])
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -44,7 +35,6 @@ export default function Dashboard() {
             }, 1000)
             return () => clearInterval(createInterval)
         }
-        dispatch(setMedia([]))
     }, [])
 
     // useEffect(() => {

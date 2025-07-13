@@ -1,56 +1,34 @@
-import { setFolders, setLoadingState } from "@/lib/slice/statesSlice";
-import { useAppSelector } from "@/lib/store";
-import axios from "axios"
-import { useDispatch } from "react-redux"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createFolder, getFolders } from "../api/folder";
 
-export const useFolder = () => {
-    const dispatch = useDispatch();
-    const token = useAppSelector(state => state.auth.authToken)
-
-    async function createFolder(
-        name: string,
-        description: string,
-        is_locked: boolean,
-        id: number
-    ) {
-        try {
-            const response = await axios.post('http://localhost:4000/upload/createFolder', {
-                name, description, is_locked, id
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            if (response.status === 201) {
-                console.log("folder created")
-            } else {
-                console.log("error in creating folder: ", response)
-            }
-
-        } catch (err) {
-            console.log(err)
+export const useCreateFolder = (
+    name: string,
+    description: string,
+    is_locked: boolean,
+    password: string,
+    id: number
+) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: () => createFolder(name, description, is_locked, password, id),
+        onMutate: async (name) => {
+            console.log(`${name} folder created`)
+        },
+        onError: (error) => {
+            console.error("Failed to create folder: ", error)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allFiles"] })
         }
-    }
+    })
+}
 
-    async function getFolder(id: number) {
-        try {
-            const response = await axios.get('http://localhost:4000/upload/getFolders', {
-                params: {
-                    id: 4
-                }
-            })
-
-            if (response.status === 200) {
-                dispatch(setFolders(response.data.message))
-                console.log("folders retrieved", response.data.message)
-            } else {
-                console.log("error getting folders: ", response)
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    return { createFolder, getFolder }
+export const useGetFolders = (id: number) => {
+    return useQuery({
+        queryKey: ['allFolders', id],
+        queryFn: () => getFolders(id),
+        enabled: !!id,
+        staleTime: 1000 * 60 * 1,
+        retry: 2
+    })
 }
