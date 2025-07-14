@@ -12,6 +12,7 @@ export default function Card({ data, setFiles, files }: {
     files: Files[]
 }) {
     const [show, setShow] = useState<boolean>(false)
+    const [position, setPosition] = useState({ x: 0, y: 0 });
 
     function addOrRemove(data: Files) {
         if (files.includes(data)) {

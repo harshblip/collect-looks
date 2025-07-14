@@ -21,7 +21,7 @@ export default function MoreDialog({ id }: { id: string }) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36"
+                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36 z-10"
                     onBlur={() => setShow(false)}
                 >
                     <div

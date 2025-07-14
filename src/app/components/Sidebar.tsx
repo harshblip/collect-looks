@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import UploadModal from "./navbar/UploadModal";
 import CreateFolder from "./widgets/CreateFolder";
+import FileUploader from "./FileUploader";
 
 export default function Sidebar() {
 
     const [show, setShow] = useState<boolean>(false)
     const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
-
+    const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
     const router = useRouter()
 
     return (
@@ -29,11 +30,17 @@ export default function Sidebar() {
                     show && <UploadModal
                         setShow={setShow}
                         setShowCreateFolder={setShowCreateFolder}
+                        showFileUploader={setShowFileUpload}
                     />
                 }
                 {
                     showCreateFolder && <CreateFolder
                         showMe={setShowCreateFolder}
+                    />
+                }
+                {
+                    showFileUpload && <FileUploader
+                        show={setShowFileUpload}
                     />
                 }
                 <div className="mt-0" />

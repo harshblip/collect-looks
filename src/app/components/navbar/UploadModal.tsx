@@ -2,16 +2,15 @@
 
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import CreateFolder from "../widgets/CreateFolder";
+import React from "react";
 
 interface PropTypes {
     setShow: React.Dispatch<React.SetStateAction<boolean>>
     setShowCreateFolder: React.Dispatch<React.SetStateAction<boolean>>
+    showFileUploader: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function UploadModal({ setShow, setShowCreateFolder }: PropTypes) {
-    // console.log(showCreateFolder)
+function UploadModal({ setShow, setShowCreateFolder, showFileUploader }: PropTypes) {
     return (
         <>
             <AnimatePresence>
@@ -23,7 +22,7 @@ export default function UploadModal({ setShow, setShowCreateFolder }: PropTypes)
                     className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2"
                 // onBlur={() => setShow((show) => !show)}
                 >
-                    <div
+                    <button
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95"
                         onClick={() => {
                             setShowCreateFolder(true)
@@ -32,17 +31,25 @@ export default function UploadModal({ setShow, setShowCreateFolder }: PropTypes)
                     >
                         <PlusIcon className="w-4" />
                         <p> create new folder </p>
-                    </div>
-                    <div className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95">
+                    </button>
+                    <button 
+                    className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95"
+                    onClick={() => {
+                        setShow(false)    
+                        showFileUploader(true)
+                    }}
+                    >
                         <PlusIcon className="w-4" />
                         <p> upload files </p>
-                    </div>
-                    <div className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95">
+                    </button>
+                    <button className="flex hover hover:bg-gray-100 space-x-2 p-2 items-center text-secondary active:scale-95">
                         <PlusIcon className="w-4" />
                         <p> upload folder </p>
-                    </div>
+                    </button>
                 </motion.div>
             </AnimatePresence>
         </>
     )
 }
+
+export default React.memo(UploadModal)

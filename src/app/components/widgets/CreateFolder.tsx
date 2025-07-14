@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import React, { useState } from "react"
 import Checkbox from "./Checkbox"
 import { AnimatePresence, motion } from "framer-motion"
 
@@ -8,7 +8,7 @@ interface PropTypes {
     showMe: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function CreateFolder({ showMe }: PropTypes) {
+function CreateFolder({ showMe }: PropTypes) {
 
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -67,3 +67,5 @@ export default function CreateFolder({ showMe }: PropTypes) {
         </>
     )
 }
+
+export default React.memo(CreateFolder)

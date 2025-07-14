@@ -12,7 +12,7 @@ export const useMedia = () => {
         try {
             const response = await axios.post('http://localhost:4000/upload', formData)
             if (response.status === 200) {
-                console.log(response.data)
+                return (response.data.message)
             } else {
                 console.log("facing error fetching images: ", response.data)
                 // setErrorMessage("facing error getting images")
