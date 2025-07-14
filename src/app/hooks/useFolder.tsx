@@ -1,16 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFolder, getFolders } from "../api/folder";
 
-export const useCreateFolder = (
-    name: string,
-    description: string,
-    is_locked: boolean,
-    password: string,
-    id: number
-) => {
+export const useCreateFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: () => createFolder(name, description, is_locked, password, id),
+        mutationFn: async ({ name, description, is_locked, password, id }: {
+            name: string,
+            description: string,
+            is_locked: boolean,
+            password: string,
+            id: string
+        }) => {
+            return await createFolder(name, description, is_locked, password, id)
+        },
         onMutate: async (name) => {
             console.log(`${name} folder created`)
         },
@@ -23,7 +25,7 @@ export const useCreateFolder = (
     })
 }
 
-export const useGetFolders = (id: number) => {
+export const useGetFolders = (id: string) => {
     return useQuery({
         queryKey: ['allFolders', id],
         queryFn: () => getFolders(id),

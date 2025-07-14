@@ -2,7 +2,7 @@ import { useAppSelector } from "@/lib/store";
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, starFile } from "../api/files";
+import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, starFile, uploadFile } from "../api/files";
 
 export const useMedia = () => {
     const dispatch = useDispatch();
@@ -49,6 +49,21 @@ export const useGetAllFiles = (user_id: string) => {
         enabled: !!user_id,
         staleTime: 1000 * 60 * 1,
         retry: 2
+    })
+}
+
+export const useUploadFile = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ formData }: { formData: FormData }) => {
+            return await uploadFile(formData)
+        },
+        onMutate: () => {
+            console.log(`file uploaded`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] })
+        }
     })
 }
 

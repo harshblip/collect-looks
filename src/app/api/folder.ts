@@ -6,7 +6,7 @@ export async function createFolder(
     description: string,
     is_locked: boolean,
     password: string,
-    id: number): Promise<string> {
+    id: string): Promise<string> {
 
     const response = await axios.post(`${BASE_URL}/upload/createFolder`, { name, description, password, is_locked, id })
 
@@ -17,7 +17,7 @@ export async function createFolder(
     return response.data.message;
 }
 
-export async function addFilesToFolder(files: [], userId: number): Promise<string> {
+export async function addFilesToFolder(files: [], userId: string): Promise<string> {
     const response = await axios.post(`${BASE_URL}/upload/addFilestoFolder`, [files, userId])
 
     if (response.status !== 201) {
@@ -27,7 +27,7 @@ export async function addFilesToFolder(files: [], userId: number): Promise<strin
     return response.data.message;
 }
 
-export async function getFolders(id: number): Promise<string> {
+export async function getFolders(id: string): Promise<string> {
     const response = await axios.get('http://localhost:4000/upload/getFolders', {
         params: {
             id: id

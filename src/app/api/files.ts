@@ -2,6 +2,16 @@ import { Files } from "@/types/mediaTypes";
 import { BASE_URL } from "@/lib/constants";
 import axios from "axios";
 
+export async function uploadFile(formData: FormData): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload`, { formData })
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || "error in uploadFile")
+    }
+
+    return response.data.message
+}
+
 export async function fetchAllFiles(user_id: string): Promise<Files[]> {
     const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
         params: { user_id },
