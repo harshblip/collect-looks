@@ -51,20 +51,6 @@ export default function Dashboard() {
         router.push('/signup')
     }
 
-
-    function addImage(name: string) {
-        if (images.includes(name)) {
-            setImages(prevImages => prevImages.filter(x => x !== name))
-        } else {
-            setImages([...images, name])
-        }
-    }
-
-    function handleLogout() {
-        dispatch(setAuthState(''))
-        router.push('/signup')
-    }
-
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
@@ -84,15 +70,18 @@ export default function Dashboard() {
                                 <p className="p-2"> {files.length} selected </p>
                             </div>
                             <div className="flex space-x-6 mr-6">
-                                <div className="flex space-x-2 active:scale-95">
+                                <button className="flex space-x-2 active:scale-95">
                                     <TrashIcon className={`w-6 hover`} />
-                                </div>
-                                <div className="flex space-x-2 active:scale-95">
+                                </button>
+                                <button 
+                                className="flex space-x-2 active:scale-95"
+                                // onClick={}
+                                >
                                     <PlusCircleIcon className="w-6 hover" />
-                                </div>
-                                <div className="flex space-x-2 active:scale-95">
+                                </button>
+                                <button className="flex space-x-2 active:scale-95">
                                     <ArrowDownTrayIcon className="w-6 hover" />
-                                </div>
+                                </button>
                             </div>
                         </motion.div> : <div
                             className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"

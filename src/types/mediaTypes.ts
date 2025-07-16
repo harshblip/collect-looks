@@ -15,3 +15,17 @@ export interface Files {
     hashed_lock_password?: string,
     updated_at?: string,
 }
+
+export interface Folders {
+    id: string,
+    user_id: string,
+    file_name: string,
+    hashed_lock_password: string,
+    size: string,
+    starred: string,
+    parent_id: number,
+    description: string,
+    is_locked: string,
+    created_at: string,
+    updated_at: string,
+}

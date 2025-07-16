@@ -13,6 +13,7 @@ export default function Sidebar() {
     const [show, setShow] = useState<boolean>(false)
     const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
     const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
+    const [yo, setYo] = useState<boolean>(false)
     const router = useRouter()
 
     return (

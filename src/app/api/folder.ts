@@ -1,4 +1,5 @@
 import { BASE_URL } from "@/lib/constants";
+import { Files, Folders } from "@/types/mediaTypes";
 import axios from "axios";
 
 export async function createFolder(
@@ -17,8 +18,8 @@ export async function createFolder(
     return response.data.message;
 }
 
-export async function addFilesToFolder(files: [], userId: string): Promise<string> {
-    const response = await axios.post(`${BASE_URL}/upload/addFilestoFolder`, [files, userId])
+export async function addFilesToFolder(files: Files[], folderId: string): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/addFilestoFolder`, [files, folderId])
 
     if (response.status !== 201) {
         throw new Error(response.data?.message || "error in addFilesToFolder")
@@ -27,7 +28,7 @@ export async function addFilesToFolder(files: [], userId: string): Promise<strin
     return response.data.message;
 }
 
-export async function getFolders(id: string): Promise<string> {
+export async function getFolders(id: string): Promise<Folders[]> {
     const response = await axios.get('http://localhost:4000/upload/getFolders', {
         params: {
             id: id
