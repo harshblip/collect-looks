@@ -52,17 +52,17 @@ export const useGetFolders = (id: number) => {
         queryKey: ['allFolders', id],
         queryFn: () => getFolders(id),
         enabled: !!id,
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }
 
 export const useGetFolderItems = (userId: number, folderId: number) => {
     return useQuery({
-        queryKey: ['folderItems'],
+        queryKey: ['folderItems', folderId],
         queryFn: () => getFolderItems(userId, folderId),
         enabled: !!userId,
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }

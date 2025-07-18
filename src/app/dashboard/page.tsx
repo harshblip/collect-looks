@@ -30,7 +30,6 @@ export default function Dashboard() {
     const [count, setCount] = useState<number>(3)
 
     const { data: allFiles } = useGetAllFiles(3)
-    const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
     const router = useRouter();
 
     useEffect(() => {
@@ -47,7 +46,6 @@ export default function Dashboard() {
 
     function openFolder(x: Files) {
         dispatch(setViewFolder(true))
-        console.log(x)
         setSelectedFolderId(x.id)
         if (folders) {
             dispatch(setSelectedFolders([...folders, x.file_name]))
@@ -55,6 +53,9 @@ export default function Dashboard() {
             dispatch(setSelectedFolders([x.file_name]))
         }
     }
+    console.log(selectedFolderId)
+
+    const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
 
     console.log(viewFolder)
 
@@ -66,11 +67,20 @@ export default function Dashboard() {
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                 {
-                    viewFolder ? <ToggleHeading /> : <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </p>
+                    viewFolder ? <ToggleHeading /> : <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </motion.p>
                 }
                 <div className="flex flex-col mt-16 bg-white">
                     {
-                        files && files.length ? <MoreOptions /> : <div
+                        files && files.length ? <MoreOptions /> : <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2 }}
                             className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
                             onClick={() => setShow(!show)}
                         >
@@ -81,7 +91,7 @@ export default function Dashboard() {
                             </div>
 
                             <p className="text-xl text-primary"> Your files </p>
-                        </div>
+                        </motion.div>
                     }
                     <AnimatePresence>
                         {show && (
@@ -97,25 +107,28 @@ export default function Dashboard() {
 
                                 <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                     {
-                                        viewFolder ? folderItems?.map((x, i) => (
-                                            <div
-                                                key={i}
-                                                onDoubleClick={() => openFolder(x)}
-                                            >
-                                                <Card
-                                                    data={x}
-                                                />
-                                            </div>
-                                        )) : allFiles?.map((x, i) => (
-                                            <div
-                                                key={i}
-                                                onDoubleClick={() => openFolder(x)}
-                                            >
-                                                <Card
-                                                    data={x}
-                                                />
-                                            </div>
-                                        ))
+                                        viewFolder ? <>
+                                            {
+                                                folderItems?.map((x, i) => (
+                                                    <div
+                                                        key={i}
+                                                        onDoubleClick={() => openFolder(x)}
+                                                    >
+                                                        <Card
+                                                            data={x}
+                                                        />
+                                                    </div>
+                                                ))
+                                            }</> : allFiles?.map((x, i) => (
+                                                <div
+                                                    key={i}
+                                                    onDoubleClick={() => openFolder(x)}
+                                                >
+                                                    <Card
+                                                        data={x}
+                                                    />
+                                                </div>
+                                            ))
                                     }
                                 </div>
                             </motion.div>

@@ -51,8 +51,6 @@ export async function getFolderItems(userId: number, folderId: number): Promise<
         }
     })
 
-    console.log("came here", response.data)
-
     if (response.status !== 200) {
         throw new Error(response.data?.message || "error in getFolders")
     }

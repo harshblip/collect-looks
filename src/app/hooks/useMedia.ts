@@ -47,7 +47,7 @@ export const useGetAllFiles = (user_id: number) => {
         queryKey: ['allFiles', user_id],
         queryFn: () => fetchAllFiles(user_id),
         enabled: !!user_id,
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }
@@ -91,7 +91,7 @@ export const useGetStarredFiles = (userId: number) => {
         queryKey: ['starFiles', userId],
         queryFn: () => getStarFile(userId),
         enabled: !!userId,
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }
@@ -101,7 +101,7 @@ export const prefetchInfo = (user_id: number, id: number) => {
     return queryClient.prefetchQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }
@@ -111,7 +111,7 @@ export const useGetFileInfo = (user_id: number, id: number) => {
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
         enabled: !!user_id,
-        staleTime: 1000 * 60 * 1,
+        staleTime: 1000 * 30,
         retry: 2
     })
 }
