@@ -10,15 +10,17 @@ import { useGetAllFiles, useMedia } from "../hooks/useMedia"
 import { motion, AnimatePresence } from 'framer-motion';
 import { Files } from "@/types/mediaTypes"
 import Card from "../components/shared/Card"
+import { setFileModal, setFiles } from "@/lib/slice/statesSlice"
 
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
     const folders = useAppSelector(state => state.states.folders)
-    const { data, isLoading } = useGetAllFiles("3")
+    const files = useAppSelector(state => state.states.files)
+    const { data, isLoading } = useGetAllFiles(3)
 
     const [images, setImages] = useState<string[]>([])
-    const [files, setFiles] = useState<Files[]>([])
+
     // folders
     const [check, setCheck] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
@@ -57,14 +59,14 @@ export default function Dashboard() {
                 <p className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </p>
                 <div className="flex flex-col mt-16 bg-white">
                     {
-                        files.length ? <motion.div
+                        files && files.length ? <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.2 }}
                             className="flex justify-between fixed space-x-4 text-primary transition-all rounded-lg hover p-3 w-[75%] bg-[url('https://cdn.dribbble.com/userupload/36271059/file/original-cbbe37d7a258e4acb0d9c6ac94e7f4c8.jpg?resize=2048x1365&vertical=center')] bg-center">
                             <div className="flex space-x-2">
-                                <button onClick={() => setFiles([])}>
+                                <button onClick={() => dispatch(setFiles([]))}>
                                     <XMarkIcon className="w-6 hover" />
                                 </button>
                                 <p className="p-2"> {files.length} selected </p>
@@ -73,9 +75,9 @@ export default function Dashboard() {
                                 <button className="flex space-x-2 active:scale-95">
                                     <TrashIcon className={`w-6 hover`} />
                                 </button>
-                                <button 
-                                className="flex space-x-2 active:scale-95"
-                                // onClick={}
+                                <button
+                                    className="flex space-x-2 active:scale-95"
+                                    onClick={() => dispatch(setFileModal(true))}
                                 >
                                     <PlusCircleIcon className="w-6 hover" />
                                 </button>
@@ -122,8 +124,6 @@ export default function Dashboard() {
                                             <div key={i}>
                                                 <Card
                                                     data={x}
-                                                    setFiles={setFiles}
-                                                    files={files}
                                                 />
                                             </div>
                                         ))

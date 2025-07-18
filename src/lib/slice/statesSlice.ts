@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Files } from "@/types/mediaTypes";
+import { Files, Folders } from "@/types/mediaTypes";
 
 export interface StateManager {
     loading: boolean
-    folders: Files[],
+    folders: Folders[],
+    files: Files[],
+    fileModal: boolean,
     mode: string,
     email: string,
     searchSuggestions: string[]
@@ -13,6 +15,8 @@ export interface StateManager {
 const initialState: StateManager = {
     loading: true,
     folders: [],
+    files: [],
+    fileModal: false,
     mode: "signup",
     email: 'gajmohan@gmail.com',
     searchSuggestions: []
@@ -25,7 +29,7 @@ export const statesSlice = createSlice({
         setLoadingState: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
-        setFolders: (state, action: PayloadAction<Files[]>) => {
+        setFolders: (state, action: PayloadAction<Folders[]>) => {
             state.folders = action.payload
         },
         setMode: (state, action: PayloadAction<string>) => {
@@ -36,9 +40,23 @@ export const statesSlice = createSlice({
         },
         setSearchSuggestions: (state, action: PayloadAction<string[]>) => {
             state.searchSuggestions = action.payload
-        }
+        },
+        setFiles: (state, action: PayloadAction<Files[]>) => {
+            state.files = action.payload
+        },
+        setFileModal: (state, action: PayloadAction<boolean>) => {
+            state.fileModal = action.payload;
+        },
     },
 });
 
-export const { setLoadingState, setFolders, setMode, setMail, setSearchSuggestions } = statesSlice.actions;
+export const {
+    setLoadingState,
+    setFolders,
+    setMode,
+    setMail,
+    setSearchSuggestions,
+    setFiles,
+    setFileModal
+} = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;

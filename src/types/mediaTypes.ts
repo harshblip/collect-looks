@@ -1,7 +1,7 @@
 
 export interface Files {
-    id: string,
-    user_id: string,
+    id: number,
+    user_id: number,
     file_name: string,
     file_url?: string,
     file_type: string,
@@ -17,8 +17,8 @@ export interface Files {
 }
 
 export interface Folders {
-    id: string,
-    user_id: string,
+    id: number,
+    user_id: number,
     file_name: string,
     hashed_lock_password: string,
     size: string,

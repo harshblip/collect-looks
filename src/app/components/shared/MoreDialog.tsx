@@ -5,7 +5,7 @@ import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/
 import { prefetchInfo, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
 import { useState } from "react";
 
-export default function MoreDialog({ id }: { id: string }) {
+export default function MoreDialog({ id }: { id: number }) {
 
     const { mutate: starFile } = useStarFile();
     const [show, setShow] = useState<boolean>(false)

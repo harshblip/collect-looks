@@ -26,7 +26,7 @@ export const useMedia = () => {
     return { uploadFile }
 }
 
-export const useDeleteMedia = (images: string[], username: string, id: string) => {
+export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: () => deleteFiles(id, username, images),
@@ -42,7 +42,7 @@ export const useDeleteMedia = (images: string[], username: string, id: string) =
     })
 }
 
-export const useGetAllFiles = (user_id: string) => {
+export const useGetAllFiles = (user_id: number) => {
     return useQuery({
         queryKey: ['allFiles', user_id],
         queryFn: () => fetchAllFiles(user_id),
@@ -70,11 +70,11 @@ export const useUploadFile = () => {
 export const useStarFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ userId, fileId }: { userId: string, fileId: string }) => {
+        mutationFn: async ({ userId, fileId }: { userId: number, fileId: number }) => {
             console.log("mutationFn called")
             return await starFile(userId, fileId)
         },
-        onMutate: async ({ userId, fileId }: { userId: string, fileId: string }) => {
+        onMutate: async ({ userId, fileId }: { userId: number, fileId: number }) => {
             console.log(`marked file ${fileId} of user ${userId} as starred`);
         },
         onError: (error) => {
@@ -86,7 +86,7 @@ export const useStarFile = () => {
     });
 }
 
-export const useGetStarredFiles = (userId: string) => {
+export const useGetStarredFiles = (userId: number) => {
     return useQuery({
         queryKey: ['starFiles', userId],
         queryFn: () => getStarFile(userId),
@@ -96,7 +96,7 @@ export const useGetStarredFiles = (userId: string) => {
     })
 }
 
-export const prefetchInfo = (user_id: string, id: string) => {
+export const prefetchInfo = (user_id: number, id: number) => {
     const queryClient = useQueryClient()
     return queryClient.prefetchQuery({
         queryKey: ['fileInfo', user_id],
@@ -106,7 +106,7 @@ export const prefetchInfo = (user_id: string, id: string) => {
     })
 }
 
-export const useGetFileInfo = (user_id: string, id: string) => {
+export const useGetFileInfo = (user_id: number, id: number) => {
     return useQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),

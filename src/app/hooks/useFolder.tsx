@@ -10,7 +10,7 @@ export const useCreateFolder = () => {
             description: string,
             is_locked: boolean,
             password: string,
-            id: string
+            id: number
         }) => {
             return await createFolder(name, description, is_locked, password, id)
         },
@@ -31,7 +31,7 @@ export const useAddFilestoFolder = () => {
     return useMutation({
         mutationFn: async ({ files, folderId }: {
             files: Files[],
-            folderId: string
+            folderId: number
         }) => {
             return await addFilesToFolder(files, folderId)
         },
@@ -47,7 +47,8 @@ export const useAddFilestoFolder = () => {
     })
 }
 
-export const useGetFolders = (id: string) => {
+export const useGetFolders = (id: number) => {
+    console.log("yha aaya tha")
     return useQuery({
         queryKey: ['allFolders', id],
         queryFn: () => getFolders(id),

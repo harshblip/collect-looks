@@ -7,7 +7,7 @@ export async function createFolder(
     description: string,
     is_locked: boolean,
     password: string,
-    id: string): Promise<string> {
+    id: number): Promise<string> {
 
     const response = await axios.post(`${BASE_URL}/upload/createFolder`, { name, description, password, is_locked, id })
 
@@ -18,8 +18,8 @@ export async function createFolder(
     return response.data.message;
 }
 
-export async function addFilesToFolder(files: Files[], folderId: string): Promise<string> {
-    const response = await axios.post(`${BASE_URL}/upload/addFilestoFolder`, [files, folderId])
+export async function addFilesToFolder(files: Files[], folderId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/addFilestoFolder`, { files, folderId })
 
     if (response.status !== 201) {
         throw new Error(response.data?.message || "error in addFilesToFolder")
@@ -28,14 +28,15 @@ export async function addFilesToFolder(files: Files[], folderId: string): Promis
     return response.data.message;
 }
 
-export async function getFolders(id: string): Promise<Folders[]> {
+export async function getFolders(id: number): Promise<Folders[]> {
     const response = await axios.get('http://localhost:4000/upload/getFolders', {
         params: {
             id: id
         }
     })
 
-    if (response.data !== 200) {
+
+    if (response.status !== 200) {
         throw new Error(response.data?.message || "error in getFolders")
     }
 

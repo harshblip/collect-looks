@@ -12,7 +12,7 @@ export async function uploadFile(formData: FormData): Promise<string> {
     return response.data.message
 }
 
-export async function fetchAllFiles(user_id: string): Promise<Files[]> {
+export async function fetchAllFiles(user_id: number): Promise<Files[]> {
     const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
         params: { user_id },
     });
@@ -26,7 +26,7 @@ export async function fetchAllFiles(user_id: string): Promise<Files[]> {
     return response.data.message
 }
 
-export async function starFile(userId: string, id: string): Promise<string> {
+export async function starFile(userId: number, id: number): Promise<string> {
     const response = await axios.post(`${BASE_URL}/upload/starFile`, { userId, id })
 
     if (response.status !== 201) {
@@ -38,7 +38,7 @@ export async function starFile(userId: string, id: string): Promise<string> {
     return response.data.message
 }
 
-export async function getStarFile(userId: string): Promise<Files[]> {
+export async function getStarFile(userId: number): Promise<Files[]> {
     const response = await axios.get(`${BASE_URL}/upload/getStars`, {
         params: {
             userId
@@ -52,7 +52,7 @@ export async function getStarFile(userId: string): Promise<Files[]> {
     return response.data.message
 }
 
-export async function deleteFiles(id: string, username: string, files: string[]): Promise<string> {
+export async function deleteFiles(id: number, username: string, files: string[]): Promise<string> {
     const response = await axios.delete(`${BASE_URL}/upload/deleteMedia`, {
         params: {
             username, id, files
@@ -66,7 +66,7 @@ export async function deleteFiles(id: string, username: string, files: string[])
     return response.data.message
 }
 
-export async function getFileInfo(user_id: string, id: string): Promise<Files> {
+export async function getFileInfo(user_id: number, id: number): Promise<Files> {
     const response = await axios.get(`${BASE_URL}/upload/getFileInfo`, {
         params: {
             user_id, id
