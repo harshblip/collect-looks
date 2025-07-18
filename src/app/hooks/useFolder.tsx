@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addFilesToFolder, createFolder, getFolders } from "../api/folder";
+import { addFilesToFolder, createFolder, getFolderItems, getFolders } from "../api/folder";
 import { Files } from "@/types/mediaTypes";
 
 export const useCreateFolder = () => {
@@ -48,11 +48,20 @@ export const useAddFilestoFolder = () => {
 }
 
 export const useGetFolders = (id: number) => {
-    console.log("yha aaya tha")
     return useQuery({
         queryKey: ['allFolders', id],
         queryFn: () => getFolders(id),
         enabled: !!id,
+        staleTime: 1000 * 60 * 1,
+        retry: 2
+    })
+}
+
+export const useGetFolderItems = (userId: number, folderId: number) => {
+    return useQuery({
+        queryKey: ['folderItems'],
+        queryFn: () => getFolderItems(userId, folderId),
+        enabled: !!userId,
         staleTime: 1000 * 60 * 1,
         retry: 2
     })

@@ -5,16 +5,18 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { statesReducer } from "./slice/statesSlice";
+import { folderReducer } from "./slice/folderSlice";
 
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["auth", "states"],
+    whitelist: ["auth", "states", "folderStates"],
 };
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    states: statesReducer
+    states: statesReducer,
+    folderStates: folderReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

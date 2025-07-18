@@ -42,3 +42,20 @@ export async function getFolders(id: number): Promise<Folders[]> {
 
     return response.data.message
 }
+
+
+export async function getFolderItems(userId: number, folderId: number): Promise<Files[]> {
+    const response = await axios.get(`${BASE_URL}/upload/folderItems`, {
+        params: {
+            userId, folderId
+        }
+    })
+
+    console.log("came here", response.data)
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || "error in getFolders")
+    }
+
+    return response.data.message
+}
