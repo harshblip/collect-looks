@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
-import Navbar from "../components/shared/Navbar"
-import Sidebar from "../components/Sidebar"
+import Navbar from "../components/layout/Navbar"
+import Sidebar from "../components/layout/Sidebar"
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (

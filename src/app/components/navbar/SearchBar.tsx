@@ -6,7 +6,7 @@ import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@hero
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import FilterModal from "../FilterModal";
+import FilterModal from "../files/FilterModal";
 import SuggestionButtons from "./SuggestionButtons";
 
 export default function SearchBar() {

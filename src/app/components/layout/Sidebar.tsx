@@ -1,13 +1,13 @@
 'use client'
 
 import { CircleStackIcon, ClockIcon, FolderIcon, HomeIcon, RectangleStackIcon, SparklesIcon, TrashIcon, UserGroupIcon } from "@heroicons/react/24/solid";
-import SidebarButton from "./shared/SidebarButtons";
+import SidebarButton from "./sidebar/SidebarButtons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import UploadModal from "./navbar/UploadModal";
-import CreateFolder from "./widgets/CreateFolder";
-import FileUploader from "./FileUploader";
-import FolderList from "./FolderList";
+import UploadModal from "../navbar/UploadModal";
+import CreateFolder from "../ui/CreateFolder";
+import FileUploader from "../files/FileUploader";
+import FolderList from "../files/FolderList";
 import { useAppSelector } from "@/lib/store";
 
 export default function Sidebar() {

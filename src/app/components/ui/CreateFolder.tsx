@@ -86,7 +86,7 @@ function CreateFolder({ showMe }: PropTypes) {
                             <button
                                 className=" rounded-md w-[10rem] border-none bg-gray-600 text-white p-3 hover"
                                 onClick={() => createFolder({
-                                    id: "3",
+                                    id: 3,
                                     name: name,
                                     description: description,
                                     is_locked: locked,

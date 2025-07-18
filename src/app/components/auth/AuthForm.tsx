@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { setMode } from "@/lib/slice/statesSlice";
 import { useDispatch } from "react-redux";
-import Checkbox from "../widgets/Checkbox";
+import Checkbox from "../ui/Checkbox";
 import { motion, AnimatePresence } from 'framer-motion';
 
 type AuthForm = {

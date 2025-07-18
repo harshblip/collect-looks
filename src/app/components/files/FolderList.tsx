@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from "framer-motion"
-import { useAddFilestoFolder, useGetFolders } from "../hooks/useFolder"
+import { useAddFilestoFolder, useGetFolders } from "../../hooks/useFolder"
 import { FolderIcon } from "@heroicons/react/24/solid"
 import { Files } from "@/types/mediaTypes"
 import { useState } from "react"
