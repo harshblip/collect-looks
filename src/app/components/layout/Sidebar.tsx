@@ -5,7 +5,7 @@ import SidebarButton from "./sidebar/SidebarButtons";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import UploadModal from "../navbar/UploadModal";
-import CreateFolder from "../ui/CreateFolder";
+import CreateFolder from "../files/CreateFolder";
 import FileUploader from "../files/FileUploader";
 import FolderList from "../files/FolderList";
 import { useAppSelector } from "@/lib/store";
