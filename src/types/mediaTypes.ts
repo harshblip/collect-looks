@@ -29,3 +29,8 @@ export interface Folders {
     created_at: string,
     updated_at: string,
 }
+
+export interface FoldersArray {
+    id: number,
+    name: string
+}

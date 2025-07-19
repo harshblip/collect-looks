@@ -1,19 +1,20 @@
+import { FoldersArray } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface States {
-    selectedFolders: string[]    
+    selectedFolders: FoldersArray[]
 }
 
 const initialState: States = {
-    selectedFolders: ['']
+    selectedFolders: []
 };
 
 export const folderSlice = createSlice({
     name: "folderStates",
     initialState,
     reducers: {
-        setSelectedFolders: (state, action: PayloadAction<string[]>) => {
+        setSelectedFolders: (state, action: PayloadAction<FoldersArray[]>) => {
             state.selectedFolders = action.payload
         }
     },

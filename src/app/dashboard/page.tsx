@@ -10,9 +10,9 @@ import MoreOptions from "../components/ui/MoreOptions"
 import ColumnHeaders from "../components/ui/ColumnHeaders"
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid"
 import ToggleHeading from "../components/ui/ToggleHeading"
-import { setViewFolder } from "@/lib/slice/statesSlice"
+import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice"
 import { setSelectedFolders } from "@/lib/slice/folderSlice"
-import { Files } from "@/types/mediaTypes"
+import { Files, FoldersArray } from "@/types/mediaTypes"
 import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
@@ -41,7 +41,15 @@ export default function Dashboard() {
     const [typedPassword, setTypedPassword] = useState<string>("")
 
     const { data: allFiles } = useGetAllFiles(3)
+    const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
+    const folderItemsArray = useAppSelector(state => state.states.folderItems)
     const router = useRouter();
+
+    useEffect(() => {
+        if (folderItems) {
+            dispatch(setFolderItems(folderItems))
+        }
+    }, [folderItems])
 
     useEffect(() => {
         if (!token) {
@@ -60,14 +68,18 @@ export default function Dashboard() {
         setSelectedFolderId(x.id)
         console.log("locked ?", x.is_locked)
         setError('')
+        const obj = {
+            id: x.id,
+            name: x.file_name
+        }
         if (x.is_locked) {
             setLocked(true)
             setPassword(x.password || '')
         }
         if (folders) {
-            dispatch(setSelectedFolders([...folders, x.file_name]))
+            dispatch(setSelectedFolders([...folders, obj]))
         } else {
-            dispatch(setSelectedFolders([x.file_name]))
+            dispatch(setSelectedFolders([obj]))
         }
     }
     console.log(selectedFolderId)
@@ -76,7 +88,6 @@ export default function Dashboard() {
         password === typedPassword ? (setLocked(false), setError("")) : setError("password's wrong. pls try again")
     }
 
-    const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
 
     console.log(viewFolder)
 
@@ -88,7 +99,7 @@ export default function Dashboard() {
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                 {
-                    viewFolder ? <ToggleHeading 
+                    viewFolder ? <ToggleHeading
                         isLocked={setLocked}
                     /> : <motion.p
                         initial={{ opacity: 0, y: -10 }}
@@ -119,6 +130,7 @@ export default function Dashboard() {
                                             type="password"
                                             onChange={(e) => setTypedPassword(e.target.value)}
                                             className="w-[16rem] rounded-md p-2 outline-none border-2 border-gray-400"
+                                            autoFocus={true}
                                         />
                                         {
                                             error && <p className="text-sm text-red-400"> {error} </p>
@@ -177,7 +189,7 @@ export default function Dashboard() {
                                     <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                         {
                                             viewFolder ? <>{
-                                                folderItems?.map((x, i) => (
+                                                folderItemsArray?.map((x, i) => (
                                                     <div
                                                         key={i}
                                                         onDoubleClick={() => openFolder(x)}

@@ -7,6 +7,7 @@ export interface StateManager {
     folders: Folders[],
     files: Files[],
     viewFolder: boolean,
+    folderItems: Files[],
     fileModal: boolean,
     mode: string,
     email: string,
@@ -18,6 +19,7 @@ const initialState: StateManager = {
     folders: [],
     files: [],
     viewFolder: false,
+    folderItems: [],
     fileModal: false,
     mode: "signup",
     email: 'gajmohan@gmail.com',
@@ -51,6 +53,9 @@ export const statesSlice = createSlice({
         },
         setViewFolder: (state, action: PayloadAction<boolean>) => {
             state.viewFolder = action.payload
+        },
+        setFolderItems: (state, action: PayloadAction<Files[]>) => {
+            state.folderItems = action.payload
         }
     },
 });
@@ -63,6 +68,7 @@ export const {
     setSearchSuggestions,
     setFiles,
     setFileModal,
-    setViewFolder
+    setViewFolder,
+    setFolderItems
 } = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;
