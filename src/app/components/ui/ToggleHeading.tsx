@@ -5,7 +5,7 @@ import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 
-export default function ToggleHeading() {
+export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<React.SetStateAction<boolean>> }) {
     const folders = useAppSelector(state => state.folderStates.selectedFolders)
     const dispatch = useDispatch()
     return (
@@ -22,6 +22,7 @@ export default function ToggleHeading() {
                             onClick={() => {
                                 dispatch(setViewFolder(false))
                                 dispatch(setSelectedFolders([]))
+                                isLocked(false)
                             }}
                             className="w-10 text-secondary hover hover:bg-gray-200 rounded-lg p-2"
                         />

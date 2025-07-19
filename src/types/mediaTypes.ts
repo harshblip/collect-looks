@@ -12,7 +12,7 @@ export interface Files {
     folder_id: number,
     description?: string,
     is_locked?: string,
-    hashed_lock_password?: string,
+    password?: string,
     updated_at?: string,
 }
 
@@ -20,7 +20,7 @@ export interface Folders {
     id: number,
     user_id: number,
     file_name: string,
-    hashed_lock_password: string,
+    password: string,
     size: string,
     starred: string,
     parent_id: number,

@@ -118,6 +118,10 @@
     cursor: pointer;
 }
 
+.hover:active {
+    transform: scale(1.2);
+}
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
