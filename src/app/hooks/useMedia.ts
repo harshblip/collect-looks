@@ -97,10 +97,10 @@ export const useGetStarredFiles = (userId: number) => {
 }
 
 export const prefetchInfo = (user_id: number, id: number) => {
-    const queryClient = useQueryClient()
-    return queryClient.prefetchQuery({
+    return useQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
+        enabled: !!user_id,
         staleTime: 1000 * 30,
         retry: 2
     })

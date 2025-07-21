@@ -1,24 +1,44 @@
-import { FoldersArray } from "@/types/mediaTypes";
+import { Files, FoldersArray } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface States {
-    selectedFolders: FoldersArray[]
+    viewInfo: boolean,
+    infoData: Files
 }
 
 const initialState: States = {
-    selectedFolders: []
+    viewInfo: false,
+    infoData: {
+        id: 0,
+        user_id: 0,
+        file_name: "",
+        file_url: "",
+        file_type: "",
+        size: "",
+        created_at: "",
+        starred: "",
+        is_trashed: "",
+        folder_id: 0,
+        description: "",
+        is_locked: "",
+        password: "",
+        updated_at: "",
+    }
 };
 
 export const folderSlice = createSlice({
     name: "folderStates",
     initialState,
     reducers: {
-        setSelectedFolders: (state, action: PayloadAction<FoldersArray[]>) => {
-            state.selectedFolders = action.payload
+        setViewInfo: (state, action: PayloadAction<boolean>) => {
+            state.viewInfo = action.payload
+        },
+        setInfoData: (state, action: PayloadAction<Files>) => {
+            state.infoData = action.payload
         }
     },
 });
 
-export const { setSelectedFolders } = folderSlice.actions;
+export const { setViewInfo, setInfoData } = folderSlice.actions;
 export const folderReducer = folderSlice.reducer;

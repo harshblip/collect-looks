@@ -3,12 +3,13 @@
 import { CircleStackIcon, ClockIcon, FolderIcon, HomeIcon, RectangleStackIcon, SparklesIcon, TrashIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 import SidebarButton from "./sidebar/SidebarButtons";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadModal from "../navbar/UploadModal";
 import CreateFolder from "../files/CreateFolder";
 import FileUploader from "../files/FileUploader";
 import FolderList from "../files/FolderList";
 import { useAppSelector } from "@/lib/store";
+import InfoCard from "../shared/InfoCard";
 
 export default function Sidebar() {
 
@@ -16,6 +17,8 @@ export default function Sidebar() {
     const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
     const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
     const showFileModal = useAppSelector(state => state.states.fileModal)
+    const infoData = useAppSelector(state => state.folderStates.infoData)
+    const viewInfo = useAppSelector(state => state.folderStates.viewInfo)
 
     const router = useRouter()
 
@@ -51,6 +54,11 @@ export default function Sidebar() {
                 {
                     showFileModal && <FolderList
                         show={showFileModal}
+                    />
+                }
+                {
+                    viewInfo && infoData && <InfoCard
+                        data={infoData}
                     />
                 }
                 <div className="mt-0" />

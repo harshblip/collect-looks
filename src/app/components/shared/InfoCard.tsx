@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 export default function InfoCard({ data }: { data: Files }) {
+    console.log("data -> ", data)
     return (
         <>
             <AnimatePresence>
@@ -28,7 +29,7 @@ export default function InfoCard({ data }: { data: Files }) {
 
                         <div className="flex flex-col space-y-2">
                             <p className="font-sm text-secondary"> name </p>
-                            <p className="mt-4 text-primary"> {data.file_name} </p>
+                            <p className="mt-4 text-xl text-primary"> {data.file_name} </p>
                         </div>
                     </div>
                 </motion.div>

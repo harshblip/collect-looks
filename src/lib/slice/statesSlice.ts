@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Files, Folders } from "@/types/mediaTypes";
+import { Files, Folders, FoldersArray } from "@/types/mediaTypes";
 
 export interface StateManager {
     loading: boolean
     folders: Folders[],
     files: Files[],
     viewFolder: boolean,
+    selectedFolders: FoldersArray[],
     folderItems: Files[],
     fileModal: boolean,
     mode: string,
@@ -19,6 +20,7 @@ const initialState: StateManager = {
     folders: [],
     files: [],
     viewFolder: false,
+    selectedFolders: [],
     folderItems: [],
     fileModal: false,
     mode: "signup",
@@ -56,7 +58,10 @@ export const statesSlice = createSlice({
         },
         setFolderItems: (state, action: PayloadAction<Files[]>) => {
             state.folderItems = action.payload
-        }
+        },
+        setSelectedFolders: (state, action: PayloadAction<FoldersArray[]>) => {
+            state.selectedFolders = action.payload
+        },
     },
 });
 
@@ -69,6 +74,7 @@ export const {
     setFiles,
     setFileModal,
     setViewFolder,
-    setFolderItems
+    setFolderItems,
+    setSelectedFolders
 } = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;

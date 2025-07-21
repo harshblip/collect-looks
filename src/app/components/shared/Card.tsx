@@ -8,7 +8,7 @@ import MoreDialog from "./MoreDialog";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
 import { setFiles, setViewFolder } from "@/lib/slice/statesSlice";
-import { setSelectedFolders } from "@/lib/slice/folderSlice";
+import { setSelectedFolders } from "@/lib/slice/statesSlice";
 
 export default function Card({ data }: {
     data: Files
@@ -55,12 +55,14 @@ export default function Card({ data }: {
                         {data.size && byteToSize(parseInt(data.size))}
                     </p>
                     {
-                        show && <MoreDialog id={data.id} />
+                        show && <MoreDialog
+                            id={data.id}
+                            showMe={setShow}
+                        />
                     }
                     <button
                         className="hover text-lg font-medium"
                         onClick={() => setShow(true)}
-                        onBlur={() => setShow(false)}
                     > <EllipsisVerticalIcon className="w-5" /> </button>
                 </div>
             </div>

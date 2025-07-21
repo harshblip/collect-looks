@@ -11,7 +11,7 @@ import ColumnHeaders from "../components/ui/ColumnHeaders"
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid"
 import ToggleHeading from "../components/ui/ToggleHeading"
 import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice"
-import { setSelectedFolders } from "@/lib/slice/folderSlice"
+import { setSelectedFolders } from "@/lib/slice/statesSlice"
 import { Files, FoldersArray } from "@/types/mediaTypes"
 import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
@@ -51,17 +51,17 @@ export default function Dashboard() {
         }
     }, [folderItems])
 
-    useEffect(() => {
-        if (!token) {
-            setCheck(!check)
-            const createInterval = setInterval(() => {
-                setCount(prevCount => prevCount - 1)
-            }, 1000)
-            return () => clearInterval(createInterval)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (!token) {
+    //         setCheck(!check)
+    //         const createInterval = setInterval(() => {
+    //             setCount(prevCount => prevCount - 1)
+    //         }, 1000)
+    //         return () => clearInterval(createInterval)
+    //     }
+    // }, [])
 
-    const folders = useAppSelector(state => state.folderStates.selectedFolders)
+    const folders = useAppSelector(state => state.states.selectedFolders)
 
     function openFolder(x: Files) {
         dispatch(setViewFolder(true))
