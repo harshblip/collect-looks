@@ -76,6 +76,5 @@ export async function getFileInfo(user_id: number, id: number): Promise<Files> {
     if (response.status !== 200) {
         throw new Error(response.data?.message || 'error in getFileInfo')
     }
-
-    return response.data.message
+    return response.data.message[0]
 }

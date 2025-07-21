@@ -97,6 +97,7 @@ export const useGetStarredFiles = (userId: number) => {
 }
 
 export const prefetchInfo = (user_id: number, id: number) => {
+    console.log("aaya")
     return useQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
