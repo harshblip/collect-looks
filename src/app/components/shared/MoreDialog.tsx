@@ -41,7 +41,7 @@ export default function MoreDialog({ id, showMe }: {
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30"
                         onClick={() => {
                             dispatch(setViewInfo(true))
-                            // showMe(false) 
+                            showMe(false) 
                         }}
                         onMouseEnter={() => refetch()}
                     >

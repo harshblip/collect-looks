@@ -1,4 +1,4 @@
-import { Files } from "@/types/mediaTypes";
+import { Files, InfoData } from "@/types/mediaTypes";
 import { BASE_URL } from "@/lib/constants";
 import axios from "axios";
 
@@ -66,17 +66,18 @@ export async function deleteFiles(id: number, username: string, files: string[])
     return response.data.message
 }
 
-export async function getFileInfo(user_id: number, id: number): Promise<Files> {
+export async function getFileInfo(user_id: number, id: number): Promise<InfoData> {
     const response = await axios.get(`${BASE_URL}/upload/getFileInfo`, {
         params: {
             user_id, id
         }
     })
 
-    console.log("response data: ", response.data)
+    console.log("images: ", response.data.message.images)
+    console.log("path: ", response.data.message.filePath)
 
     if (response.status !== 200) {
         throw new Error(response.data?.message || 'error in getFileInfo')
     }
-    return response.data.message[0]
+    return response.data.message
 }

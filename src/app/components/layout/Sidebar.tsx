@@ -57,7 +57,7 @@ export default function Sidebar() {
                     />
                 }
                 {
-                    viewInfo && infoData && <InfoCard
+                    !viewInfo || infoData && <InfoCard
                         data={infoData}
                     />
                 }

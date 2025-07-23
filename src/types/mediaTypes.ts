@@ -34,3 +34,8 @@ export interface FoldersArray {
     id: number,
     name: string
 }
+
+export interface InfoData {
+    image: Files[],
+    filePath: string[]
+}
