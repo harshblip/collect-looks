@@ -5,7 +5,6 @@ import { Files, Folders, FoldersArray } from "@/types/mediaTypes";
 export interface StateManager {
     loading: boolean
     folders: Folders[],
-    files: Files[],
     viewFolder: boolean,
     selectedFolders: FoldersArray[],
     folderItems: Files[],
@@ -18,7 +17,6 @@ export interface StateManager {
 const initialState: StateManager = {
     loading: true,
     folders: [],
-    files: [],
     viewFolder: false,
     selectedFolders: [],
     folderItems: [],
@@ -47,9 +45,6 @@ export const statesSlice = createSlice({
         setSearchSuggestions: (state, action: PayloadAction<string[]>) => {
             state.searchSuggestions = action.payload
         },
-        setFiles: (state, action: PayloadAction<Files[]>) => {
-            state.files = action.payload
-        },
         setFileModal: (state, action: PayloadAction<boolean>) => {
             state.fileModal = action.payload;
         },
@@ -71,7 +66,6 @@ export const {
     setMode,
     setMail,
     setSearchSuggestions,
-    setFiles,
     setFileModal,
     setViewFolder,
     setFolderItems,

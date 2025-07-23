@@ -4,7 +4,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface States {
     viewInfo: boolean,
-    infoData: Files
+    infoData: Files,
+    files: Files[],
 }
 
 const initialState: States = {
@@ -24,7 +25,8 @@ const initialState: States = {
         is_locked: "",
         password: "",
         updated_at: "",
-    }
+    },
+    files: [],
 };
 
 export const folderSlice = createSlice({
@@ -36,9 +38,12 @@ export const folderSlice = createSlice({
         },
         setInfoData: (state, action: PayloadAction<Files>) => {
             state.infoData = action.payload
-        }
+        },
+        setFiles: (state, action: PayloadAction<Files[]>) => {
+            state.files = action.payload
+        },
     },
 });
 
-export const { setViewInfo, setInfoData } = folderSlice.actions;
+export const { setViewInfo, setInfoData, setFiles } = folderSlice.actions;
 export const folderReducer = folderSlice.reducer;

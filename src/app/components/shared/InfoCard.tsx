@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 export default function InfoCard({ data }: { data: Files }) {
-    console.log("data -> ", data)
+    // console.log("data -> ", data)
     return (
         <>
             <AnimatePresence>

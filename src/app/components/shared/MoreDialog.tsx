@@ -15,10 +15,11 @@ export default function MoreDialog({ id, showMe }: {
     const { mutate: starFile } = useStarFile();
     const [show, setShow] = useState<boolean>(false)
     const { data, refetch } = prefetchInfo(3, id)
-    console.log(data)
+
     useEffect(() => {
         data && dispatch(setInfoData(data))
     }, [data])
+
     return (
         <>
             <AnimatePresence>

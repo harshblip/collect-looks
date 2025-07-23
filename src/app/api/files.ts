@@ -73,6 +73,8 @@ export async function getFileInfo(user_id: number, id: number): Promise<Files> {
         }
     })
 
+    console.log("response data: ", response.data)
+
     if (response.status !== 200) {
         throw new Error(response.data?.message || 'error in getFileInfo')
     }

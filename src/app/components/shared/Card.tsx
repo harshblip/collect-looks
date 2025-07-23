@@ -7,14 +7,13 @@ import { useState } from "react";
 import MoreDialog from "./MoreDialog";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
-import { setFiles, setViewFolder } from "@/lib/slice/statesSlice";
-import { setSelectedFolders } from "@/lib/slice/statesSlice";
+import { setFiles } from "@/lib/slice/folderSlice";
 
 export default function Card({ data }: {
     data: Files
 }) {
     const [show, setShow] = useState<boolean>(false)
-    const files = useAppSelector(state => state.states.files)
+    const files = useAppSelector(state => state.folderStates.files)
     const dispatch = useDispatch()
 
     // console.log("data:-> ", files)
@@ -35,7 +34,7 @@ export default function Card({ data }: {
         <>
             <div
                 onClick={() => addOrRemove(data)}
-                className={`${files && files.includes(data) ? `bg-[#f8edeb]` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center`}>
+                className={`${files && files.includes(data) ? `bg-[#eef0eb]` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center`}>
                 <div className="flex space-x-4 items-center">
                     {
                         data.file_type === "image" ? <PhotoIcon className="text-emerald-500 w-6" /> :
