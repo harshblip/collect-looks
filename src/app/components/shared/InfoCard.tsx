@@ -1,7 +1,7 @@
 
 import { setViewInfo } from "@/lib/slice/folderSlice";
 import { InfoData } from "@/types/mediaTypes";
-import { FolderIcon, KeyIcon, LockClosedIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { FolderIcon, HomeIcon, KeyIcon, LockClosedIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -111,7 +111,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                             filePath && <div className="flex flex-col space-y-2">
                                 <p className="text-sm text-primary"> Location </p>
                                 <div className=" text-xl flex space-x-2 text-secondary font-medium"> {
-                                    filePath.map((x, i) => <div className="flex items-center space-x-2"> <div
+                                    filePath.length > 0 ? filePath.map((x, i) => <div className="flex items-center space-x-2"> <div
                                         key={i}
                                         className="flex space-x-2 border border-gray-400 rounded-md p-2"
                                     >
@@ -122,7 +122,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                                         i < filePath.length-1 && <p> / </p>
                                     }
                                     </div>
-                                    )}
+                                    ) :<div className="flex space-x-2 items-center"> <HomeIcon className="w-5 text-secondary"/></div>}
                                 </div>
                             </div>
                         }

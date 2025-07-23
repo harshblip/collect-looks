@@ -19,7 +19,7 @@ function UploadModal({ setShow, setShowCreateFolder, showFileUploader }: PropTyp
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2"
+                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-4 flex flex-col space-y-2 z-2"
                 // onBlur={() => setShow((show) => !show)}
                 >
                     <button

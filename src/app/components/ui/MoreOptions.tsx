@@ -15,7 +15,7 @@ export default function MoreOptions() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.2 }}
-                className="flex justify-between fixed space-x-4  transition-all rounded-lg hover p-3 w-[75%] bg-[#4a4e69] text-white ">
+                className="flex justify-between fixed space-x-4  transition-all rounded-lg hover p-3 w-[75%] bg-[#4a4e69] text-white z-1">
                 <div className="flex space-x-2">
                     <button onClick={() => dispatch(setFiles([]))}>
                         <XMarkIcon className="w-6 hover" />

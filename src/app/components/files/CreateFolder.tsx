@@ -38,7 +38,7 @@ function CreateFolder({ showMe }: PropTypes) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-1">
+                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
                     <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/43609485/file/original-4d5208449d51a62c489343742821ef18.png?resize=1504x1128&vertical=center')] bg-center bg-contain h-[64%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary">
                         {created ? <p className="text-xl"> folder {name} created ✅ </p> : <>
                             <p className="text-2xl mt-2"> Create a new folder </p>

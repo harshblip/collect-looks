@@ -106,7 +106,7 @@ export default function Dashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.2 }}
-                        className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </motion.p>
+                        className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white z-1"> Welcome to Collect </motion.p>
                 }
                 {
                     locked ? <motion.div
@@ -162,7 +162,7 @@ export default function Dashboard() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.2 }}
-                                className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white"
+                                className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1"
                                 onClick={() => setShow(!show)}
                             >
                                 <div

@@ -8,11 +8,13 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import FilterModal from "../files/FilterModal";
 import SuggestionButtons from "./SuggestionButtons";
+import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
 
     const searchSuggestions = useAppSelector(state => state.states.searchSuggestions)
     const dispatch = useDispatch()
+    const navigate = useRouter()
     const [visible, setVisible] = useState<boolean>(false)
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [show, setShow] = useState<boolean>(false)
@@ -67,7 +69,8 @@ export default function SearchBar() {
                         placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                addToSuggesstions((e.target as HTMLInputElement).value);
+                                addToSuggesstions((e.target as HTMLInputElement).value)
+                                navigate.push('/dashboard/search')
                             }
                         }}
                         onChange={(e) => setSearchQuery(e.target.value)}

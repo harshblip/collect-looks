@@ -28,7 +28,7 @@ export default function MoreDialog({ id, showMe }: {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="bg-white absolute font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36 z-10"
+                    className="bg-white font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-36 z-10"
                 >
                     <div
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-30"

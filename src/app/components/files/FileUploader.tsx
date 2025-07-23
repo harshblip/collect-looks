@@ -83,7 +83,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="absolute bg-black/20 top-0 bottom-0 w-[100%] flex justify-center items-center font-product z-1 -ml-8"
+                    className="absolute bg-black/20 top-0 bottom-0 w-[100%] flex justify-center items-center font-product z-2 -ml-8"
                 >
                     {
                         uploading ? (

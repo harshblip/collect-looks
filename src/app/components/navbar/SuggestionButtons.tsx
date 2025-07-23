@@ -10,7 +10,7 @@ interface PropTypes {
 export default function SuggestionButtons({ index, searchSuggestions, setSearchQuery, removeSuggestion }: PropTypes) {
     return (
         <button
-            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full"
+            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full z-2"
             onClick={() => setSearchQuery(searchSuggestions[index])}
         >
             <div className="flex items-center space-x-3">

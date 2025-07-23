@@ -54,10 +54,12 @@ export default function Card({ data }: {
                         {data.size && byteToSize(parseInt(data.size))}
                     </p>
                     {
-                        show && <MoreDialog
-                            id={data.id}
-                            showMe={setShow}
-                        />
+                        show && <div className="absolute">
+                            <MoreDialog
+                                id={data.id}
+                                showMe={setShow}
+                            />
+                        </div>
                     }
                     <button
                         className="hover text-lg font-medium"

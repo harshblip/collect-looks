@@ -16,7 +16,7 @@ export default function FolderList({ show }: Props) {
     const { data } = useGetFolders(3)
     const [id, setId] = useState<number>(0)
     const [name, setName] = useState<string>("")
-    const files = useAppSelector(state => state.states.files)
+    const files = useAppSelector(state => state.folderStates.files)
     const dispatch = useDispatch()
     const [created, setCreated] = useState<boolean>(false)
 
@@ -40,7 +40,7 @@ export default function FolderList({ show }: Props) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center font-product -ml-8 h-full z-1">
+                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center font-product -ml-8 h-full z-2">
                     <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/43609485/file/original-4d5208449d51a62c489343742821ef18.png?resize=1504x1128&vertical=center')] bg-center bg-contain h-[64%] w-[30rem] rounded-lg flex flex-col items-center text-primary">
                         {
                             created ? <p> {files.length} files added to {name} </p> : <>

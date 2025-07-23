@@ -7,7 +7,7 @@ export default function FilterModal({ show, setShow }: PropType) {
     return (
         <>
             <div
-                className="font-product absolute bg-black/20 flex justify-center items-center w-full top-0 bottom-0 -ml-8 z-1"
+                className="font-product absolute bg-black/20 flex justify-center items-center w-full top-0 bottom-0 -ml-8 z-2"
                 onClick={() => setShow(false)}
             >
                 <div className="bg-white flex flex-col rounded-lg w-[26rem] p-4">

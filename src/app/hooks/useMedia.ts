@@ -4,28 +4,6 @@ import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, starFile, uploadFile } from "../api/files";
 
-export const useMedia = () => {
-    const dispatch = useDispatch();
-    const token = useAppSelector(state => state.auth.authToken)
-
-    async function uploadFile(formData: FormData) {
-        try {
-            const response = await axios.post('http://localhost:4000/upload', formData)
-            if (response.status === 200) {
-                return (response.data.message)
-            } else {
-                console.log("facing error fetching images: ", response.data)
-                // setErrorMessage("facing error getting images")
-            }
-        } catch (err: any) {
-            // setError(err.response.data.message)
-            console.log("error fetching images: ", err)
-        }
-    }
-
-    return { uploadFile }
-}
-
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
     return useMutation({
@@ -62,7 +40,7 @@ export const useUploadFile = () => {
             console.log(`file uploaded`)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['allFiles'] })
+            queryClient.invalidateQueries({ queryKey: ["allFiles"] })
         }
     })
 }
