@@ -1,4 +1,8 @@
+import { setSelectedFolders, setViewFolder } from "@/lib/slice/statesSlice"
+import { useAppSelector } from "@/lib/store"
+import { Files } from "@/types/mediaTypes"
 import axios from "axios"
+import { useDispatch } from "react-redux"
 
 export const updatePassword = async (
     email: string,

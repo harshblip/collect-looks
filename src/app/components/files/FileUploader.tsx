@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { handleDragLeave, handleDragOver, handleDrop, handleFileInput, handleRemove, handleUpload } from '@/app/utils/fileuploader';
 
 export default function FileUploader({ show }: { show: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [files, setFiles] = useState<File[]>([]);
@@ -21,59 +22,6 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
         }
     }, [progress]);
 
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        const droppedFiles = Array.from(e.dataTransfer.files);
-        setFiles((prev) => [...prev, ...droppedFiles]);
-        setIsDragging(false);
-    };
-
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-
-    const handleDragLeave = () => {
-        setIsDragging(false);
-    };
-
-    const handleRemove = (index: number) => {
-        setFiles(files.filter((_, i) => i !== index));
-    };
-
-    const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
-        const selectedFiles = Array.from(e.target.files);
-        setFiles((prev) => [...prev, ...selectedFiles]);
-    };
-
-    const handleUpload = async () => {
-        if (!files.length) return;
-
-        setUploading(true);
-        setProgress(0);
-
-        const formData = new FormData();
-        files.forEach((file) => formData.append('file', file));
-        formData.append('username', 'mihir')
-        try {
-            await axios.post('http://localhost:4000/upload', formData, {
-                onUploadProgress: (progressEvent) => {
-                    const total = progressEvent.total ?? 1;
-                    const percent = Math.round((progressEvent.loaded * 100) / total);
-                    setProgress(percent);
-                },
-            });
-
-            setFiles([]);
-        } catch (error) {
-            console.error('Upload error:', error);
-        } finally {
-            setUploading(false);
-            setProgress(0);
-        }
-    };
 
     return (
         <div className="flex flex-col">
@@ -100,9 +48,9 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                             </motion.div>
                         ) : (
                             < div
-                                onDrop={handleDrop}
-                                onDragOver={handleDragOver}
-                                onDragLeave={handleDragLeave}
+                                onDrop={(e) => handleDrop(e, setFiles, setIsDragging)}
+                                onDragOver={(e) => handleDragOver(e, setIsDragging)}
+                                onDragLeave={() => handleDragLeave(setIsDragging)}
                                 className={`border-2 border-dashed w-1/2 p-6 h-32 rounded-lg flex flex-col items-center justify-center text-center cursor-pointer transition-colors duration-300 ${isDragging ? 'bg-blue-100 border-blue-400' : 'border-gray-300 bg-white'}`}
                                 onClick={() => fileInputRef.current?.click()}
                             >
@@ -118,7 +66,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                     ref={fileInputRef}
                                     type="file"
                                     multiple
-                                    onChange={handleFileInput}
+                                    onChange={(e) => handleFileInput(e, setFiles)}
                                     className="hidden"
                                 />
                             </div>
@@ -138,7 +86,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                         animate={{ opacity: 1, scale: 1 }}
                                     >
                                         <span className="text-sm truncate max-w-xs">{file.name}</span>
-                                        <Button size="sm" variant="destructive" onClick={() => handleRemove(index)}>Remove</Button>
+                                        <Button size="sm" variant="destructive" onClick={() => handleRemove(index, setFiles, files)}>Remove</Button>
                                     </motion.li>
                                 ))}
                             </ul>
@@ -148,7 +96,12 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                     onClick={() => show(false)}
                                     variant={'outline'}
                                 >Close</Button>
-                                <Button className="mt-4 w-1/2" onClick={handleUpload}>Upload</Button>
+                                <Button className="mt-4 w-1/2" onClick={() => handleUpload(
+                                    files,
+                                    setFiles,
+                                    setUploading,
+                                    setProgress
+                                )}>Upload</Button>
                             </div>
                         </motion.div>
                     )}
