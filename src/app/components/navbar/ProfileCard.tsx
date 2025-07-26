@@ -1,9 +1,13 @@
 import Image from "next/image";
 import { motion } from 'framer-motion'
-import { BeakerIcon, FingerPrintIcon, FireIcon } from "@heroicons/react/24/solid";
+import { BeakerIcon, FireIcon } from "@heroicons/react/24/solid";
 import CardButton from "../shared/CardButton";
+import { useRouter } from "next/navigation";
 
-export default function ProfileCard() {
+export default function ProfileCard({ toggle }: {
+    toggle: React.Dispatch<React.SetStateAction<'menu' | 'profile' | 'settings' | ''>>
+}) {
+    const navigate = useRouter()
     return (
         <>
             <motion.div
@@ -13,38 +17,40 @@ export default function ProfileCard() {
                 transition={{ duration: 0.1, ease: 'easeInOut' }}
                 className="absolute mt-10 -ml-[22rem] z-2"
             >
-                <div className="bg-gray-200 h-[29rem] w-[25rem] rounded-xl p-4">
-                    <div className="bg-white h-[27rem] w-[23rem] flex flex-col rounded-xl p-4">
-                        <div className="bg-[#83c5be] flex flex-col items-center justify-center rounded-md h-[10rem] text-white p-10">
+                <div className="bg-gray-200 h-[14rem] w-[25rem] rounded-xl p-4">
+                    <div className="bg-white h-[12rem] w-[23rem] flex flex-col rounded-xl p-4">
+                        <button
+                            className="flex items-center space-x-3 p-2 hover"
+                            onClick={() => {
+                                navigate.push('/dashboard/my-profile')
+                                toggle('')
+                            }}
+                        >
                             <Image
-                                src='https://cdn.dribbble.com/userupload/43663406/file/original-2ddbfcb3948ed62d3d9de1bd3ffdcbcc.jpg?resize=1504x1003&vertical=center'
+                                src='https://cdn.dribbble.com/userupload/44247454/file/3c40a681651173421483c9ec43601a7f.png?resize=1024x1024&vertical=center'
                                 alt='profile image'
-                                className="rounded-full"
+                                className="w-12 h-12 rounded-full"
                                 height={0}
-                                width={60}
+                                width={40}
                             />
-                            <p className="mt-4"> Shreyas </p>
-                            <div className="flex space-x-2">
-                                <p>shreyas</p>
-                                <p>·</p>
-                                <p>shreyas.iyer@gmail.com</p>
+                            <div className="flex flex-col items-start">
+                                <p className="text-primary"> Shreyas </p>
+                                <p className="text-sm text-gray-400">shreyas.iyer@gmail.com</p>
                             </div>
-                        </div>
-                        <div className="mt-6 flex flex-col divide-gray-200 text-secondary font-medium ">
+                        </button>
+                        <div className="mt-2 flex flex-col divide-gray-200 text-secondary font-medium p-2">
                             <CardButton
-                                label="update profile"
+                                label="Go to your account"
                                 icon={<BeakerIcon />}
-                                onClick={() => console.log("update profile clicked")}
+                                onClick={() => {
+                                    navigate.push('/dashboard/my-profile')
+                                    toggle('')
+                                }}
                             />
                             <CardButton
-                                label="view profile"
+                                label="log out"
                                 icon={<FireIcon />}
-                                onClick={() => console.log("view profile clicked")}
-                            />
-                            <CardButton
-                                label="update profile"
-                                icon={<FingerPrintIcon />}
-                                onClick={() => console.log("change password clicked")}
+                                onClick={() => console.log("logged out!")}
                             />
                         </div>
                     </div>

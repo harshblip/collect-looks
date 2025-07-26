@@ -44,10 +44,11 @@ export default function Navbar() {
                             onClick={() => setToggle(toggle === 'profile' ? '' : 'profile')}
                         > <UserIcon /> </button>
                         <AnimatePresence>
-
                             {
                                 toggle === 'profile' ? <>
-                                    <ProfileCard />
+                                    <ProfileCard
+                                        toggle={setToggle}
+                                    />
                                 </> : ''
                             }
                         </AnimatePresence>

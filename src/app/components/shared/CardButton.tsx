@@ -17,7 +17,7 @@ const CardButton: React.FC<Props> = ({ label, icon, onClick, className }) => (
         )}
     >
         <div className="w-10 h-10 text-primary p-2">{icon}</div>
-        <p>{label}</p>
+        <p className='text-primary'>{label}</p>
     </button>
 );
 
