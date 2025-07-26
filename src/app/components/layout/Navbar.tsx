@@ -6,6 +6,7 @@ import { BeakerIcon, Cog6ToothIcon, CubeTransparentIcon, FingerPrintIcon, FireIc
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProfileCard from "../navbar/ProfileCard";
+import Menu from "../navbar/Menu";
 
 export default function Navbar() {
     const [toggle, setToggle] = useState<'settings' | 'menu' | 'profile' | ''>('')
@@ -25,9 +26,18 @@ export default function Navbar() {
                 </div>
                 <SearchBar />
                 <div className="flex space-x-8">
-                    <button className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"> <Cog6ToothIcon />  </button>
-                    <button 
-                        className="w-10 h-10 hover rounded-lg p-2 text-primary "> <CubeTransparentIcon /> </button>
+                    <button
+                        className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95">
+                        <Cog6ToothIcon />
+                    </button>
+                    <button
+                        className="w-10 h-10 hover rounded-lg p-2 text-primary "> <CubeTransparentIcon
+                            onClick={() => setToggle(toggle === 'menu' ? '' : 'menu')}
+                        />
+                    </button>
+                    {
+                        toggle === 'menu' && <Menu />
+                    }
                     <div className="flex flex-col">
                         <button
                             className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"
