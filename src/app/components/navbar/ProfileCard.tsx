@@ -22,7 +22,7 @@ export default function ProfileCard({ toggle }: {
                         <button
                             className="flex items-center space-x-3 p-2 hover"
                             onClick={() => {
-                                navigate.push('/dashboard/my-profile')
+                                navigate.push('/my-profile')
                                 toggle('')
                             }}
                         >
@@ -43,7 +43,7 @@ export default function ProfileCard({ toggle }: {
                                 label="Go to your account"
                                 icon={<BeakerIcon />}
                                 onClick={() => {
-                                    navigate.push('/dashboard/my-profile')
+                                    navigate.push('/my-profile')
                                     toggle('')
                                 }}
                             />
