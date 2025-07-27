@@ -1,5 +1,8 @@
+'use client'
+
 import { InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { Pixelify_Sans } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -7,6 +10,9 @@ const pixel = Pixelify_Sans({
 })
 
 export default function AccountInfo() {
+
+    const navigate = useRouter()
+
     return (
         <>
             <div className="flex flex-col space-y-10 mt-12 mb-12">
@@ -44,7 +50,10 @@ export default function AccountInfo() {
                         </button>
                     </div>
                     <div className="flex space-x-4 mt-4">
-                        <button className="bg-red-400 p-2 text-white text-md w-44 hover shadow-md rounded-md">
+                        <button
+                            className="bg-red-400 p-2 text-white text-md w-44 hover shadow-md rounded-md"
+                            onClick={() => navigate.push('/reset-password')}
+                        >
                             reset password
                         </button>
                         <div className="text-secondary flex items-center space-x-2">

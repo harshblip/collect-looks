@@ -24,7 +24,6 @@ const pixel = Pixelify_Sans({
 
 export default function Dashboard() {
 
-
     const token = useAppSelector((state) => state.auth.authToken);
     const files = useAppSelector(state => state.folderStates.files)
     const viewFolder = useAppSelector(state => state.states.viewFolder)
