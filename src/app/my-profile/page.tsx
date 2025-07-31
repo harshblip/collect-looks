@@ -72,7 +72,12 @@ export default function MyProfile() {
                             }
                         </div>
                         <div className="bg-white w-[90rem] rounded-lg p-4 mt-12">
-                            <StorageInfo />
+                            <StorageInfo 
+                                photo={data && data.photos_size || ''}
+                                video={data && data.videos_size || ''}
+                                audio={data && data.audios_size || ''}
+                                doc={data && data.documents_size || ''}
+                            />
                         </div>
                         <div className="bg-white w-[90rem] rounded-lg p-4 mt-12">
                             <DeleteAccount />

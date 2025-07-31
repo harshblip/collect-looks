@@ -1,19 +1,25 @@
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { Pixelify_Sans } from "next/font/google";
 import StatCard from "./StatCard";
+import { byteToSize } from "@/app/utils/useful";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
     subsets: ['cyrillic', 'latin']
 })
 
-export default function StorageInfo() {
+export default function StorageInfo({photo, video, audio, doc} : {
+    photo: string,
+    video: string,
+    audio: string,
+    doc: string
+}) {
 
     const data = [
-        { label: "Photos", size: "4MB" },
-        { label: "Videos", size: "12MB" },
-        { label: "Documents", size: "8MB" },
-        { label: "Audio", size: "1MB" },
+        { label: "Photos", size: `${byteToSize(parseInt(photo))}` },
+        { label: "Videos", size: `${byteToSize(parseInt(video))}` },
+        { label: "Documents", size: `${byteToSize(parseInt(audio))}` },
+        { label: "Audio", size: `${byteToSize(parseInt(video))}` },
     ];
 
     return (
