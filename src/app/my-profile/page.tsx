@@ -46,7 +46,7 @@ export default function MyProfile() {
                             alt="profile-banner"
                             fill
                             quality={100}
-                            className="object-cover object-bottom shadow-md"
+                            className="object-cover object-bottom shadow-md p-2 rounded-xl"
                         />
                     </div>
                     <div className="mt-10 flex justify-center items-center space-x-8 z-20">

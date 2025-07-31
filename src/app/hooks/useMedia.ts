@@ -40,7 +40,7 @@ export const useUploadFile = () => {
             console.log(`file uploaded`)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFiles"] })
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] })
         }
     })
 }
@@ -59,7 +59,7 @@ export const useStarFile = () => {
             console.error("Failed to mark file:", error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFiles", "starFiles"] });
+            queryClient.invalidateQueries({ queryKey: ['allFiles', 'starFiles'] });
         },
     });
 }

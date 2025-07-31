@@ -1,9 +1,10 @@
 'use client'
 
+import { useUpateUser } from "@/app/hooks/useUser";
 import { InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { Pixelify_Sans } from "next/font/google";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -15,11 +16,21 @@ export default function AccountInfo({ username, email }: {
     email: string
 }) {
 
-    const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [editableName, setEditableName] = useState<string>(username);
-    const [editableEmail, setEditableEmail] = useState<string>(email);
+    const [isEditMode, setIsEditMode] = useState<boolean>(true);
+    const [name, setName] = useState<string>(username);
+    const [newEmail, setNewEmail] = useState<string>(email);
+    const { mutate: updateUserData } = useUpateUser()
 
     const navigate = useRouter()
+    console.log(name)
+
+    useEffect(() => {
+        isEditMode && updateUserData({
+            username: name,
+            email: newEmail,
+            id: 3
+        })
+    }, [isEditMode])
 
     return (
         <>
@@ -27,10 +38,12 @@ export default function AccountInfo({ username, email }: {
                 <div className="flex justify-between">
                     <p className={`${pixel.className} text-4xl ml-10`}> Account Info </p>
                     <button
-                        onClick={() => setIsEditMode((lol) => !lol)}
+                        onClick={() => {
+                            setIsEditMode((lol) => !lol)
+                        }}
                         className={`${pixel.className} mr-10 hover hover:bg-gray-600 hover:text-white transition-all w-24 p-2 rounded-md border-2 border-gray-600 active:scale-95`}
                     >
-                        {!isEditMode ? `Edit` : `Save`}
+                        {isEditMode ? `Edit` : `Save`}
                     </button>
                 </div>
                 <div className="flex justify-around">
@@ -39,17 +52,17 @@ export default function AccountInfo({ username, email }: {
                         <hr
                             className="w-12 border-2 border-gray-100"
                         />
-                        {isEditMode ? (
+                        {!isEditMode ? (
                             <input
                                 type="text"
-                                value={editableName}
-                                onChange={(e) => setEditableName(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 className={`w-[24rem] p-4 text-lg text-secondary bg-transparent outline-none border-2 border-gray-400 border-dashed rounded-md`}
                                 autoFocus={true}
                             />
                         ) : (
                             <p className={`w-[24rem] p-4 shadow-md text-lg text-secondary`}>
-                                {editableName}
+                                {name}
                             </p>
                         )}
 
@@ -59,16 +72,16 @@ export default function AccountInfo({ username, email }: {
                         <hr
                             className="w-12 border-2 border-gray-100"
                         />
-                        {isEditMode ? (
+                        {!isEditMode ? (
                             <input
                                 type="email"
-                                value={editableEmail}
-                                onChange={(e) => setEditableEmail(e.target.value)}
+                                value={newEmail}
+                                onChange={(e) => setNewEmail(e.target.value)}
                                 className={`w-[24rem] p-4 text-lg text-secondary bg-transparent outline-none border-2 border-gray-400 border-dashed rounded-md`}
                             />
                         ) : (
                             <p className={`w-[24rem] p-4 shadow-md text-lg text-secondary`}>
-                                {editableEmail}
+                                {newEmail}
                             </p>
                         )}
                     </div>

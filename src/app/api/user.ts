@@ -15,3 +15,15 @@ export async function getUserData(id: number): Promise<User> {
 
     return response.data.message
 }
+
+export async function updateUserData(username: string, email: string, id: number): Promise<string> {
+    const response = await axios.patch(`${BASE_URL}/user/update`, { username, email, id })
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || "error in updateUserData")
+    }
+
+    console.log(response.data)
+
+    return response.data.message
+}
