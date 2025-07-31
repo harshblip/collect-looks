@@ -8,6 +8,8 @@ import AccountInfo from "../components/layout/my-profile/AccountInfo";
 import StorageInfo from "../components/layout/my-profile/StorageInfo";
 import DeleteAccount from "../components/layout/my-profile/DeleteAcc";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGetUserData } from "../hooks/useUser";
+import { useAppSelector } from "@/lib/store";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -15,6 +17,10 @@ const pixel = Pixelify_Sans({
 })
 
 export default function MyProfile() {
+
+    const id = useAppSelector(state => state.states.userId)
+    const { data } = useGetUserData(3)
+    console.log(id, data)
 
     return (
         <>
@@ -27,7 +33,13 @@ export default function MyProfile() {
                     className="p-4 flex flex-col font-product primary-bg h-full"
                 >
                     <ProfileNavbar />
-                    <p className="font-glook z-20 mt-[14rem] text-primary text-5xl ml-12"> Hey, Mihir </p>
+                    <p className="font-glook z-20 mt-[14rem] text-primary text-5xl ml-12"> Hey,
+                        {
+                            data?.username[0].toUpperCase()
+                        }{
+                            data?.username.split(' ', 1)[0].slice(1)
+                        }
+                    </p>
                     <div className="relative w-full h-[24rem] -mt-[14rem] z-10 primary-bg -ml-0 rounded-lg overflow-hidden">
                         <Image
                             src="/profile-banner.png"
@@ -52,7 +64,12 @@ export default function MyProfile() {
                     </div>
                     <div className="flex flex-col items-center justify-center w-full">
                         <div className="bg-white w-[90rem] rounded-lg p-4 mt-12">
-                            <AccountInfo />
+                            {
+                                data && <AccountInfo
+                                    username={data.username}
+                                    email={data.email}
+                                />
+                            }
                         </div>
                         <div className="bg-white w-[90rem] rounded-lg p-4 mt-12">
                             <StorageInfo />

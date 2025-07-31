@@ -11,6 +11,7 @@ export interface StateManager {
     fileModal: boolean,
     mode: string,
     email: string,
+    userId: number,
     searchSuggestions: string[]
 }
 
@@ -23,6 +24,7 @@ const initialState: StateManager = {
     fileModal: false,
     mode: "signup",
     email: 'gajmohan@gmail.com',
+    userId: 3,
     searchSuggestions: []
 };
 
@@ -57,6 +59,9 @@ export const statesSlice = createSlice({
         setSelectedFolders: (state, action: PayloadAction<FoldersArray[]>) => {
             state.selectedFolders = action.payload
         },
+        setUserId: (state, action: PayloadAction<number>) => {
+            state.userId = action.payload
+        }
     },
 });
 
@@ -69,6 +74,7 @@ export const {
     setFileModal,
     setViewFolder,
     setFolderItems,
+    setUserId,
     setSelectedFolders
 } = statesSlice.actions;
 export const statesReducer = statesSlice.reducer;
