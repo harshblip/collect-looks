@@ -5,7 +5,6 @@ import { InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid
 import { Pixelify_Sans } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Spinner from "../../ui/Spinner";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],

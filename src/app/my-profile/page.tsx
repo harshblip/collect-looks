@@ -10,6 +10,7 @@ import DeleteAccount from "../components/layout/my-profile/DeleteAcc";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetUserData } from "../hooks/useUser";
 import { useAppSelector } from "@/lib/store";
+import Footer from "../components/shared/Footer";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -33,8 +34,7 @@ export default function MyProfile() {
                     className="p-4 flex flex-col font-product primary-bg h-full"
                 >
                     <ProfileNavbar />
-                    <p className="font-glook z-20 mt-[14rem] text-primary text-5xl ml-12"> Hey,
-                        {
+                    <p className="font-glook z-20 mt-[14rem] text-primary text-5xl ml-12"> Hey,&nbsp;{
                             data?.username[0].toUpperCase()
                         }{
                             data?.username.split(' ', 1)[0].slice(1)
@@ -83,6 +83,7 @@ export default function MyProfile() {
                             <DeleteAccount />
                         </div>
                     </div>
+                    <Footer />
                 </motion.div>
             </AnimatePresence>
         </>
