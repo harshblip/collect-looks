@@ -16,6 +16,7 @@ import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
+import { setIndex, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -76,13 +77,22 @@ export default function Dashboard() {
             dispatch(setSelectedFolders([obj]))
         }
     }
-    
-    console.log(selectedFolderId)
-    console.log(viewFolder)
+
+    // console.log(viewFolder)
 
     // if (count === 0) {
     //     router.push('/signup')
     // }
+
+    function openMedia(x: number, type: string) {
+        dispatch(setIndex(x))
+        dispatch(setViewMedia(true))
+        if (type === 'allFiles' && allFiles) {
+            dispatch(setViewMediaFiles(allFiles))
+        } else if (type === 'folderFiles' && folderItems) {
+            dispatch(setViewMediaFiles(folderItems))
+        }
+    }
 
     return (
         <>
@@ -135,21 +145,21 @@ export default function Dashboard() {
                                     <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                         {
                                             viewFolder ? folderItemsArray?.map((x, i) => (
-                                                    <div
-                                                        key={i}
-                                                        onDoubleClick={() => openFolder(x)}
-                                                    >
-                                                        <Card data={x} />
-                                                    </div>
-                                                ))
-                                            : allFiles?.map((x, i) => (
                                                 <div
                                                     key={i}
-                                                    onDoubleClick={() => openFolder(x)}
+                                                    onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'folderFiles')}
                                                 >
                                                     <Card data={x} />
                                                 </div>
                                             ))
+                                                : allFiles?.map((x, i) => (
+                                                    <div
+                                                        key={i}
+                                                        onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'allFiles')}
+                                                    >
+                                                        <Card data={x} />
+                                                    </div>
+                                                ))
                                         }
                                     </div>
                                 </motion.div>

@@ -6,6 +6,9 @@ export interface States {
     viewInfo: boolean,
     infoData: InfoData,
     files: Files[],
+    index: number,
+    viewMedia: boolean,
+    viewMediaFiles: Files[]
 }
 
 const initialState: States = {
@@ -32,6 +35,26 @@ const initialState: States = {
         ]
     },
     files: [],
+    index: 0,
+    viewMedia: false,
+    viewMediaFiles: [
+        {
+            id: 0,
+            user_id: 0,
+            file_name: "",
+            file_url: "",
+            file_type: "",
+            size: "",
+            created_at: "",
+            starred: "",
+            is_trashed: "",
+            folder_id: 0,
+            description: "",
+            is_locked: "",
+            password: "",
+            updated_at: "",
+        }
+    ]
 };
 
 export const folderSlice = createSlice({
@@ -47,8 +70,17 @@ export const folderSlice = createSlice({
         setFiles: (state, action: PayloadAction<Files[]>) => {
             state.files = action.payload
         },
+        setIndex: (state, action: PayloadAction<number>) => {
+            state.index = action.payload
+        },
+        setViewMedia: (state, action: PayloadAction<boolean>) => {
+            state.viewMedia = action.payload
+        },
+        setViewMediaFiles: (state, action: PayloadAction<Files[]>) => {
+            state.viewMediaFiles = action.payload
+        }
     },
 });
 
-export const { setViewInfo, setInfoData, setFiles } = folderSlice.actions;
+export const { setViewInfo, setInfoData, setFiles, setIndex, setViewMedia, setViewMediaFiles } = folderSlice.actions;
 export const folderReducer = folderSlice.reducer;

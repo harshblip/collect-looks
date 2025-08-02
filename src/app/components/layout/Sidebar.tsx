@@ -10,6 +10,7 @@ import FileUploader from "../files/FileUploader";
 import FolderList from "../files/FolderList";
 import { useAppSelector } from "@/lib/store";
 import InfoCard from "../shared/InfoCard";
+import MediaViewer from "./MediaViewer";
 
 export default function Sidebar() {
 
@@ -19,6 +20,7 @@ export default function Sidebar() {
     const showFileModal = useAppSelector(state => state.states.fileModal)
     const infoData = useAppSelector(state => state.folderStates.infoData)
     const viewInfo = useAppSelector(state => state.folderStates.viewInfo)
+    const viewMedia = useAppSelector(state => state.folderStates.viewMedia)
 
     const router = useRouter()
 
@@ -60,6 +62,9 @@ export default function Sidebar() {
                     !viewInfo || infoData && <InfoCard
                         data={infoData}
                     />
+                }
+                {
+                    viewMedia && <MediaViewer />
                 }
                 <div className="mt-0" />
                 <SidebarButton
