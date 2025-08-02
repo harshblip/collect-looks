@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
 import { setIndex, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -29,15 +30,18 @@ export default function Dashboard() {
     const files = useAppSelector(state => state.folderStates.files)
     const viewFolder = useAppSelector(state => state.states.viewFolder)
     const folderItemsArray = useAppSelector(state => state.states.folderItems)
+    const openFiles = useAppSelector(state => state.folderStates.viewMediaFiles)
+    const pages = openFiles.length / 15
     const dispatch = useDispatch()
 
     const [selectedFolderId, setSelectedFolderId] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1)
     const [show, setShow] = useState<boolean>(false)
     const [password, setPassword] = useState<string>("")
     const [error, setError] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
-    const { data: allFiles } = useGetAllFiles(3)
+    const { data: allFiles } = useGetAllFiles(3, currentPage)
     const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
 
     useEffect(() => {
@@ -161,6 +165,17 @@ export default function Dashboard() {
                                                     </div>
                                                 ))
                                         }
+                                    </div>
+                                    <div className="flex space-x-2 items-center bg-white shadow-md rounded-md p-2 text-secondary">
+                                        <ChevronDoubleLeftIcon />
+                                        <ChevronLeftIcon />
+                                        {
+                                            for(let i = 0; i < pages; i++){
+
+                                            }
+                                        }
+                                        <ChevronRightIcon />
+                                        <ChevronDoubleRightIcon />
                                     </div>
                                 </motion.div>
                             )}

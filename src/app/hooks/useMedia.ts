@@ -20,10 +20,10 @@ export const useDeleteMedia = (images: string[], username: string, id: number) =
     })
 }
 
-export const useGetAllFiles = (user_id: number) => {
+export const useGetAllFiles = (user_id: number, page: number) => {
     return useQuery({
         queryKey: ['allFiles', user_id],
-        queryFn: () => fetchAllFiles(user_id),
+        queryFn: () => fetchAllFiles(user_id, page),
         enabled: !!user_id,
         staleTime: 1000 * 30,
         retry: 2

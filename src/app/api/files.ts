@@ -12,17 +12,15 @@ export async function uploadFile(formData: FormData): Promise<string> {
     return response.data.message
 }
 
-export async function fetchAllFiles(user_id: number): Promise<Files[]> {
+export async function fetchAllFiles(user_id: number, page: number): Promise<Files[]> {
     const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
-        params: { user_id },
+        params: { user_id, page },
     });
-
-    console.log("called")
 
     if (response.status !== 200) {
         throw new Error(response.data?.message || "error in fetchAllFiles")
     }
-    console.log(response.data)
+
     return response.data.message
 }
 
