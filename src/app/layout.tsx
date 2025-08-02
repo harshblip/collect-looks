@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProvider from "@/lib/reduxProvider";
 import { Gloock, Gochi_Hand } from "next/font/google";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouteLoader } from "./components/layout/RouteLoader";
 
 const glook = Gloock({
   weight: ['400'],
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${gochi.variable} ${glook.variable} antialiased`}>
         <ReduxProvider>
           <QueryClientProvider client={queryClient}>
+            <RouteLoader />
             {children}
           </QueryClientProvider>
         </ReduxProvider>

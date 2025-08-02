@@ -32,7 +32,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex justify-end items-end mb-6 mr-12">
-                    <p className={`${pixel.className} text-gray-400`}>Made with Love</p>
+                    <p className={` text-gray-400 tracking-wider font-medium`}>Made with Love</p>
                 </div>
             </div>
         </>

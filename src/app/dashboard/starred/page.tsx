@@ -2,7 +2,7 @@
 
 import Card from "@/app/components/shared/Card";
 import { useGetStarredFiles } from "@/app/hooks/useMedia";
-import { setFiles } from "@/lib/slice/statesSlice";
+import { setFiles } from "@/lib/slice/folderSlice";
 import { Files } from "@/types/mediaTypes";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -39,8 +39,8 @@ export default function Starred() {
                                         <div key={i}>
                                             <Card
                                                 data={x}
-                                                setFiles={setFiles}
-                                                files={files}
+                                                // setFiles={setFiles}
+                                                // files={files}
                                             />
                                         </div>
                                     ))
