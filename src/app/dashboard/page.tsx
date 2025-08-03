@@ -30,8 +30,6 @@ export default function Dashboard() {
     const files = useAppSelector(state => state.folderStates.files)
     const viewFolder = useAppSelector(state => state.states.viewFolder)
     const folderItemsArray = useAppSelector(state => state.states.folderItems)
-    const openFiles = useAppSelector(state => state.folderStates.viewMediaFiles)
-    const pages = openFiles.length / 15
     const dispatch = useDispatch()
 
     const [selectedFolderId, setSelectedFolderId] = useState<number>(0)
@@ -49,16 +47,6 @@ export default function Dashboard() {
             dispatch(setFolderItems(folderItems))
         }
     }, [folderItems])
-
-    useEffect(() => {
-        // if (!token) {
-        //     setCheck(!check)
-        //     const createInterval = setInterval(() => {
-        //         setCount(prevCount => prevCount - 1)
-        //     }, 1000)
-        //     return () => clearInterval(createInterval)
-        // }
-    }, [])
 
     const folders = useAppSelector(state => state.states.selectedFolders)
 
@@ -82,12 +70,6 @@ export default function Dashboard() {
         }
     }
 
-    // console.log(viewFolder)
-
-    // if (count === 0) {
-    //     router.push('/signup')
-    // }
-
     function openMedia(x: number, type: string) {
         dispatch(setIndex(x))
         dispatch(setViewMedia(true))
@@ -97,6 +79,19 @@ export default function Dashboard() {
             dispatch(setViewMediaFiles(folderItems))
         }
     }
+
+    useEffect(() => {
+        viewFolder ? folderItems && dispatch(setViewMediaFiles(folderItems)) : allFiles && dispatch(setViewMediaFiles(allFiles))
+    }, [viewFolder])
+
+
+    const openFiles = useAppSelector(state => state.folderStates.viewMediaFiles)
+    const pages = viewFolder ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15)) : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15))
+
+    const [btns, setBtns] = useState<number[]>([])
+    useEffect(() => {
+        setBtns(Array(pages).fill(0))
+    }, [pages])
 
     return (
         <>
@@ -149,37 +144,54 @@ export default function Dashboard() {
                                     <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                         {
                                             viewFolder ? folderItemsArray?.map((x, i) => (
-                                                <div
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -20 }}
+                                                    transition={{ duration: 0.2 }}
                                                     key={i}
                                                     onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'folderFiles')}
                                                 >
                                                     <Card data={x} />
-                                                </div>
+                                                </motion.div>
                                             ))
                                                 : allFiles?.map((x, i) => (
-                                                    <div
+                                                    <motion.div
+                                                        initial={{ opacity: 0, y: -10 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        exit={{ opacity: 0, y: -20 }}
+                                                        transition={{ duration: 0.2 }}
                                                         key={i}
                                                         onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'allFiles')}
                                                     >
                                                         <Card data={x} />
-                                                    </div>
+                                                    </motion.div>
                                                 ))
                                         }
-                                    </div>
-                                    <div className="flex space-x-2 items-center bg-white shadow-md rounded-md p-2 text-secondary">
-                                        <ChevronDoubleLeftIcon />
-                                        <ChevronLeftIcon />
-                                        {
-                                            for(let i = 0; i < pages; i++){
-
-                                            }
-                                        }
-                                        <ChevronRightIcon />
-                                        <ChevronDoubleRightIcon />
                                     </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
+                        {
+                            show && <div className="flex space-x-2 justify-center items-center bg-white shadow-md rounded-md p-2 text-secondary absolute right-25 bottom-15">
+                                <ChevronDoubleLeftIcon className="w-4 hover" />
+                                <ChevronLeftIcon
+                                    onClick={() => setCurrentPage((cr) => cr > 0 ? cr - 1 : cr)}
+                                    className="w-4 hover" />
+                                {
+                                    btns.map((_, i) => <button
+                                        key={i}
+                                        onClick={() => setCurrentPage(i + 1)}
+                                        className="bg-transparent outline-none p-1 pr-2 pl-2 hover hover:bg-gray-200 rounded-sm">
+                                        {i + 1}
+                                    </button>)
+                                }
+                                <ChevronRightIcon
+                                    onClick={() => setCurrentPage((cr) => cr < btns.length ? cr + 1 : cr)}
+                                    className="w-4 hover" />
+                                <ChevronDoubleRightIcon className="w-4 hover" />
+                            </div>
+                        }
                     </div>
                 }
             </div>

@@ -31,6 +31,7 @@ const initialState: States = {
                 is_locked: "",
                 password: "",
                 updated_at: "",
+                total_count: 0
             }
         ]
     },
@@ -53,6 +54,7 @@ const initialState: States = {
             is_locked: "",
             password: "",
             updated_at: "",
+            total_count: 0
         }
     ]
 };

@@ -14,6 +14,7 @@ export interface Files {
     is_locked?: string,
     password?: string,
     updated_at?: string,
+    total_count: number
 }
 
 export interface Folders {

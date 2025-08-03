@@ -17,6 +17,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
             const timeout = setTimeout(() => {
                 setUploading(false);
                 setProgress(0);
+                show(false)
             }, 2000);
             return () => clearTimeout(timeout);
         }
@@ -54,7 +55,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                                 <div className='flex space-x-4 text-gray-600'>
                                                     <PhotoIcon className={`-rotate-20 ${files.length ? `w-4` : `w-6`}`} />
                                                     <CameraIcon className={`${files.length ? `w-4` : `w-8`} -mt-6`} />
-                                                    <FolderIcon className={`-rotate-20 ${files.length ? `w-4` : `w-6`}`} />
+                                                    <FolderIcon className={`rotate-20 ${files.length ? `w-4` : `w-6`}`} />
                                                 </div>
                                                 <p className="text-gray-600 mt-4">drop them now</p>
                                             </div>
