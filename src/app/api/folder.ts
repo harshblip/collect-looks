@@ -57,3 +57,27 @@ export async function getFolderItems(userId: number, folderId: number): Promise<
 
     return response.data.message
 }
+
+export async function setFolderLock(password: string, folderId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/lockfolder`, {
+        password, folderId
+    })
+
+    if(response.status !== 201){
+        throw new Error(response.data?.message || 'error in setFolderLock')
+    }
+
+    return response.data.message
+}
+
+export async function unlockFolder(folderId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/unlockfolder`, {
+        folderId
+    })
+
+    if(response.status !== 201){
+        throw new Error(response.data?.message || 'error in unlockFolder')
+    }
+
+    return response.data.message
+}

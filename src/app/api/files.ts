@@ -79,3 +79,27 @@ export async function getFileInfo(user_id: number, id: number): Promise<InfoData
     }
     return response.data.message
 }
+
+export async function setFileLock(password: string, fileId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/lockfile`, {
+        password, fileId
+    })
+
+    if(response.status !== 201){
+        throw new Error(response.data?.message || 'error in setFileLock')
+    }
+
+    return response.data.message
+}
+
+export async function unlockFile(fileId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/lockfile`, {
+        fileId
+    })
+
+    if(response.status !== 201){
+        throw new Error(response.data?.message || 'error in unlockFile')
+    }
+
+    return response.data.message
+}

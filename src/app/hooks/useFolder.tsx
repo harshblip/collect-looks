@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addFilesToFolder, createFolder, getFolderItems, getFolders } from "../api/folder";
+import { addFilesToFolder, createFolder, getFolderItems, getFolders, setFolderLock, unlockFolder } from "../api/folder";
 import { Files } from "@/types/mediaTypes";
 
 export const useCreateFolder = () => {
@@ -65,4 +65,40 @@ export const useGetFolderItems = (userId: number, folderId: number) => {
         staleTime: 1000 * 30,
         retry: 2
     })
+}
+
+export const useLockFolder = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ password, folderId }: { password: string, folderId: number }) => {
+            return await setFolderLock(password, folderId)
+        },
+        onMutate: async ({ folderId }: { password: string, folderId: number }) => {
+            console.log(`locked folder with folderId ${folderId}`);
+        },
+        onError: (error) => {
+            console.error("Failed to folder file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] });
+        },
+    });
+}
+
+export const useUnlockFolder = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ folderId }: { folderId: number }) => {
+            return await unlockFolder(folderId)
+        },
+        onMutate: async ({ folderId }: { folderId: number }) => {
+            console.log(`folder unlocked with folderId ${folderId}`);
+        },
+        onError: (error) => {
+            console.error("Failed to unlock folder:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] });
+        },
+    });
 }

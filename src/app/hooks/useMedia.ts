@@ -2,7 +2,7 @@ import { useAppSelector } from "@/lib/store";
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, starFile, uploadFile } from "../api/files";
+import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -92,4 +92,40 @@ export const useGetFileInfo = (user_id: number, id: number) => {
         staleTime: 1000 * 30,
         retry: 2
     })
+}
+
+export const useLockFile = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ password, fileId }: { password: string, fileId: number }) => {
+            return await setFileLock(password, fileId)
+        },
+        onMutate: async ({ password, fileId }: { password: string, fileId: number }) => {
+            console.log(`locked file with fileId ${fileId}`);
+        },
+        onError: (error) => {
+            console.error("Failed to lock file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] });
+        },
+    });
+}
+
+export const useUnlockFile = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ fileId }: { fileId: number }) => {
+            return await unlockFile(fileId)
+        },
+        onMutate: async ({ fileId }: { fileId: number }) => {
+            console.log(`file unlocked with fileId ${fileId}`);
+        },
+        onError: (error) => {
+            console.error("Failed to unlock file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] });
+        },
+    });
 }
