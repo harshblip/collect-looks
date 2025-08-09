@@ -57,6 +57,8 @@ export default function Card({ data }: {
                         show && <div className="absolute">
                             <MoreDialog
                                 id={data.id}
+                                locked={data.is_locked || false}
+                                type={data.file_type}
                                 showMe={setShow}
                             />
                         </div>

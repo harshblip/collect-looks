@@ -5,11 +5,14 @@ import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/
 import { prefetchInfo, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setInfoData, setViewInfo } from "@/lib/slice/folderSlice";
+import { setInfoData, setLockModal, setViewInfo } from "@/lib/slice/folderSlice";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
 
-export default function MoreDialog({ id, showMe }: {
+export default function MoreDialog({ id, showMe, locked, type }: {
     id: number,
     showMe: React.Dispatch<React.SetStateAction<boolean>>
+    locked: boolean,
+    type: string
 }) {
     const dispatch = useDispatch()
     const { mutate: starFile } = useStarFile();
@@ -41,12 +44,25 @@ export default function MoreDialog({ id, showMe }: {
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30"
                         onClick={() => {
                             dispatch(setViewInfo(true))
-                            showMe(false) 
+                            showMe(false)
                         }}
                         onMouseEnter={() => refetch()}
                     >
                         <InformationCircleIcon className="w-5" />
                         <p> info </p>
+                    </button>
+                    <button
+                        onClick={() => dispatch(setLockModal({
+                            lock: true,
+                            id: id,
+                            type: type
+                        }))}
+                        className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30"
+                    >
+                        <LockClosedIcon className="w-5" />
+                        {
+                            locked ? `unlock` : `lock`
+                        }
                     </button>
                     <div className="flex hover hover:bg-red-400 hover:text-white rounded-lg space-x-2 p-2 items-center active:scale-95 w-30">
                         <TrashIcon className="w-5" />

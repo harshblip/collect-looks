@@ -11,7 +11,7 @@ export interface Files {
     is_trashed: string,
     folder_id: number,
     description?: string,
-    is_locked?: string,
+    is_locked?: boolean,
     password?: string,
     updated_at?: string,
     total_count: number
@@ -26,7 +26,7 @@ export interface Folders {
     starred: string,
     parent_id: number,
     description: string,
-    is_locked: string,
+    is_locked: boolean,
     created_at: string,
     updated_at: string,
 }
