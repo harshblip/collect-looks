@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getUserData, updateUserData } from "../api/user"
+import { getUserData, updateLastOpened, updateUserData } from "../api/user"
 
 export const useGetUserData = (id: number) => {
     return useQuery({
@@ -29,6 +29,27 @@ export const useUpateUser = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["userData"] })
+        }
+    })
+}
+
+export const useUpdateLastOpened = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ type, fileId }: {
+            type: string,
+            fileId: number
+        }) => {
+            return await updateLastOpened(type, fileId)
+        },
+        onMutate: async () => {
+            console.log("last opened updated")
+        },
+        onError: (error) => {
+            console.error("Failed to update latest time: ", error)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allFiles"] })
         }
     })
 }

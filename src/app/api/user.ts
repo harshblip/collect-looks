@@ -27,3 +27,13 @@ export async function updateUserData(username: string, email: string, id: number
 
     return response.data.message
 }
+
+export async function updateLastOpened(type: string, fileId: number): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/updateLastOpened`, {type, fileId})
+
+    if (response.status !== 201) {
+        throw new Error(response.data?.message || "error in updateLastOpened")
+    }
+
+    return response.data.message
+}
