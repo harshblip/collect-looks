@@ -85,6 +85,8 @@ export async function setFileLock(password: string, fileId: number): Promise<str
         password, fileId
     })
 
+    console.log(response)
+
     if(response.status !== 201){
         throw new Error(response.data?.message || 'error in setFileLock')
     }

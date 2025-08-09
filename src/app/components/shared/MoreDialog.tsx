@@ -5,14 +5,15 @@ import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/
 import { prefetchInfo, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setInfoData, setLockModal, setViewInfo } from "@/lib/slice/folderSlice";
+import { setInfoData, setLockModal, setViewInfo, setViewLockModal } from "@/lib/slice/folderSlice";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
-export default function MoreDialog({ id, showMe, locked, type }: {
+export default function MoreDialog({ id, showMe, locked, type, password }: {
     id: number,
     showMe: React.Dispatch<React.SetStateAction<boolean>>
     locked: boolean,
-    type: string
+    type: string,
+    password: string
 }) {
     const dispatch = useDispatch()
     const { mutate: starFile } = useStarFile();
@@ -52,14 +53,20 @@ export default function MoreDialog({ id, showMe, locked, type }: {
                         <p> info </p>
                     </button>
                     <button
-                        onClick={() => dispatch(setLockModal({
-                            lock: true,
+                        onClick={() => {
+                            dispatch(setLockModal({
+                            lock: locked,
                             id: id,
-                            type: type
-                        }))}
+                            type: type,
+                            password: password
+                        }))
+                        dispatch(setViewLockModal(true))
+                        showMe(false)
+                    }
+                    }
                         className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-30"
                     >
-                        <LockClosedIcon className="w-5" />
+                        <LockClosedIcon className="w-5 mr-2" />
                         {
                             locked ? `unlock` : `lock`
                         }

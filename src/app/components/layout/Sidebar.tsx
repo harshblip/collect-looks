@@ -11,6 +11,7 @@ import FolderList from "../files/FolderList";
 import { useAppSelector } from "@/lib/store";
 import InfoCard from "../shared/InfoCard";
 import MediaViewer from "./MediaViewer";
+import LockModal from "../files/LockModal";
 
 export default function Sidebar() {
 
@@ -21,6 +22,7 @@ export default function Sidebar() {
     const infoData = useAppSelector(state => state.folderStates.infoData)
     const viewInfo = useAppSelector(state => state.folderStates.viewInfo)
     const viewMedia = useAppSelector(state => state.folderStates.viewMedia)
+    const viewLockModal = useAppSelector(state => state.folderStates.viewLockModal)
 
     const router = useRouter()
 
@@ -65,6 +67,9 @@ export default function Sidebar() {
                 }
                 {
                     viewMedia && <MediaViewer />
+                }
+                {
+                    viewLockModal && <LockModal />
                 }
                 <div className="mt-0" />
                 <SidebarButton

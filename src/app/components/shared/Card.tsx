@@ -59,6 +59,7 @@ export default function Card({ data }: {
                                 id={data.id}
                                 locked={data.is_locked || false}
                                 type={data.file_type}
+                                password={data.password || ''}
                                 showMe={setShow}
                             />
                         </div>

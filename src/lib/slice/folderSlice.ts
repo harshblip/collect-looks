@@ -12,8 +12,10 @@ export interface States {
     lockModal: {
         lock: boolean, 
         id: number,
-        type: string
-    }
+        type: string,
+        password: string
+    },
+    viewLockModal: boolean
 }
 
 const initialState: States = {
@@ -65,8 +67,10 @@ const initialState: States = {
     lockModal: {
         lock: false,
         id: 0,
-        type: ''
-    }
+        type: '',
+        password: ''
+    },
+    viewLockModal: false
 };
 
 export const folderSlice = createSlice({
@@ -91,11 +95,14 @@ export const folderSlice = createSlice({
         setViewMediaFiles: (state, action: PayloadAction<Files[]>) => {
             state.viewMediaFiles = action.payload
         },
-        setLockModal: (state, action: PayloadAction<{lock: boolean, id: number, type: string}>) => {
+        setLockModal: (state, action: PayloadAction<{lock: boolean, id: number, type: string, password: string}>) => {
             state.lockModal = action.payload
+        },
+        setViewLockModal: (state, action: PayloadAction<boolean>) => {
+            state.viewLockModal = action.payload
         }
     },
 });
 
-export const { setViewInfo, setInfoData, setFiles, setIndex, setViewMedia, setViewMediaFiles, setLockModal } = folderSlice.actions;
+export const { setViewInfo, setInfoData, setFiles, setIndex, setViewMedia, setViewMediaFiles, setLockModal, setViewLockModal } = folderSlice.actions;
 export const folderReducer = folderSlice.reducer;
