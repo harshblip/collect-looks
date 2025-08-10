@@ -3,20 +3,10 @@
 import Card from "@/app/components/shared/Card";
 import EmptyStarPage from "@/app/components/ui/EmptyStarPage";
 import { useGetStarredFiles } from "@/app/hooks/useMedia";
-import { setFiles } from "@/lib/slice/folderSlice";
-import { Files } from "@/types/mediaTypes";
-import { CloudIcon, EllipsisVerticalIcon, InformationCircleIcon, MapIcon, TruckIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import { Pixelify_Sans } from "next/font/google";
-import { useState } from "react";
-
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
 
 export default function Starred() {
-    const { data, error } = useGetStarredFiles(3) // send userId as parameter
+    const { data } = useGetStarredFiles(3) // send userId as parameter
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
