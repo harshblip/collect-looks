@@ -19,11 +19,6 @@ import LockScreen from "../components/shared/LockScreen";
 import { setIndex, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
-
 export default function Dashboard() {
 
     const token = useAppSelector((state) => state.auth.authToken);
