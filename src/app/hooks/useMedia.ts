@@ -1,6 +1,3 @@
-import { useAppSelector } from "@/lib/store";
-import axios from "axios"
-import { useDispatch } from "react-redux"
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 
