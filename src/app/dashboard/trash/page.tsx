@@ -1,3 +1,4 @@
+'use client'
 import EmptyTrashPage from "@/app/components/ui/EmptyTrashPage";
 
 export default function Trash() {
