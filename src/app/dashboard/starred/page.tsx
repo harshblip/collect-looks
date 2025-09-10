@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export default function Starred() {
     const { data } = useGetStarredFiles(3) // send userId as parameter
+    console.log(data)
     return (
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
