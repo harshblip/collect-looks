@@ -87,7 +87,7 @@ export async function setFileLock(password: string, fileId: number): Promise<str
 
     console.log(response)
 
-    if(response.status !== 201){
+    if (response.status !== 201) {
         throw new Error(response.data?.message || 'error in setFileLock')
     }
 
@@ -99,8 +99,22 @@ export async function unlockFile(fileId: number): Promise<string> {
         fileId
     })
 
-    if(response.status !== 201){
+    if (response.status !== 201) {
         throw new Error(response.data?.message || 'error in unlockFile')
+    }
+
+    return response.data.message
+}
+
+export async function getLastSeen(userId: number): Promise<Files[]> {
+    const response = await axios.get(`${BASE_URL}/upload/getRecentlyOpened`, {
+        params: {
+            userId: userId
+        }
+    })
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || 'error in getLastSeen')
     }
 
     return response.data.message

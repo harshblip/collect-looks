@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { deleteFiles, fetchAllFiles, getFileInfo, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
+import { deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -86,6 +86,16 @@ export const useGetFileInfo = (user_id: number, id: number) => {
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
         enabled: !!user_id,
+        staleTime: 1000 * 30,
+        retry: 2
+    })
+}
+
+export const useGetLastSeen = (userId: number) => {
+    return useQuery({
+        queryKey: ['lastSeen', userId],
+        queryFn: () => getLastSeen(userId),
+        enabled: !!userId,
         staleTime: 1000 * 30,
         retry: 2
     })
