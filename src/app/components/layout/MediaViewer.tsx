@@ -33,8 +33,8 @@ export default function MediaViewer() {
 
     useEffect(() => {
         const type = openFiles[updateI].file_type === null ? 'folders' : 'files'
-        show && updateLastOpened({ type: type, fileId: openFiles[updateI].id })
-    }, [show, setUpdateI])
+        updateLastOpened({ type: type, fileId: openFiles[updateI].id })
+    }, [])
 
     return (
         <>

@@ -1,5 +1,6 @@
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
+import { trashMedia, deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
+import { Files } from '@/types/mediaTypes';
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -130,6 +131,24 @@ export const useUnlockFile = () => {
         },
         onError: (error) => {
             console.error("Failed to unlock file:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] });
+        },
+    });
+}
+
+export const useDeleteFile = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ files }: { files: Files[] }) => {
+            return await trashMedia(files)
+        },
+        onMutate: async ({ files }: { files: Files[] }) => {
+            console.log(`${files.length} files deleted`);
+        },
+        onError: (error) => {
+            console.error("Failed to delete file:", error);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['allFiles'] });

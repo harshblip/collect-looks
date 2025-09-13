@@ -134,7 +134,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
 
                         <div className="flex flex-col">
                             <p className="text-sm text-primary"> Opened </p>
-                            <p className=" text-xl text-secondary font-medium"> {image.created_at.substring(0, 10)} </p>
+                            <p className=" text-xl text-secondary font-medium"> {image.updated_at.substring(0, 10)} </p>
                         </div>
 
                     </div>

@@ -13,7 +13,7 @@ export interface Files {
     description?: string,
     is_locked?: boolean,
     password?: string,
-    updated_at?: string,
+    updated_at: string,
     total_count: number
 }
 

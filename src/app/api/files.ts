@@ -120,3 +120,15 @@ export async function getLastSeen(userId: number): Promise<Files[]> {
     return response.data.message
 }
 
+export async function trashMedia(files: Files[]): Promise<string> {
+    const response = await axios.post(`${BASE_URL}/upload/trashMedia`, {
+        files
+    })
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || 'error in deleteFile')
+    }
+
+    return response.data.message
+}
+
