@@ -141,10 +141,10 @@ export const useUnlockFile = () => {
 export const useDeleteFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ files }: { files: Files[] }) => {
+        mutationFn: async ({ files }: { files: any }) => {
             return await trashMedia(files)
         },
-        onMutate: async ({ files }: { files: Files[] }) => {
+        onMutate: async ({ files }: { files: any }) => {
             console.log(`${files.length} files deleted`);
         },
         onError: (error) => {
