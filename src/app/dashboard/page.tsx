@@ -112,7 +112,7 @@ export default function Dashboard() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.2 }}
-                                className="flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1"
+                                className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
                                 onClick={() => setShow(!show)}
                             >
                                 <div
@@ -131,7 +131,7 @@ export default function Dashboard() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ duration: 0.2 }}
-                                    className="p-6"
+                                    className={`${viewFolder && `-mt-10`} p-6`}
                                 >
                                     {/* Column Headers */}
                                     <ColumnHeaders />
@@ -146,6 +146,7 @@ export default function Dashboard() {
                                                     transition={{ duration: 0.2 }}
                                                     key={i}
                                                     onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'folderFiles')}
+                                                    className="-mt-0"
                                                 >
                                                     <Card data={x} />
                                                 </motion.div>

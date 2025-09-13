@@ -19,7 +19,8 @@ export default function LockScreen({
     const [error, setError] = useState<string>("")
     const [typedPassword, setTypedPassword] = useState<string>("")
 
-    function verify() {
+    function verify(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
         password === typedPassword ? (setLocked(false), setError("")) : setError("password's wrong. pls try again")
     }
 
@@ -42,7 +43,7 @@ export default function LockScreen({
                         <p className={`${pixel.className} text-4xl`}> Protected folder </p>
                         <form
                             className="flex items-center space-x-4 mt-16"
-                            onSubmit={verify}
+                            onSubmit={(e) => verify(e)}
                         >
                             <div className="flex flex-col space-y-2">
                                 <input
@@ -61,7 +62,7 @@ export default function LockScreen({
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.2 }}
                                 className="bg-gray-400 text-white hover text-sm rounded-md p-2"
-                                onClick={verify}
+                                onClick={() => verify}
                             >
                                 Lets goo
                             </motion.button>
