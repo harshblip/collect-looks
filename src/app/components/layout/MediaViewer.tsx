@@ -31,6 +31,8 @@ export default function MediaViewer() {
 
     const { mutate: updateLastOpened } = useUpdateLastOpened()
 
+    console.log(openFiles[updateI].is_locked, openFiles[updateI].password)
+
     useEffect(() => {
         const type = openFiles[updateI].file_type === null ? 'folders' : 'files'
         updateLastOpened({ type: type, fileId: openFiles[updateI].id })
