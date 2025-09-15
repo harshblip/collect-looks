@@ -16,7 +16,7 @@ import LockModal from "../files/LockModal";
 export default function Sidebar() {
 
     const [show, setShow] = useState<boolean>(false)
-    const [showCreateFolder, setShowCreateFolder] = useState<boolean>(false)
+    const showCreateFolder = useAppSelector(state => state.folderStates.viewCreateFolder)
     const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
     const showFileModal = useAppSelector(state => state.states.fileModal)
     const infoData = useAppSelector(state => state.folderStates.infoData)
@@ -40,15 +40,11 @@ export default function Sidebar() {
                 {
                     show && <UploadModal
                         setShow={setShow}
-                        setShowCreateFolder={setShowCreateFolder}
                         showFileUploader={setShowFileUpload}
-
                     />
                 }
                 {
-                    showCreateFolder && <CreateFolder
-                        showMe={setShowCreateFolder}
-                    />
+                    showCreateFolder && <CreateFolder />
                 }
                 {
                     showFileUpload && <FileUploader

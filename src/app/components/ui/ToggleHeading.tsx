@@ -1,10 +1,12 @@
 import { useGetFolderItems } from "@/app/hooks/useFolder";
+import { setViewCreateFolder } from "@/lib/slice/folderSlice";
 import { setSelectedFolders } from "@/lib/slice/statesSlice";
 import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice";
 import { useAppSelector } from "@/lib/store";
 import { FoldersArray } from "@/types/mediaTypes";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
+import { Folder } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -29,6 +31,7 @@ export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<R
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.2 }}
+                    className="flex w-full justify-between"
                 >
                     <div className="flex space-x-1 truncate">
                         <HomeIcon
@@ -61,6 +64,15 @@ export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<R
                             </motion.div>)
                         }
                     </div>
+                    <button 
+                    className="border-2 border-dashed border-gray-400 outline-none p-2 rounded-md text-secondary w-[14rem] flex justify-center items-center hover hover:bg-gray-200  hover:border-gray-200"
+                    onClick={() => {
+                        dispatch(setViewCreateFolder(true))
+                    }}
+                    >
+                        <span> <Folder className="text-gray-500 w-6 mr-2" /></span> Create new folder
+                        
+                    </button>
                 </motion.div>
             </AnimatePresence>
         </>

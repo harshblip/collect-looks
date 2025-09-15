@@ -16,7 +16,7 @@ import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
-import { setIndex, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
+import { setIndex, setParentId, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
@@ -28,6 +28,7 @@ export default function Dashboard() {
     const dispatch = useDispatch()
 
     const [selectedFolderId, setSelectedFolderId] = useState<number>(0)
+    const [count, setCount] = useState<number>(1)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [show, setShow] = useState<boolean>(false)
     const [password, setPassword] = useState<string>("")
@@ -46,6 +47,12 @@ export default function Dashboard() {
     const folders = useAppSelector(state => state.states.selectedFolders)
 
     function openFolder(x: Files) {
+        setCount(prevCount => prevCount + 1)
+        if(folders.length !== 1){
+            console.log(selectedFolderId)
+            dispatch(setParentId(selectedFolderId))
+        }
+
         dispatch(setViewFolder(true))
         setSelectedFolderId(x.id)
         console.log("locked ?", x.is_locked)

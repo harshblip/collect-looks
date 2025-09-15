@@ -7,9 +7,11 @@ export async function createFolder(
     description: string,
     is_locked: boolean,
     password: string,
-    id: number): Promise<string> {
+    id: number,
+    parent_id: number | null
+): Promise<string> {
 
-    const response = await axios.post(`${BASE_URL}/upload/createFolder`, { name, description, password, is_locked, id })
+    const response = await axios.post(`${BASE_URL}/upload/createFolder`, { name, description, password, is_locked, id, parent_id })
 
     if (response.status !== 201) {
         throw new Error(response.data?.message || "error in createFolder")

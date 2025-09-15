@@ -5,14 +5,15 @@ import { Files } from "@/types/mediaTypes";
 export const useCreateFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ name, description, is_locked, password, id }: {
+        mutationFn: async ({ name, description, is_locked, password, id, parent_id }: {
             name: string,
             description: string,
             is_locked: boolean,
             password: string,
-            id: number
+            id: number,
+            parent_id: number | null
         }) => {
-            return await createFolder(name, description, is_locked, password, id)
+            return await createFolder(name, description, is_locked, password, id, parent_id)
         },
         onMutate: async () => {
             console.log(`folder created mutate`)
@@ -21,7 +22,7 @@ export const useCreateFolder = () => {
             console.error("Failed to create folder: ", error)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFiles"] })
+            queryClient.invalidateQueries({ queryKey: ["allFiles", 'folderItems'] })
         }
     })
 }

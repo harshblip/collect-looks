@@ -5,12 +5,17 @@ import Checkbox from "../ui/Checkbox"
 import { AnimatePresence, motion } from "framer-motion"
 import { EyeIcon } from "@heroicons/react/24/solid"
 import { useCreateFolder } from "@/app/hooks/useFolder"
+import { useDispatch } from "react-redux"
+import { setViewCreateFolder } from "@/lib/slice/folderSlice"
+import { useAppSelector } from "@/lib/store"
 
 interface PropTypes {
-    showMe: React.Dispatch<React.SetStateAction<boolean>>
+    showMe: boolean
 }
 
-function CreateFolder({ showMe }: PropTypes) {
+function CreateFolder() {
+
+    const dispatch = useDispatch()
 
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
@@ -18,11 +23,14 @@ function CreateFolder({ showMe }: PropTypes) {
     const [locked, setLocked] = useState<boolean>(false)
     const [see, setSee] = useState<boolean>(false)
     const [created, setCreated] = useState<boolean>(false)
+    const parent_id = useAppSelector(state => state.folderStates.parent_id)
+
+    console.log(parent_id)
 
     useEffect(() => {
         if (created) {
             const timeout = setTimeout(() => {
-                showMe(false)
+                dispatch(setViewCreateFolder(false))
             }, 2000)
             return () => clearTimeout(timeout);
         }
@@ -90,7 +98,7 @@ function CreateFolder({ showMe }: PropTypes) {
                             <div className={`flex justify-around w-full items-center ${locked ? `mt-6` : `mt-16`}`}>
                                 <button
                                     className="text-primary rounded-md w-[10rem] border-2 border-gray-200 p-3 hover"
-                                    onClick={() => showMe((show) => !show)}
+                                    onClick={() => dispatch(setViewCreateFolder(false))}
                                 >
                                     cancel
                                 </button>
@@ -103,7 +111,8 @@ function CreateFolder({ showMe }: PropTypes) {
                                             name: name,
                                             description: description,
                                             is_locked: locked,
-                                            password: password
+                                            password: password,
+                                            parent_id: parent_id
                                         })
                                     }}
                                 >
