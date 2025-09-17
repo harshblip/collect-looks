@@ -49,7 +49,7 @@ function AuthForm({
             } */}
             <AnimatePresence mode='wait'>
                 <motion.div
-                    className="primary-bg flex justify-start mt-10 flex-col space-y-8"
+                    className="primary-bg flex justify-center items-center mt-10 flex-col space-y-8"
                 >
                     {
                         mode === 'Create an account' && username !== undefined && (
@@ -59,7 +59,9 @@ function AuthForm({
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
+                            className="mt-3"
                             >
+                            <div/>
                                 <AuthInput
                                     label="Username"
                                     type="text"
@@ -75,7 +77,7 @@ function AuthForm({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
-                    <div className="flex space-x-2 md:space-x-4">
+                    <div className="flex ml-14 space-x-2 md:space-x-4">
                         <AuthInput
                             label="Password"
                             type={`${see ? `text` : `password`}`}
@@ -104,7 +106,7 @@ function AuthForm({
                         />
                     </div>
                     {
-                        mode === 'Sign in' && <div className="text-sm flex items-center space-x-4 -mt-6">
+                        mode === 'Sign in' && <div className="text-sm flex -ml-52  space-x-4 -mt-6">
                             <a
                                 className={`font-glook text-secondary mb-2 hover`}
                                 onClick={() => setVisible(true)}
@@ -112,7 +114,7 @@ function AuthForm({
                         </div>
                     }
                     {
-                        mode === 'Sign in' && <div className="flex items-center space-x-4 -mt-6">
+                        mode === 'Sign in' && <div className="flex -ml-44 items-center space-x-4 -mt-6">
                             <Checkbox 
                                 setChecked={setChecked}
                             />
@@ -121,7 +123,7 @@ function AuthForm({
                     }
                     <button
                         onClick={submit}
-                        className={` hover font-glook bg-[#495057] text-white p-2 rounded-md w-[20rem] -mt-4`}
+                        className={` hover font-glook bg-[#495057] text-white p-2 rounded-md w-[20rem] mt-4`}
                     >
                         {mode}
                     </button>

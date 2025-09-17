@@ -29,15 +29,15 @@ export default function Auth() {
 
     return (
         <>
-            <div className="primary-bg md:mt-0 mt-24 lg:items-start justify-center    items-center flex flex-col h-screen">
+            <div className="primary md:mt-0 mt-24 lg:items-center justify-center items-center flex flex-col h-screen">
                 {
-                    visible && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-center justify-center" >
+                    visible && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center" >
                         <ForgotModal
                             setVisible={setVisible}
                         />
                     </div>
                 }
-                <div className="md:p-32 flex flex-col p-24">
+                <div className="md:p-32 flex flex-col items-center p-24">
                     <SmallLogo />
                     <p className={`font-glook text-primary text-3xl mt-8`}>{mode}</p>
                     {
