@@ -2,7 +2,7 @@ import { BASE_URL } from "@/lib/constants";
 import { User } from "@/types/userTypes";
 import axios from "axios";
 
-export async function loginUser(email: string, password: string, checked: boolean): Promise<string> {
+export async function loginUser(email: string, password: string, checked: boolean): Promise<any> {
     const response = await axios.get(`${BASE_URL}/user/login`, {
         params: {
             email: email,
@@ -14,7 +14,7 @@ export async function loginUser(email: string, password: string, checked: boolea
     if (response.status !== 200) {
         throw new Error(response.data?.message || "error in loginUser")
     }
-
+    console.log(response.data)
     return response.data.message
 
 }
