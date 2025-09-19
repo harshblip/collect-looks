@@ -15,12 +15,12 @@ function AuthInput({
     return (
         <>
             <div className="flex flex-col">
-                <label className={`font-gochi text-xl font-medium`}>{label}</label>
+                <label className={`font-product text-xl text-gray-500 font-medium`}>{label}</label>
                 <input
                     type={type}
                     value={value}
                     onChange={onChange}
-                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md font-glook`}
+                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md font-product text-secondary`}
                 />
             </div>
         </>

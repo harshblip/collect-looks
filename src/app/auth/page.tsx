@@ -10,6 +10,7 @@ import SmallLogo from "../components/ui/SmallLogo";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from 'framer-motion';
 import ForgotModal from "../components/auth/ForgotModal";
+import { useLoginUser, useSignupUser } from "../hooks/useUser";
 
 export default function Auth() {
 
@@ -20,6 +21,8 @@ export default function Auth() {
     const [visible, setVisible] = useState<boolean>(false)
     const [checked, setChecked] = useState<boolean>(false)
 
+    const { refetch } = useLoginUser(email, password, checked)
+    const { mutate: signupUser } = useSignupUser()
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -70,7 +73,7 @@ export default function Auth() {
                                 visible={visible}
                                 setVisible={setVisible}
                                 setChecked={setChecked}
-                                submit={() => Signup(username, email, password, setError)}
+                                submit={() => signupUser({ username: username, email: email, password: password })}
                             />
                         </div> : <div className="fade-in">
                             <AuthForm
@@ -84,7 +87,7 @@ export default function Auth() {
                                 visible={visible}
                                 setVisible={setVisible}
                                 setChecked={setChecked}
-                                submit={() => Signin(email, password, setError, router, dispatch, checked)}
+                                submit={() => refetch()}
                             />
                         </div>
                     }

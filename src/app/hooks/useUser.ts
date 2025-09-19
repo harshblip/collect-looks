@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getUserData, updateLastOpened, updateUserData } from "../api/user"
+import { getUserData, loginUser, signupUser, updateLastOpened, updateUserData } from "../api/user"
 
 export const useGetUserData = (id: number) => {
     return useQuery({
@@ -8,6 +8,37 @@ export const useGetUserData = (id: number) => {
         enabled: !!id,
         staleTime: 1000 * 30,
         retry: 2
+    })
+}
+
+export const useLoginUser = (email: string, password: string, checked: boolean) => {
+    return useQuery({
+        queryKey: ['userLogin', email],
+        queryFn: () => loginUser(email, password, checked),
+        enabled: false, // auto-run false
+        staleTime: 1000 * 30,
+        retry: 2
+    })
+}
+
+export const useSignupUser = () => {
+    return useMutation({
+        mutationFn: async ({ username, email, password }: {
+            username: string,
+            email: string,
+            password: string
+        }) => {
+            return await signupUser(username, email, password)
+        },
+        onMutate: async () => {
+            console.log("user created")
+        },
+        onError: (error) => {
+            console.error("Failed to create user: ", error)
+        },
+        onSuccess: () => {
+            console.error("user created")
+        }
     })
 }
 
@@ -53,3 +84,4 @@ export const useUpdateLastOpened = () => {
         }
     })
 }
+
