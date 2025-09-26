@@ -1,5 +1,6 @@
 'use client'
 
+import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import { useAppSelector } from "@/lib/store"
 import { useEffect, useState } from "react"
 import { useGetAllFiles } from "../hooks/useMedia"
@@ -7,7 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Card from "../components/shared/Card"
 import MoreOptions from "../components/ui/MoreOptions"
 import ColumnHeaders from "../components/ui/ColumnHeaders"
-import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import ToggleHeading from "../components/ui/ToggleHeading"
 import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice"
 import { setSelectedFolders } from "@/lib/slice/statesSlice"
