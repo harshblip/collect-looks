@@ -1,6 +1,7 @@
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { trashMedia, deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 import { Files } from '@/types/mediaTypes';
+import { useEffect } from 'react';
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -155,3 +156,20 @@ export const useDeleteFile = () => {
         },
     });
 }
+
+export const useKeyboardShortcuts = (shortcuts: Record<string, () => void>) => {
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.ctrlKey || e.metaKey) {
+                const key = e.key.toLowerCase();
+                if (shortcuts[key]) {
+                    e.preventDefault();
+                    shortcuts[key]();
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [shortcuts]);
+};

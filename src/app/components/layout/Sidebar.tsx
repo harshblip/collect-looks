@@ -12,9 +12,13 @@ import { useAppSelector } from "@/lib/store";
 import InfoCard from "../shared/InfoCard";
 import MediaViewer from "./MediaViewer";
 import LockModal from "../files/LockModal";
+import { useDispatch } from "react-redux";
+import { setViewCreateFolder } from "@/lib/slice/folderSlice";
+import { useKeyboardShortcuts } from "@/app/hooks/useMedia";
 
 export default function Sidebar() {
 
+    const dispatch = useDispatch()
     const [show, setShow] = useState<boolean>(false)
     const showCreateFolder = useAppSelector(state => state.folderStates.viewCreateFolder)
     const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
@@ -25,6 +29,15 @@ export default function Sidebar() {
     const viewLockModal = useAppSelector(state => state.folderStates.viewLockModal)
 
     const router = useRouter()
+
+    useKeyboardShortcuts({
+        "^": () => dispatch(setViewCreateFolder(true)),
+        "i": () => setShowFileUpload(lol => !lol),
+        ".": () => router.push("/dashboard"),
+        ";": () => router.push("/dashboard/recent"),
+        "*": () => router.push("/dashboard/starred"),
+        "!": () => router.push("/dashboard/trash")
+    })
 
     return (
         <>

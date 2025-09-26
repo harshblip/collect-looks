@@ -1,9 +1,7 @@
-'use client'
-
 import { setViewCreateFolder } from "@/lib/slice/folderSlice";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 interface PropTypes {
