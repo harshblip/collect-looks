@@ -13,7 +13,7 @@ export const useGetUserData = (id: number) => {
 }
 
 export const useLoginUser = (email: string, password: string, checked: boolean) => {
-    const { userlogin } = useAuth()
+    // const { userlogin } = useAuth()
     return useQuery({
         queryKey: ['userLogin', email],
         queryFn: () => loginUser(email, password, checked),

@@ -1,19 +1,59 @@
 <div align="center">
   
-<img src="/public/looks.png" alt="looks Image" width="600" height="250">
+<img src="/public/github-logo.png" alt="looks Image" width="600" height="300">
 
 </div>
-<h3 align="center"> backend to a main project </h3>
+<h3 align="center"> face card of collect </h3>
 
 <p align="center">
-     <img src = "https://img.shields.io/badge/Node-40916c?style=for-the-badge&logo=node.js&logoColor=white" />
-     <img src = "https://img.shields.io/badge/PostgreSQL-5849BE?style=for-the-badge&logo=postgresql&logoColor=white" />
-     <img src = "https://img.shields.io/badge/Express-52b788.svg?style=for-the-badge&logo=express&logoColor=white" />
-     <img src = "https://img.shields.io/badge/aws-fdc500.svg?style=for-the-badge&logo=amazon-web-services&logoColor=black" />
-     <img src = "https://img.shields.io/badge/JWT-%23000000.svg?style=for-the-badge&logo=json-web-tokens&logoColor=white" />
+     <img src = "https://img.shields.io/badge/next-000000?style=for-the-badge&logo=next.js&logoColor=white" />
+     <img src = "https://img.shields.io/badge/redux-5849BE?style=for-the-badge&logo=redux&logoColor=white" />
+     <img src = "https://img.shields.io/badge/framer_motion-ffca28?style=for-the-badge&logo=framer&logoColor=%23ffffff&color=%237178f6" />
+     <img src = "https://img.shields.io/badge/TanStack_Query-160440?style=for-the-badge&logo=react-query" />
+     <img src = "https://img.shields.io/badge/Tailwind_CSS-grey?style=for-the-badge&logo=tailwind-css&logoColor=38B2AC" />
  </p>
 
-## 🧠 Collect – Backend
+## 🧠 Collect – Frontend
+A best-in-class frontend crafted with clean, elegant UI, industry-level best practices, and optimized workflows that make every interaction seamless.
+
+## Features
+- **Structured Architecture** 🏗️🧩 - separating data fetch and display into presentation, bussiness layer and data access layer enhancing maintainability, scalability, and flexibility
+- **Tanstack query for data management** 📦🗂️ - utilizing `@tanstack` for server-state management, caching, hydration, and query invalidation.
+- **Best in class UI** 🎨✨ - consistent typography, spacing, and state-driven UI transitions creating the best hand-made ui which is not copied from any dribbble
+- **Optimizations** ⚡🛠️- which goes unnoticed most of the time but values the most - **pagination**, **memoization**, **prefetching queries**
+
+## Implementation details
+
+### Presentation–Logic–Data Layering 🧩
+- used this technique to separate the component logic from hooks from standard server api calling. 
+- separating layer-by-layer with their specific concerns. 
+- in case if i have to add any feature if its any `new api -> api layer`. a `new component -> component layer` wihtout breaking or tweaking unncessary part of code
+- ultra helpful in debugging. separated by concerns debug ezzzz
+
+### Tanstack query 🗂️
+ - Instead of re-fetching data every time (because who loves wasted network calls?), TanStack Query just caches it — so the app feels lightning ⚡ fast without you even trying 🤫.
+ - When data changes, it refetches ♻ magically — no need to write boring useEffect logic like a mid dev
+ - Data gets loaded before the user even asks for it (prefetching). Like serving whole food with a glass of water before mummy comes in and raids 🎐
+
+
+### Best-in-class glossy ui
+- the ui is handmade completely but truly inspired from google drive. (*what'll be the best place to inspire from than a cloud service itself*)
+- the ui is well-thought, smooth, creative and ultra classy which may seem like one of series A funded startups itself
+- (i am pretty great in designing too. open for design work too heheh 🎨)
+- well loaded with necessary loaders, information indicators for navigation, perfect contrast ccolors for text visibility
+
+|      Login       |         Dashboard Page      |
+| :---------------------: | :----------------------: |
+| <img src='/public/demo/login.png'> | <img src='/public/demo/dashboard.png'> |
+
+
+|      account info       |         account storage      |
+| :---------------------: | :----------------------: |
+| <img src='/public/demo/account-info.png'> | <img src='/public/demo/account-storage.png'> |
+
+|      create folder       |         empty page      |
+| :---------------------: | :----------------------: |
+| <img src='/public/demo/create-folder.png'> | <img src='/public/demo/empty-page.png'> |
 
 ## Getting Started
 
