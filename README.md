@@ -24,6 +24,8 @@ A best-in-class frontend crafted with clean, elegant UI, industry-level best pra
 
 ## Implementation details
 
+<img src = '/public/architecture.png' alt='architecture diagram' />
+
 ### Presentation–Logic–Data Layering 🧩
 - used this technique to separate the component logic from hooks from standard server api calling. 
 - separating layer-by-layer with their specific concerns. 
@@ -44,7 +46,7 @@ A best-in-class frontend crafted with clean, elegant UI, industry-level best pra
 
 |      Login       |         Dashboard Page      |
 | :---------------------: | :----------------------: |
-| <img src='/public/demo/login.png'> | <img src='/public/demo/dashboard.png'> |
+| <img src='/public/demo/login-page.png'> | <img src='/public/demo/dashboard.png'> |
 
 
 |      account info       |         account storage      |
