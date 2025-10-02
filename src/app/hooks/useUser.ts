@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getUserData, loginUser, signupUser, updateLastOpened, updateUserData } from "../api/user"
+import { useAuth } from "../context/AuthContext"
 
 export const useGetUserData = (id: number) => {
     return useQuery({
@@ -12,6 +13,7 @@ export const useGetUserData = (id: number) => {
 }
 
 export const useLoginUser = (email: string, password: string, checked: boolean) => {
+    const { userlogin } = useAuth()
     return useQuery({
         queryKey: ['userLogin', email],
         queryFn: () => loginUser(email, password, checked),

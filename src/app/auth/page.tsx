@@ -28,7 +28,7 @@ export default function Auth() {
 
     useEffect(() => {
         setShow(false)
-        router.push('/dashboard')
+        // router.push('/dashboard')
     }, [isFetched])
 
     const mode = useAppSelector(state => state.states.mode) || 'Create an account'

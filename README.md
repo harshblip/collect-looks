@@ -1,4 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  
+<img src="/public/looks.png" alt="looks Image" width="600" height="250">
+
+</div>
+<h3 align="center"> backend to a main project </h3>
+
+<p align="center">
+     <img src = "https://img.shields.io/badge/Node-40916c?style=for-the-badge&logo=node.js&logoColor=white" />
+     <img src = "https://img.shields.io/badge/PostgreSQL-5849BE?style=for-the-badge&logo=postgresql&logoColor=white" />
+     <img src = "https://img.shields.io/badge/Express-52b788.svg?style=for-the-badge&logo=express&logoColor=white" />
+     <img src = "https://img.shields.io/badge/aws-fdc500.svg?style=for-the-badge&logo=amazon-web-services&logoColor=black" />
+     <img src = "https://img.shields.io/badge/JWT-%23000000.svg?style=for-the-badge&logo=json-web-tokens&logoColor=white" />
+ </p>
+
+## 🧠 Collect – Backend
 
 ## Getting Started
 
@@ -28,6 +43,8 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Next js
 
 ## Deploy on Vercel
 
