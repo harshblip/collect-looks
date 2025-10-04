@@ -118,11 +118,6 @@
     cursor: pointer;
 }
 
-.page-fade {
-    opacity: 0;
-    animation: fadeIn 0.4s ease-in forwards;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -134,6 +129,12 @@
         transform: translateY(0);
     }
 }
+
+.page-fade {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-in forwards;
+}
+
 
 .fade-section {
     opacity: 0;

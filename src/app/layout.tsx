@@ -7,6 +7,7 @@ import { Gloock, Gochi_Hand } from "next/font/google";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouteLoader } from "./components/layout/RouteLoader";
 import { AuthProvider } from "./context/AuthContext";
+import PageTransition from "./components/ui/PageTransition";
 
 const glook = Gloock({
   weight: ['400'],
@@ -34,7 +35,9 @@ export default function RootLayout({
           <ReduxProvider>
             <QueryClientProvider client={queryClient}>
               <RouteLoader />
-              {children}
+              <PageTransition>
+                {children}
+              </PageTransition>
             </QueryClientProvider>
           </ReduxProvider>
         </AuthProvider>

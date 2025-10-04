@@ -4,7 +4,7 @@ import Logo from "../components/ui/logo"
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (
         <>
-            <div className="flex lg:flex-row flex-col">
+            <div className="flex lg:flex-row flex-col page-fade">
                 <div
                     style={{
                         backgroundImage: `
