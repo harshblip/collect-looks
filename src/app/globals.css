@@ -40,8 +40,7 @@
     --mid-dark: #6C757D;
     --dark: #495057;
     --off-white: #DEE2E6;
-    --primary-bg: #EFEFEF
-;
+    --primary-bg: #EFEFEF;
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.141 0.005 285.823);
@@ -73,7 +72,8 @@
     --sidebar-accent: oklch(0.967 0.001 286.375);
     --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
     --sidebar-border: oklch(0.92 0.004 286.32);
-    --sidebar-ring: oklch(0.705 0.015 286.067)}
+    --sidebar-ring: oklch(0.705 0.015 286.067)
+}
 
 @theme {
     --breakpoint-sm: 640px;
@@ -116,6 +116,40 @@
 
 .hover:hover {
     cursor: pointer;
+}
+
+.page-fade {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-section {
+    opacity: 0;
+    animation: fadeInSection 0.5s ease forwards;
+}
+
+@keyframes fadeInSection {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 ::-webkit-scrollbar {
@@ -228,10 +262,11 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
     }
 }

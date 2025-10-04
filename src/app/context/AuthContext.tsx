@@ -2,7 +2,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
-
 interface AuthContextType {
     user: { id: string; username: string; role?: string } | null;
     accessToken: string | null;
@@ -25,9 +24,9 @@ export const AuthProvider = ({ children }: AuthProvider) => {
         // decode minimal info from JWT payload
         const decoded: any = jwtDecode(token);
         setUser({
-            id: decoded.sub,
+            id: decoded.id,
+            emai: decoded.email,
             username: decoded.username,
-            role: decoded.role,
         });
     };
 

@@ -13,13 +13,20 @@ export const useGetUserData = (id: number) => {
 }
 
 export const useLoginUser = (email: string, password: string, checked: boolean) => {
-    // const { userlogin } = useAuth()
-    return useQuery({
-        queryKey: ['userLogin', email],
-        queryFn: () => loginUser(email, password, checked),
-        enabled: false, // auto-run false
-        staleTime: 1000 * 30,
-        retry: 2
+    const { login } = useAuth()
+
+    return useMutation({
+        mutationFn: ({ email, password, checked }: { email: string; password: string; checked: boolean }) => loginUser(email, password, checked),
+
+        onSuccess: (data) => {
+            console.log(data, data.access_token)
+            const token = data.access_token
+            login(token)
+        },
+
+        onError: (error: any) => {
+            console.error('Login failed:', error)
+        },
     })
 }
 

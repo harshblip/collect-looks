@@ -15,7 +15,7 @@ export async function loginUser(email: string, password: string, checked: boolea
         throw new Error(response.data?.message || "error in loginUser")
     }
     console.log(response.data)
-    return response.data.message
+    return response.data
 
 }
 
