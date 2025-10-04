@@ -9,19 +9,29 @@ import { useDispatch } from "react-redux";
 import FilterModal from "../files/FilterModal";
 import SuggestionButtons from "./SuggestionButtons";
 import { useRouter } from "next/navigation";
+import { useGetSuggestions } from "@/app/hooks/useMedia";
 
 export default function SearchBar() {
 
     const searchSuggestions = useAppSelector(state => state.states.searchSuggestions)
     const dispatch = useDispatch()
     const navigate = useRouter()
-    const [visible, setVisible] = useState<boolean>(false)
+    const [searchQ, setSearchQ] = useState<string>('')
     const [searchQuery, setSearchQuery] = useState<string>('')
+    const [visible, setVisible] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
+    const { refetch, data } = useGetSuggestions(searchQuery, 3)
 
     console.log(searchSuggestions)
 
     const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            refetch()
+        }, 2000)
+        return () => clearTimeout(timeout)
+    }, [searchQuery])
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -75,11 +85,11 @@ export default function SearchBar() {
                         }}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         value={searchQuery}
-                        onFocus={() => setVisible(!visible)}  
+                        onFocus={() => setVisible(!visible)}
                     />
                     <AnimatePresence>
                         {
-                            visible && searchSuggestions.length ?
+                            !data ? visible && searchSuggestions.length ?
                                 <motion.div
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -99,7 +109,25 @@ export default function SearchBar() {
                                         )
                                     }
                                 </motion.div>
-                                : ''
+                                : '' : visible && <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-2"
+                                    onClick={() => console.log("clicked div")}
+                                >
+                                    {
+                                        data.map((_, i) => <SuggestionButtons
+                                            key={i}
+                                            index={i}
+                                            searchSuggestions={data}
+                                            setSearchQuery={setSearchQuery}
+                                            removeSuggestion={removeSuggestion}
+                                        />
+                                        )
+                                    }
+                                </motion.div>
                         }
                     </AnimatePresence>
                 </div>

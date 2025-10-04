@@ -2,6 +2,7 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { trashMedia, deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 import { Files } from '@/types/mediaTypes';
 import { useEffect } from 'react';
+import { getSuggestions } from '../api/search';
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -68,6 +69,16 @@ export const useGetStarredFiles = (userId: number) => {
         queryKey: ['starFiles', userId],
         queryFn: () => getStarFile(userId),
         enabled: !!userId,
+        staleTime: 1000 * 30,
+        retry: 2
+    })
+}
+
+export const useGetSuggestions = (word: string, userId: number) => {
+    return useQuery({
+        queryKey: ['suggestions', userId],
+        queryFn: () => getSuggestions(word, userId),
+        enabled: false,
         staleTime: 1000 * 30,
         retry: 2
     })
