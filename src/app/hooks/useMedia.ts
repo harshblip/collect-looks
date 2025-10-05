@@ -75,10 +75,11 @@ export const useGetStarredFiles = (userId: number) => {
 }
 
 export const useGetSuggestions = (word: string, userId: number) => {
+    console.log("came here1")
     return useQuery({
         queryKey: ['suggestions', userId],
         queryFn: () => getSuggestions(word, userId),
-        enabled: false,
+        enabled: !!userId,
         staleTime: 1000 * 30,
         retry: 2
     })

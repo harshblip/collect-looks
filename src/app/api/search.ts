@@ -10,6 +10,8 @@ export async function getSuggestions(word: string, userId: number): Promise<File
         }
     })
 
+    console.log("came here2", response.data)
+
     if (response.status !== 200) {
         throw new Error(response.data?.message || 'error in getSuggestions')
     }

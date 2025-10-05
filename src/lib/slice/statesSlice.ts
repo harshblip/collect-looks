@@ -12,7 +12,7 @@ export interface StateManager {
     mode: string,
     email: string,
     userId: number,
-    searchSuggestions: string[]
+    searchSuggestions: Files[]
 }
 
 const initialState: StateManager = {
@@ -44,7 +44,7 @@ export const statesSlice = createSlice({
         setMail: (state, action: PayloadAction<string>) => {
             state.email = action.payload
         },
-        setSearchSuggestions: (state, action: PayloadAction<string[]>) => {
+        setSearchSuggestions: (state, action: PayloadAction<Files[]>) => {
             state.searchSuggestions = action.payload
         },
         setFileModal: (state, action: PayloadAction<boolean>) => {

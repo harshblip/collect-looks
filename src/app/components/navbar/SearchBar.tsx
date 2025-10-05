@@ -10,6 +10,7 @@ import FilterModal from "../files/FilterModal";
 import SuggestionButtons from "./SuggestionButtons";
 import { useRouter } from "next/navigation";
 import { useGetSuggestions } from "@/app/hooks/useMedia";
+import { Files } from "@/types/mediaTypes";
 
 export default function SearchBar() {
 
@@ -22,13 +23,14 @@ export default function SearchBar() {
     const [show, setShow] = useState<boolean>(false)
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
 
-    console.log(searchSuggestions)
+    // console.log(searchSuggestions)
+    console.log(data)
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            refetch()
+            refetch()   
         }, 2000)
         return () => clearTimeout(timeout)
     }, [searchQuery])
@@ -40,13 +42,13 @@ export default function SearchBar() {
                 inputRef.current?.focus();
             }
         };
-
+        
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
+    
 
-
-    function addToSuggesstions(x: string) {
+    function addToSuggesstions(x: Files) {
         if (searchSuggestions) {
             dispatch(setSearchSuggestions([...searchSuggestions, x]))
         } else {
@@ -79,7 +81,6 @@ export default function SearchBar() {
                         placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                addToSuggesstions((e.target as HTMLInputElement).value)
                                 navigate.push('/dashboard/search')
                             }
                         }}
@@ -99,10 +100,10 @@ export default function SearchBar() {
                                     onClick={() => console.log("clicked div")}
                                 >
                                     {
-                                        searchSuggestions.map((_, i) => <SuggestionButtons
+                                        data && searchSuggestions.map((_, i) => <SuggestionButtons
                                             key={i}
                                             index={i}
-                                            searchSuggestions={searchSuggestions}
+                                            searchSuggestions={data}
                                             setSearchQuery={setSearchQuery}
                                             removeSuggestion={removeSuggestion}
                                         />
