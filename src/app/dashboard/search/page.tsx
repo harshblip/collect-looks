@@ -13,7 +13,7 @@ export default function SearchResults() {
                     <HomeIcon
                         onClick={() => navigate.push('/dashboard')}
                         className="w-10 text-secondary hover hover:bg-gray-200 rounded-lg p-2" />
-                    <p> search results for "{searchQuery[searchQuery.length - 1]}" </p>
+                    <p> search results for "{searchQuery}" </p>
                 </div>
             </div>
         </>

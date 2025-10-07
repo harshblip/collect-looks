@@ -17,20 +17,19 @@ export default function SearchBar() {
     const searchSuggestions = useAppSelector(state => state.states.searchSuggestions)
     const dispatch = useDispatch()
     const navigate = useRouter()
-    const [searchQ, setSearchQ] = useState<string>('')
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [visible, setVisible] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
 
     // console.log(searchSuggestions)
-    console.log(data)
+    // console.log(data)
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            refetch()   
+            refetch() 
         }, 2000)
         return () => clearTimeout(timeout)
     }, [searchQuery])

@@ -29,8 +29,9 @@ export default function SuggestionButtons({ index, searchSuggestions, setSearchQ
                     searchSuggestions[index].file_type === 'image' ? <Image
                         src={`${searchSuggestions[index].file_name}`}
                         alt={`${searchSuggestions[index].file_name}`}
-                    /> : searchSuggestions[index].file_type === 'video' ? <PlayCircleIcon width={4} /> : searchSuggestions[index].file_type === 'audio' ? <SignalIcon width={4} /> : searchSuggestions[index].file_type === 'folder' ? <FolderIcon width={4} /> :
-                        <DocumentIcon width={4} />
+                        width={6}
+                    /> : searchSuggestions[index].file_type === 'video' ? <PlayCircleIcon width={6} /> : searchSuggestions[index].file_type === 'audio' ? <SignalIcon width={6} /> : searchSuggestions[index].file_type === 'folder' ? <FolderIcon width={6} /> :
+                        <DocumentIcon width={6} />
                 }
                 <XMarkIcon
                     className="w-6 h-6 text-gray-400"

@@ -25,7 +25,25 @@ const initialState: StateManager = {
     mode: "signup",
     email: 'gajmohan@gmail.com',
     userId: 3,
-    searchSuggestions: []
+    searchSuggestions: [
+        {
+            id: 0,
+            user_id: 0,
+            file_name: "",
+            file_url: "",
+            file_type: "",
+            size: "",
+            created_at: "",
+            starred: "",
+            is_trashed: "",
+            folder_id: 0,
+            description: "",
+            is_locked: false,
+            password: "",
+            updated_at: "",
+            total_count: 0
+        }
+    ]
 };
 
 export const statesSlice = createSlice({

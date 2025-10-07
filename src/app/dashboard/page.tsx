@@ -52,7 +52,7 @@ export default function Dashboard() {
         if (!user) {
             setShowError(true)
             const timeout = setTimeout(() => {
-                router.push('/')
+                // router.push('/')
             }, 2000)
             return () => clearTimeout(timeout)
         }
@@ -119,9 +119,12 @@ export default function Dashboard() {
         <>
             {
                 showError ? <div className="flex justify-center z-1 mt-[15%]">
-                    <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-center">
-                        <p className={`${pixel.className} text-red-500 text-5xl`}> unauthorized access </p>
-                        <p className="text-secondary"> redirecting to login page </p>
+                    <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-between">
+                    <div className="flex items-center space-x-6 mt-10">
+                        <p className={`text-red-200 text-2xl -mt-1`}> error </p>
+                        <p className={`text-gray-200 text-7xl`}> LOL </p>
+                    </div>
+                        {/* <p className="text-secondary mt-[12rem] opacity-70 tracking-wider"> redirecting to login page </p> */}
                     </div>
                 </div> : <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                     {
