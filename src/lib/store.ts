@@ -11,7 +11,7 @@ import { generalReducer } from "./slice/generalSlice";
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["auth", "utility"],
+    whitelist: ["user", "utility"],
 };
 
 const rootReducer = combineReducers({

@@ -4,8 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface IAuthState {
     authToken: string
     email: string
-    userId: number
-    
+    userId: number  
 }
 
 const initialState: IAuthState = {

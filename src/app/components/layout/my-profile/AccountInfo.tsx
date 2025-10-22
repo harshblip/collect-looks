@@ -1,6 +1,6 @@
 'use client'
 
-import { useUpateUser } from "@/app/hooks/useUser";
+import { useUpdateUser } from "@/app/hooks/useUser";
 import { InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { Pixelify_Sans } from "next/font/google";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function AccountInfo({ username, email }: {
     const [isEditMode, setIsEditMode] = useState<boolean>(true);
     const [name, setName] = useState<string>(username);
     const [newEmail, setNewEmail] = useState<string>(email);
-    const { mutate: updateUserData } = useUpateUser()
+    const { mutate: updateUserData } = useUpdateUser()
 
     const navigate = useRouter()
     console.log(name)

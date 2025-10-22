@@ -39,12 +39,19 @@ export default function LockModal() {
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
                     <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/43609485/file/original-4d5208449d51a62c489343742821ef18.png?resize=1504x1128&vertical=center')] bg-center bg-contain h-[50%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-4">
                         {
-                            gayab ? <p className="text-secondary text-sm"> {temp.type} successfully locked ✅ </p> : <> <p className="text-secondary text-2xl">
+                            gayab ? <p className="text-secondary text-sm"> {temp.type} successfully locked ✅ </p> : <> <div className="w-full flex justify-between items-center"> 
+                            <button className="ml-14"></button>
+                            <p className="text-secondary text-2xl">
                                 {
                                     temp.lock ? `unlock ` : `Lock `
                                 }
                                 {temp.type}
                             </p>
+                                <button 
+                                className="hover:border hover:border-black rounded-md transition hover mr-4 text-xl p-0 h-8 w-10 "
+                                onClick={() => dispatch(setViewLockModal(false))}
+                                > x </button>
+                            </div>
                                 <p className="text-md text-gray-400 mt-12"> set a strong password for this file to protect it from <br /> <i> muhehehheheh </i> </p>
                                 <div className="mt-8 flex items-center space-x-2">
                                     <div className="flex flex-col space-y-2">

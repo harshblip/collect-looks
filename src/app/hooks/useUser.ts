@@ -51,7 +51,7 @@ export const useSignupUser = () => {
     })
 }
 
-export const useUpateUser = () => {
+export const useUpdateUser = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ username, email, id }: {
