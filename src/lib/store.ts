@@ -4,19 +4,21 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { statesReducer } from "./slice/statesSlice";
+import { filesReducer } from "./slice/filesSlice";
 import { folderReducer } from "./slice/folderSlice";
+import { generalReducer } from "./slice/generalSlice";
 
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["auth", "states"],
+    whitelist: ["auth", "utility"],
 };
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-    states: statesReducer,
-    folderStates: folderReducer
+    user: authReducer,
+    files: filesReducer,
+    folders: folderReducer,
+    utility: generalReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

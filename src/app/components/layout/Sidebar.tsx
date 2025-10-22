@@ -20,13 +20,13 @@ export default function Sidebar() {
 
     const dispatch = useDispatch()
     const [show, setShow] = useState<boolean>(false)
-    const showCreateFolder = useAppSelector(state => state.folderStates.viewCreateFolder)
+    const showCreateFolder = useAppSelector(state => state.folders.viewCreateFolder)
     const [showFileUpload, setShowFileUpload] = useState<boolean>(false)
-    const showFileModal = useAppSelector(state => state.states.fileModal)
-    const infoData = useAppSelector(state => state.folderStates.infoData)
-    const viewInfo = useAppSelector(state => state.folderStates.viewInfo)
-    const viewMedia = useAppSelector(state => state.folderStates.viewMedia)
-    const viewLockModal = useAppSelector(state => state.folderStates.viewLockModal)
+    const showFileModal = useAppSelector(state => state.files.fileModal)
+    const infoData = useAppSelector(state => state.utility.infoData)
+    const viewInfo = useAppSelector(state => state.utility.viewInfo)
+    const viewMedia = useAppSelector(state => state.utility.viewMedia)
+    const viewLockModal = useAppSelector(state => state.utility.viewLockModal)
 
     const router = useRouter()
 

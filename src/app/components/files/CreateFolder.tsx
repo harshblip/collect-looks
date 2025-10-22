@@ -23,7 +23,7 @@ function CreateFolder() {
     const [locked, setLocked] = useState<boolean>(false)
     const [see, setSee] = useState<boolean>(false)
     const [created, setCreated] = useState<boolean>(false)
-    const parent_id = useAppSelector(state => state.folderStates.parent_id)
+    const parent_id = useAppSelector(state => state.folders.parent_id)
 
     console.log(parent_id)
 

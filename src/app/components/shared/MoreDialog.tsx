@@ -5,9 +5,10 @@ import { InformationCircleIcon, StarIcon, TrashIcon } from "@heroicons/react/24/
 import { prefetchInfo, useDeleteFile, useGetFileInfo, useStarFile } from "@/app/hooks/useMedia";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setInfoData, setLockModal, setViewInfo, setViewLockModal } from "@/lib/slice/folderSlice";
+import { setInfoData, setViewInfo, setViewLockModal } from "@/lib/slice/generalSlice";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { Files } from "@/types/mediaTypes";
+import { setLockModal } from "@/lib/slice/folderSlice";
 
 export default function MoreDialog({ cardInfo, showMe }: {
     cardInfo: Files

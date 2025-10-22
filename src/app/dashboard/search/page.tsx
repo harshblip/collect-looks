@@ -4,7 +4,7 @@ import { HomeIcon } from "@heroicons/react/24/solid"
 import { useRouter } from "next/navigation"
 
 export default function SearchResults() {
-    const searchQuery = useAppSelector(state => state.states.searchSuggestions)
+    const searchQuery = useAppSelector(state => state.utility.searchSuggestions)
     const navigate = useRouter()
     return (
         <>
@@ -13,7 +13,7 @@ export default function SearchResults() {
                     <HomeIcon
                         onClick={() => navigate.push('/dashboard')}
                         className="w-10 text-secondary hover hover:bg-gray-200 rounded-lg p-2" />
-                    <p> search results for "{searchQuery}" </p>
+                    <p> search results for  </p>
                 </div>
             </div>
         </>

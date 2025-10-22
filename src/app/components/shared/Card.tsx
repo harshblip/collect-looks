@@ -7,13 +7,13 @@ import { useState } from "react";
 import MoreDialog from "./MoreDialog";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
-import { setFiles } from "@/lib/slice/folderSlice";
+import { setFiles } from "@/lib/slice/filesSlice";
 
 export default function Card({ data }: {
     data: Files
 }) {
     const [show, setShow] = useState<boolean>(false)
-    const files = useAppSelector(state => state.folderStates.files)
+    const files = useAppSelector(state => state.files.files)
     const dispatch = useDispatch()
 
     // console.log("data:-> ", files)

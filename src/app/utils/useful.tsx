@@ -1,4 +1,4 @@
-import { setSelectedFolders, setViewFolder } from "@/lib/slice/statesSlice"
+import { setSelectedFolders, setViewFolder } from "@/lib/slice/filesSlice"
 import { useAppSelector } from "@/lib/store"
 import { Files } from "@/types/mediaTypes"
 import axios from "axios"

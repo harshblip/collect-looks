@@ -9,17 +9,18 @@ import Card from "../components/shared/Card"
 import MoreOptions from "../components/ui/MoreOptions"
 import ColumnHeaders from "../components/ui/ColumnHeaders"
 import ToggleHeading from "../components/ui/ToggleHeading"
-import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice"
-import { setSelectedFolders } from "@/lib/slice/statesSlice"
+import { setSelectedFolders, setFolderItems, setViewFolder } from "@/lib/slice/folderSlice"
 import { Files } from "@/types/mediaTypes"
 import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
-import { setIndex, setParentId, setViewMedia, setViewMediaFiles } from "@/lib/slice/folderSlice";
+import { setIndex, setParentId} from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/navigation"
+import { setViewMediaFiles } from "@/lib/slice/filesSlice"
+import { setViewMedia } from "@/lib/slice/generalSlice"
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -28,10 +29,10 @@ const pixel = Pixelify_Sans({
 
 export default function Dashboard() {
 
-    const token = useAppSelector((state) => state.auth.authToken);
-    const files = useAppSelector(state => state.folderStates.files)
-    const viewFolder = useAppSelector(state => state.states.viewFolder)
-    const folderItemsArray = useAppSelector(state => state.states.folderItems)
+    const token = useAppSelector((state) => state.user.authToken);
+    const files = useAppSelector(state => state.files.files)
+    const viewFolder = useAppSelector(state => state.folders.viewFolder)
+    const folderItemsArray = useAppSelector(state => state.folders.folderItems)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -64,7 +65,7 @@ export default function Dashboard() {
         }
     }, [folderItems])
 
-    const folders = useAppSelector(state => state.states.selectedFolders)
+    const folders = useAppSelector(state => state.folders.selectedFolders)
 
     function openFolder(x: Files) {
         setCount(prevCount => prevCount + 1)
@@ -107,7 +108,7 @@ export default function Dashboard() {
     }, [viewFolder])
 
 
-    const openFiles = useAppSelector(state => state.folderStates.viewMediaFiles)
+    const openFiles = useAppSelector(state => state.files.viewMediaFiles)
     const pages = viewFolder ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15)) : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15))
 
     const [btns, setBtns] = useState<number[]>([])

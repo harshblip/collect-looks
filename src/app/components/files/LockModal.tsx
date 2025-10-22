@@ -1,6 +1,6 @@
 import { useLockFolder, useUnlockFolder } from "@/app/hooks/useFolder"
 import { useLockFile, useUnlockFile } from "@/app/hooks/useMedia"
-import { setViewLockModal } from "@/lib/slice/folderSlice"
+import { setViewLockModal } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
 import { EyeSlashIcon } from "@heroicons/react/24/solid"
 import { AnimatePresence, motion } from "framer-motion"
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 export default function LockModal() {
-    const temp = useAppSelector(state => state.folderStates.lockModal)
+    const temp = useAppSelector(state => state.folders.lockModal)
     const dispatch = useDispatch()
 
     const { mutate: setFileLock } = useLockFile()

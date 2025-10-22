@@ -1,6 +1,6 @@
 'use client'
 
-import { setViewMedia } from "@/lib/slice/folderSlice"
+import { setViewMedia } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
 import { ArrowLeftIcon, ArrowRightIcon, FolderIcon } from "@heroicons/react/24/outline"
 import { ArrowsPointingInIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
@@ -19,8 +19,8 @@ import { useUpdateLastOpened } from "@/app/hooks/useUser"
 export default function MediaViewer() {
 
     const dispatch = useDispatch()
-    const index = useAppSelector(state => state.folderStates.index)
-    const openFiles = useAppSelector(state => state.folderStates.viewMediaFiles)
+    const index = useAppSelector(state => state.folders.index)
+    const openFiles = useAppSelector(state => state.files.viewMediaFiles)
 
     const [see, setSee] = useState<boolean>(false)
     const [password, setPassword] = useState<string>('')

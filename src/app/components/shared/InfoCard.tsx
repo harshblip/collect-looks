@@ -1,5 +1,5 @@
 
-import { setViewInfo } from "@/lib/slice/folderSlice";
+import { setViewInfo } from "@/lib/slice/generalSlice";
 import { InfoData } from "@/types/mediaTypes";
 import { FolderIcon, HomeIcon, KeyIcon, LockClosedIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";

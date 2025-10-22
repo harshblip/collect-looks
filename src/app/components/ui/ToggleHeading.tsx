@@ -1,7 +1,7 @@
 import { useGetFolderItems } from "@/app/hooks/useFolder";
-import { setViewCreateFolder } from "@/lib/slice/folderSlice";
-import { setSelectedFolders } from "@/lib/slice/statesSlice";
-import { setFolderItems, setViewFolder } from "@/lib/slice/statesSlice";
+import { setViewCreateFolder, setViewFolder } from "@/lib/slice/folderSlice";
+import { setSelectedFolders } from "@/lib/slice/folderSlice";
+import { setFolderItems } from "@/lib/slice/folderSlice";
 import { useAppSelector } from "@/lib/store";
 import { FoldersArray } from "@/types/mediaTypes";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid";
@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const folders = useAppSelector(state => state.states.selectedFolders)
+    const folders = useAppSelector(state => state.folders.selectedFolders)
     const dispatch = useDispatch()
     const { data: folderItems } = useGetFolderItems(3, folders[folders.length - 1].id)
 

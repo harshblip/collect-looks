@@ -48,7 +48,7 @@ export default function Auth() {
         }
     }, [])
 
-    const mode = useAppSelector(state => state.states.mode) || 'Create an account'
+    const mode = useAppSelector(state => state.utility.mode) || 'Create an account'
 
     return (
         <>

@@ -5,7 +5,7 @@ import { useAddFilestoFolder, useGetFolders } from "../../hooks/useFolder"
 import { FolderIcon } from "@heroicons/react/24/solid"
 import { useEffect, useState } from "react"
 import { useAppSelector } from "@/lib/store"
-import { setFileModal } from "@/lib/slice/statesSlice"
+import { setFileModal } from "@/lib/slice/filesSlice"
 import { useDispatch } from "react-redux"
 import { CrossIcon, DoorClosed } from "lucide-react"
 import { ArrowRightEndOnRectangleIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline"
@@ -18,7 +18,7 @@ export default function FolderList({ show }: Props) {
     const { data } = useGetFolders(3)
     const [id, setId] = useState<number>(0)
     const [name, setName] = useState<string>("")
-    const files = useAppSelector(state => state.folderStates.files)
+    const files = useAppSelector(state => state.files.files)
     const dispatch = useDispatch()
     const [created, setCreated] = useState<boolean>(false)
 

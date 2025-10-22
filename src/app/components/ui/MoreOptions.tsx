@@ -1,5 +1,5 @@
-import { setFiles } from "@/lib/slice/folderSlice";
-import { setFileModal } from "@/lib/slice/statesSlice";
+import { setFiles } from "@/lib/slice/filesSlice";
+import { setFileModal } from "@/lib/slice/filesSlice";
 import { useAppSelector } from "@/lib/store";
 import { ArrowDownTrayIcon, PlusCircleIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 export default function MoreOptions() {
     const dispatch = useDispatch()
-    const files = useAppSelector(state => state.folderStates.files)
+    const files = useAppSelector(state => state.files.files)
     return (
         <>
             <motion.div

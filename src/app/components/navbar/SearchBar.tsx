@@ -1,6 +1,6 @@
 'use client'
 
-import { setSearchSuggestions } from "@/lib/slice/statesSlice";
+import { setSearchSuggestions } from "@/lib/slice/generalSlice";
 import { useAppSelector } from "@/lib/store";
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,10 +11,11 @@ import SuggestionButtons from "./SuggestionButtons";
 import { useRouter } from "next/navigation";
 import { useGetSuggestions } from "@/app/hooks/useMedia";
 import { Files } from "@/types/mediaTypes";
+import SearchResults from "@/app/dashboard/search/page";
 
 export default function SearchBar() {
 
-    const searchSuggestions = useAppSelector(state => state.states.searchSuggestions)
+    const searchSuggestions = useAppSelector(state => state.utility.searchSuggestions)
     const dispatch = useDispatch()
     const navigate = useRouter()
     const [searchQuery, setSearchQuery] = useState<string>('')

@@ -2,7 +2,7 @@ import PasswordStrengthBar from "react-password-strength-bar";
 import AuthInput from "./AuthInput";
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { setMode } from "@/lib/slice/statesSlice";
+import { setMode } from "@/lib/slice/generalSlice";
 import { useDispatch } from "react-redux";
 import Checkbox from "../ui/Checkbox";
 import { motion, AnimatePresence } from 'framer-motion';
