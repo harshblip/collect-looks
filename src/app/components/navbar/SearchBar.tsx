@@ -1,6 +1,6 @@
 'use client'
 
-import { setSearchSuggestions } from "@/lib/slice/generalSlice";
+import { setSearchQuery, setSearchSuggestions } from "@/lib/slice/generalSlice";
 import { useAppSelector } from "@/lib/store";
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,13 +12,16 @@ import { useRouter } from "next/navigation";
 import { useGetSuggestions } from "@/app/hooks/useMedia";
 import { Files } from "@/types/mediaTypes";
 import SearchResults from "@/app/dashboard/search/page";
+import { PlayIcon } from "@heroicons/react/24/outline";
+import { byteToSize } from "@/app/utils/useful";
+import Image from "next/image";
 
 export default function SearchBar() {
 
     const searchSuggestions = useAppSelector(state => state.utility.searchSuggestions)
     const dispatch = useDispatch()
     const navigate = useRouter()
-    const [searchQuery, setSearchQuery] = useState<string>('')
+    const [searchQuery, setSearchQuerY] = useState<string>('')
     const [visible, setVisible] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
@@ -28,12 +31,12 @@ export default function SearchBar() {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            refetch() 
-        }, 2000)
-        return () => clearTimeout(timeout)
-    }, [searchQuery])
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         refetch()
+    //     }, 2000)
+    //     return () => clearTimeout(timeout)
+    // }, [searchQuery, refetch])
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,11 +45,11 @@ export default function SearchBar() {
                 inputRef.current?.focus();
             }
         };
-        
+
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
-    
+
 
     function addToSuggesstions(x: Files) {
         if (searchSuggestions) {
@@ -59,7 +62,7 @@ export default function SearchBar() {
     function removeSuggestion(x: number) {
         dispatch(setSearchSuggestions(searchSuggestions.filter((_, i) => i !== x)))
     }
-
+    console.log(data)
     return (
         <>
             {
@@ -70,6 +73,7 @@ export default function SearchBar() {
             }
             <div className="relative w-[30rem]">
                 <MagnifyingGlassIcon
+                    onClick={() => refetch()}
                     className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
                 />
                 <div
@@ -80,11 +84,12 @@ export default function SearchBar() {
                         className={`bg-white font-product text-primary rounded-xl focus:shadow-md py-2 pl-14 pr-10 w-full outline-none h-14`}
                         placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
+                            dispatch(setSearchQuery(searchQuery))
                             if (e.key === 'Enter') {
                                 navigate.push('/dashboard/search')
                             }
                         }}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e) => setSearchQuerY(e.target.value)}
                         value={searchQuery}
                         onFocus={() => setVisible(!visible)}
                     />
@@ -104,31 +109,62 @@ export default function SearchBar() {
                                             key={i}
                                             index={i}
                                             searchSuggestions={data}
-                                            setSearchQuery={setSearchQuery}
+                                            searchQuery={searchQuery}
+                                            setSearchQuery={setSearchQuerY}
                                             removeSuggestion={removeSuggestion}
                                         />
                                         )
                                     }
                                 </motion.div>
-                                : '' : visible && <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-2"
-                                    onClick={() => console.log("clicked div")}
-                                >
-                                    {
-                                        data.map((_, i) => <SuggestionButtons
-                                            key={i}
-                                            index={i}
-                                            searchSuggestions={data}
-                                            setSearchQuery={setSearchQuery}
-                                            removeSuggestion={removeSuggestion}
-                                        />
-                                        )
-                                    }
-                                </motion.div>
+                                : '' : visible && <div className="absolute w-full mt-14">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                        className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-2  p-2 z-2"
+                                        onClick={() => console.log("clicked div")}
+                                    >
+                                        {
+                                            data.map((_, i) => <SuggestionButtons
+                                                key={i}
+                                                index={i}
+                                                searchSuggestions={data}
+                                                setSearchQuery={setSearchQuerY}
+                                                searchQuery={searchQuery}
+                                                removeSuggestion={removeSuggestion}
+                                            />
+                                            )
+                                        }
+                                    </motion.div>
+                                    <motion.div className="mt-2 ">
+                                        {
+                                            searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
+                                                <div className="bg-white shadow-md text-secondary rounded-md p-4 flex space-x-8">
+                                                    {
+                                                        data[0].file_type === 'image' ? <Image
+                                                            src={`${data[0].file_url}`}
+                                                            alt={`${data[0].file_name}`}
+                                                            height={0}
+                                                            width={140}
+                                                            className="rounded-lg"
+                                                        /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md p-4">
+                                                            <PlayIcon
+                                                                className="w-12 text-red-300"
+                                                            />
+                                                        </div>
+                                                    }
+                                                    <div className="flex flex-col space-y-2 justify-center">
+                                                    <p className="text-xs"> <i>matches 100% with your query</i> </p>
+                                                        <p className="text-xl"> {data[0].file_name} </p>
+                                                        <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
+                                                        <p> {byteToSize(parseInt(data[0].size))} </p>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        }
+                                    </motion.div>
+                                </div>
                         }
                     </AnimatePresence>
                 </div>

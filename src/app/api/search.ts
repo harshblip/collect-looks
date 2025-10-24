@@ -3,6 +3,7 @@ import { Files } from "@/types/mediaTypes";
 import axios from "axios";
 
 export async function getSuggestions(word: string, userId: number): Promise<Files[]> {
+    console.log("came here2")
     const response = await axios.get(`${BASE_URL}/upload/getSuggestions`, {
         params: {
             userId: userId,
@@ -10,7 +11,6 @@ export async function getSuggestions(word: string, userId: number): Promise<File
         }
     })
 
-    console.log("came here2", response.data)
 
     if (response.status !== 200) {
         throw new Error(response.data?.message || 'error in getSuggestions')

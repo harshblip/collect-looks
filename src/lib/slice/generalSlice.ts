@@ -4,10 +4,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 export interface GeneralState {
     mode: string
     searchSuggestions: Files[]
-    viewInfo: boolean,
-    infoData: InfoData,
-    viewMedia: boolean,
-    viewLockModal: boolean,
+    viewInfo: boolean
+    infoData: InfoData
+    viewMedia: boolean
+    viewLockModal: boolean
+    searchQuery: string
 }
 
 const initialState: GeneralState = {
@@ -36,6 +37,7 @@ const initialState: GeneralState = {
         ]
     },
     viewLockModal: false,
+    searchQuery: '',
     searchSuggestions: [
         {
             id: 0,
@@ -80,6 +82,9 @@ export const generalSlice = createSlice({
         setViewMedia: (state, action: PayloadAction<boolean>) => {
             state.viewMedia = action.payload
         },
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload
+        }
     }
 })
 
@@ -90,6 +95,7 @@ export const {
     setViewInfo,
     setInfoData,
     setViewLockModal,
+    setSearchQuery
 } = generalSlice.actions
 
 export const generalReducer = generalSlice.reducer;

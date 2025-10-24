@@ -79,7 +79,7 @@ export const useGetSuggestions = (word: string, userId: number) => {
     return useQuery({
         queryKey: ['suggestions', userId],
         queryFn: () => getSuggestions(word, userId),
-        enabled: !!userId,
+        enabled: false,
         staleTime: 1000 * 30,
         retry: 2
     })
