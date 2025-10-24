@@ -2,6 +2,11 @@ import { ReactNode } from "react"
 import Navbar from "../components/layout/Navbar"
 import Sidebar from "../components/layout/Sidebar"
 
+export const metadata = {
+    title: 'collect | dashboard',
+    description: 'see all your options in a single place'
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
     return (
         <>

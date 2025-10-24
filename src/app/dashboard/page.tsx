@@ -15,12 +15,13 @@ import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
-import { setIndex, setParentId} from "@/lib/slice/folderSlice";
+import { setIndex, setParentId } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setViewMedia } from "@/lib/slice/generalSlice"
+import Head from "next/head"
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -118,13 +119,16 @@ export default function Dashboard() {
 
     return (
         <>
+            <Head>
+                <title> Dashboard | collect </title>
+            </Head>
             {
                 showError ? <div className="flex justify-center z-1 mt-[15%]">
                     <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-between">
-                    <div className="flex items-center space-x-6 mt-10">
-                        <p className={`text-red-200 text-2xl -mt-1`}> error </p>
-                        <p className={`text-gray-200 text-7xl`}> LOL </p>
-                    </div>
+                        <div className="flex items-center space-x-6 mt-10">
+                            <p className={`text-red-200 text-2xl -mt-1`}> error </p>
+                            <p className={`text-gray-200 text-7xl`}> LOL </p>
+                        </div>
                         {/* <p className="text-secondary mt-[12rem] opacity-70 tracking-wider"> redirecting to login page </p> */}
                     </div>
                 </div> : <div className="flex flex-col space-y-0 mt-4 p-8 font-product">

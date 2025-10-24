@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useGetUserData } from "../hooks/useUser";
 import { useAppSelector } from "@/lib/store";
 import Footer from "../components/shared/Footer";
+import Head from "next/head";
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -19,12 +20,15 @@ const pixel = Pixelify_Sans({
 
 export default function MyProfile() {
 
-    const id = useAppSelector(state => state.states.userId)
+    const id = useAppSelector(state => state.user.userId)
     const { data } = useGetUserData(3)
     console.log(id, data)
 
     return (
         <>
+        <Head>
+            <title> {data?.username} </title>
+        </Head>
             <AnimatePresence>
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
