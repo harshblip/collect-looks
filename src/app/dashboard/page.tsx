@@ -127,9 +127,10 @@ export default function Dashboard() {
                     <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-between">
                         <div className="flex items-center space-x-6 mt-10">
                             <p className={`text-red-200 text-2xl -mt-1`}> error </p>
+                            <div>
                             <p className={`text-gray-200 text-7xl`}> LOL </p>
+                            </div>
                         </div>
-                        {/* <p className="text-secondary mt-[12rem] opacity-70 tracking-wider"> redirecting to login page </p> */}
                     </div>
                 </div> : <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                     {
