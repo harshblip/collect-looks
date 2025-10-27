@@ -3,25 +3,26 @@ import { motion } from 'framer-motion'
 import { BeakerIcon, FireIcon } from "@heroicons/react/24/solid";
 import CardButton from "../shared/CardButton";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/context/AuthContext";
 import { useEffect } from "react";
 
 export default function ProfileCard({ toggle }: {
     toggle: React.Dispatch<React.SetStateAction<'menu' | 'profile' | 'settings' | ''>>
 }) {
     const router = useRouter()
-    const { logout, user } = useAuth()
-
+    const user = {
+        username: '',
+        email: ''
+    }
+    
     useEffect(() => {
-        if (!user) {
-            const timeout = setTimeout(() => {
-                router.push('/')
-            }, 2000)
-            return () => clearTimeout(timeout)
-        }
-    }, [user])
+        // if (!user) {
+        //     const timeout = setTimeout(() => {
+        //         router.push('/')
+        //     }, 2000)
+        //     return () => clearTimeout(timeout)
+        // }
+    }, [])
 
-    console.log(user)
     return (
         <>
             <motion.div
@@ -50,7 +51,7 @@ export default function ProfileCard({ toggle }: {
                                 />
                                 <div className="flex flex-col items-start -mt-2">
                                     <p className="text-primary"> {user?.username} </p>
-                                    <p className="text-sm text-gray-400">{user?.emai}</p>
+                                    <p className="text-sm text-gray-400">{user?.email}</p>
                                 </div>
                             </button>
                                 <div className="mt-2 flex flex-col divide-gray-200 text-secondary font-medium p-2">
@@ -65,7 +66,7 @@ export default function ProfileCard({ toggle }: {
                                     <CardButton
                                         label="log out"
                                         icon={<FireIcon />}
-                                        onClick={() => logout()}
+                                        // onClick={}
                                     />
                                 </div></> : <>
                                 <motion.div

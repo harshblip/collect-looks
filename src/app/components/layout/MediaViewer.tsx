@@ -121,12 +121,14 @@ export default function MediaViewer() {
                                         />
                                     </> : <>
                                         <div className="absolute w-[50%] h-[100vh] p-10">
-                                            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                                <Viewer
-                                                    fileUrl={openFiles[updateI].file_url || ''}
-                                                    plugins={[defaultLayoutPluginInstance]}
-                                                />
-                                            </Worker>
+                                            {
+                                                openFiles[updateI].file_url && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                    <Viewer
+                                                        fileUrl={openFiles[updateI].file_url}
+                                                        plugins={[defaultLayoutPluginInstance]}
+                                                    />
+                                                </Worker>
+                                            }
                                         </div>
                                     </>
                                 }

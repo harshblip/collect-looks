@@ -39,8 +39,6 @@ export default function Recent() {
                                                 <div key={i}>
                                                     <Card
                                                         data={x}
-                                                    // setFiles={setFiles}
-                                                    // files={files}
                                                     />
                                                 </div>
                                             ))

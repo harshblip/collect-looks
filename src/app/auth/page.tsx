@@ -9,7 +9,6 @@ import SmallLogo from "../components/ui/SmallLogo";
 import ForgotModal from "../components/auth/ForgotModal";
 import { useLoginUser, useSignupUser } from "../hooks/useUser";
 import Status from "../components/shared/Status";
-import { useAuth } from "../context/AuthContext";
 import { motion } from 'framer-motion'
 
 export default function Auth() {
@@ -23,7 +22,6 @@ export default function Auth() {
 
     const { mutate: loginUser, isSuccess, error } = useLoginUser(email, password, checked)
     const { mutate: signupUser } = useSignupUser()
-    const { user } = useAuth()
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -39,13 +37,13 @@ export default function Auth() {
     }, [isSuccess])
 
     useEffect(() => {
-        if (user) {
-            const timeout = setTimeout(() => {
-                setShow(false)
-                router.back()
-            }, 2000)
-            return () => clearTimeout(timeout)
-        }
+        // if (user) {
+        //     const timeout = setTimeout(() => {
+        //         setShow(false)
+        //         router.back()
+        //     }, 2000)
+        //     return () => clearTimeout(timeout)
+        // }
     }, [])
 
     const mode = useAppSelector(state => state.utility.mode) || 'Create an account'
@@ -102,7 +100,7 @@ export default function Auth() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.1, ease: 'easeInOut' }}
-                            className="font-product mt-12 text-4xl text-secondary"> Hey {user.username} 👋</motion.p>
+                            className="font-product mt-12 text-4xl text-secondary"> Hey "user.username" 👋</motion.p>
                     }
                 </div>
 

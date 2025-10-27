@@ -1,6 +1,6 @@
 'use client'
 
-import { setSearchQuery, setSearchSuggestions } from "@/lib/slice/generalSlice";
+import { setSearchQuery, setSearchSuggestions, setViewMedia } from "@/lib/slice/generalSlice";
 import { useAppSelector } from "@/lib/store";
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
@@ -15,6 +15,7 @@ import SearchResults from "@/app/dashboard/search/page";
 import { PlayIcon } from "@heroicons/react/24/outline";
 import { byteToSize } from "@/app/utils/useful";
 import Image from "next/image";
+import { setViewMediaFiles } from "@/lib/slice/filesSlice";
 
 export default function SearchBar() {
 
@@ -50,6 +51,11 @@ export default function SearchBar() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+    function viewSuggestions(data: Files[]) {
+        // setSearchQuerY()
+        dispatch(setViewMedia(true))
+        dispatch(setViewMediaFiles(data))
+    }
 
     function addToSuggesstions(x: Files) {
         if (searchSuggestions) {
@@ -133,11 +139,12 @@ export default function SearchBar() {
                                                 setSearchQuery={setSearchQuerY}
                                                 searchQuery={searchQuery}
                                                 removeSuggestion={removeSuggestion}
+                                                onClick={() => viewSuggestions(data)}
                                             />
                                             )
                                         }
                                     </motion.div>
-                                    <motion.div className="mt-2 ">
+                                    <motion.div className="mt-2">
                                         {
                                             searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
                                                 <div className="bg-white shadow-md text-secondary rounded-md p-4 flex space-x-8">
@@ -155,7 +162,7 @@ export default function SearchBar() {
                                                         </div>
                                                     }
                                                     <div className="flex flex-col space-y-2 justify-center">
-                                                    <p className="text-xs"> <i>matches 100% with your query</i> </p>
+                                                        <p className="text-xs"> <i>matches 100% with your query</i> </p>
                                                         <p className="text-xl"> {data[0].file_name} </p>
                                                         <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
                                                         <p> {byteToSize(parseInt(data[0].size))} </p>

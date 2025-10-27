@@ -17,7 +17,6 @@ import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
 import { setIndex, setParentId } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { useAuth } from "../context/AuthContext"
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setViewMedia } from "@/lib/slice/generalSlice"
@@ -48,16 +47,15 @@ export default function Dashboard() {
 
     const { data: allFiles } = useGetAllFiles(3, currentPage)
     const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
-    const { user } = useAuth()
 
     useEffect(() => {
-        if (!user) {
-            setShowError(true)
-            const timeout = setTimeout(() => {
-                // router.push('/')
-            }, 2000)
-            return () => clearTimeout(timeout)
-        }
+        // if (!user) {
+        //     setShowError(true)
+        //     const timeout = setTimeout(() => {
+        //         // router.push('/')
+        //     }, 2000)
+        //     return () => clearTimeout(timeout)
+        // }
     }, [])
 
     useEffect(() => {
