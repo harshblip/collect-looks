@@ -20,7 +20,7 @@ import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, Exclama
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setViewMedia } from "@/lib/slice/generalSlice"
-import Head from "next/head"
+import Status from "../components/shared/Status"
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -42,10 +42,9 @@ export default function Dashboard() {
     const [show, setShow] = useState<boolean>(false)
     const [showError, setShowError] = useState<boolean>(false)
     const [password, setPassword] = useState<string>("")
-    const [error, setError] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
-    const { data: allFiles } = useGetAllFiles(3, currentPage)
+    const { data: allFiles, error } = useGetAllFiles(3, currentPage)
     const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
 
     useEffect(() => {
@@ -76,7 +75,6 @@ export default function Dashboard() {
         dispatch(setViewFolder(true))
         setSelectedFolderId(x.id)
         console.log("locked ?", x.is_locked)
-        setError('')
         const obj = {
             id: x.id,
             name: x.file_name
@@ -114,19 +112,24 @@ export default function Dashboard() {
     useEffect(() => {
         setBtns(Array(pages).fill(0))
     }, [pages])
-
+    console.log("error", error)
     return (
         <>
-            <Head>
-                <title> Dashboard | collect </title>
-            </Head>
+            {
+                error || error && <div className="absolute top-20 right-50 left-50">
+                    <Status
+                        type="ERROR"
+                        message={error}
+                    />
+                </div>
+            }
             {
                 showError ? <div className="flex justify-center z-1 mt-[15%]">
                     <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-between">
                         <div className="flex items-center space-x-6 mt-10">
                             <p className={`text-red-200 text-2xl -mt-1`}> error </p>
                             <div>
-                            <p className={`text-gray-200 text-7xl`}> LOL </p>
+                                <p className={`text-gray-200 text-7xl`}> LOL </p>
                             </div>
                         </div>
                     </div>

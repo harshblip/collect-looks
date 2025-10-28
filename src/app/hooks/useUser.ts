@@ -11,7 +11,7 @@ export const useGetUserData = (id: number) => {
     })
 }
 
-export const useLoginUser = (email: string, password: string, checked: boolean) => {
+export const useLoginUser = () => {
 
     return useMutation({
         mutationFn: ({ email, password, checked }: { email: string; password: string; checked: boolean }) => loginUser(email, password, checked),

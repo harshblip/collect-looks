@@ -16,11 +16,12 @@ export async function fetchAllFiles(user_id: number, page: number): Promise<File
     const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
         params: { user_id, page },
     });
-
+    
+    console.log("response", response)
     if (response.status !== 200) {
-        throw new Error(response.data?.message || "error in fetchAllFiles")
+        throw new Error(response.data?.message)
     }
-
+    
     return response.data.message
 }
 

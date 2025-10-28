@@ -26,7 +26,7 @@ export const useGetAllFiles = (user_id: number, page: number) => {
         queryFn: () => fetchAllFiles(user_id, page),
         enabled: !!user_id,
         staleTime: 1000 * 30,
-        retry: 2
+        retry: 2,
     })
 }
 

@@ -9,7 +9,7 @@ export interface IAuthState {
 
 const initialState: IAuthState = {
     authToken: "",
-    email: 'gajmohan@gmail.com',
+    email: '',
     userId: 3,
 };
 

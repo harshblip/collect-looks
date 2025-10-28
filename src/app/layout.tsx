@@ -6,7 +6,6 @@ import ReduxProvider from "@/lib/reduxProvider";
 import { Gloock, Gochi_Hand } from "next/font/google";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouteLoader } from "./components/layout/RouteLoader";
-import { AuthProvider } from "./context/AuthContext";
 import PageTransition from "./components/ui/PageTransition";
 
 const glook = Gloock({
@@ -31,7 +30,6 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${gochi.variable} ${glook.variable} antialiased`}>
-        <AuthProvider>
           <ReduxProvider>
             <QueryClientProvider client={queryClient}>
               <RouteLoader />
@@ -40,7 +38,6 @@ export default function RootLayout({
               </PageTransition>
             </QueryClientProvider>
           </ReduxProvider>
-        </AuthProvider>
       </body>
     </html>
   );
