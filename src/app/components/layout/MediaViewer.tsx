@@ -2,7 +2,7 @@
 
 import { setViewMedia } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
-import { ArrowLeftIcon, ArrowRightIcon, FolderIcon } from "@heroicons/react/24/outline"
+import { ArrowLeftIcon, ArrowRightIcon, FolderIcon, QrCodeIcon, SparklesIcon } from "@heroicons/react/24/outline"
 import { ArrowsPointingInIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -15,6 +15,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import Player from "../media-player/VideoPlayer"
 import { EyeIcon } from "lucide-react"
 import { useUpdateLastOpened } from "@/app/hooks/useUser"
+import { AnimatePresence, motion } from "framer-motion"
 
 export default function MediaViewer() {
 
@@ -53,40 +54,64 @@ export default function MediaViewer() {
                         className="w-10 text-white hover absolute top-[50%] left-20" />
                     {
                         !show && openFiles[updateI].is_locked ? <>
-                            <div className="bg-gray-600 p-6 rounded-md flex items-center flex-col justify-center text-white">
-                                <p> yoooo, this is soooo blocked </p>
-                                <div className="flex items-center space-x-2">
-                                    <input
-                                        type={`${see ? `text` : `password`}`}
-                                        placeholder="set a password"
-                                        className="w-[18rem] p-4 bg-gray-100/75 border-none text-secondary placeholder:text-gray-600 placeholder:font-stretch-50% outline-none rounded-md mt-16"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                    <button
-                                        onClick={() => setSee(!see)}
-                                        className="hover w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-95 mt-16"
-                                    >
-                                        {
-                                            see ? <EyeIcon
-                                                className="hover w-6"
-                                                onClick={() => setSee(!see)}
-                                            /> : <EyeSlashIcon
-                                                className="hover w-6"
-                                                onClick={() => setSee(!see)}
+                            <AnimatePresence>
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                    className="flex flex-col space-y-4">
+                                    <div className="flex justify-between items-end w-[34rem] h-[12rem] rounded-md bg-white p-8 text-gray-300">
+                                        <p className="text-5xl"> Locked... </p>
+                                        <QrCodeIcon className="w-16 mr-4 mb-14" />
+                                    </div>
+                                    <div className="bg-gray-50 p-5 rounded-md flex items-center justify-center text-white">
+                                        <div className="flex justify-start items-center space-x-2 -ml-">
+                                            <input
+                                                type={`${see ? `text` : `password`}`}
+                                                placeholder="type your password"
+                                                className="w-[24rem] border border-gray-400 p-4 text-secondary placeholder:text-gray-400 placeholder:font-stretch-50% outline-none rounded-md focus:shadow-md focus:border-gray-200"
+                                                onChange={(e) => setPassword(e.target.value)}
                                             />
-                                        }
-                                    </button>
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        password === openFiles[updateI].password ? setShow(true) : ''
-                                    }}
-                                    className="p-2 outline-none text-gray-600 rounded-md w-32 flex justify-center mt-16 bg-white hover">
-                                    Go
-                                </button>
-                            </div>
+                                            <button
+                                                onClick={() => setSee(!see)}
+                                                className="hover w-12 h-12 hover:bg-gray-200 rounded-md flex justify-center active:scale-95 -ml-16 text-gray-400"
+                                            >
+                                                {
+                                                    see ? <EyeIcon
+                                                        className="hover w-6"
+                                                        onClick={() => setSee(!see)}
+                                                    /> : <EyeSlashIcon
+                                                        className="hover w-6"
+                                                        onClick={() => setSee(!see)}
+                                                    />
+                                                }
+                                            </button>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                password === openFiles[updateI].password ? setShow(true) : ''
+                                            }}
+                                            className="p-4 outline-none text-gray-600 rounded-md flex justify-center bg-white hover ml-16 hover:bg-gray-400 hover:text-white transition">
+                                            Go
+                                        </button>
+                                    </div>
+                                    <div className="bg-white rounded-md p-4 text-gray-400 flex flex-col">
+                                        <div className="flex justify-between text-gray-400 space-x-2">
+                                            <SparklesIcon className="w-6 text-secondary ml-2" />
+                                            <p> secured by <span className="text-xl">Collect</span></p>
+                                            <SparklesIcon className="w-6 text-secondary mr-2" />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
                         </> : <>
-                            <div className="flex flex-col items-center justify-center rounded-lg w-[100%] p-4 overflow-hidden">
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                className="flex flex-col items-center justify-center rounded-lg w-[100%] p-4 overflow-hidden">
                                 {
                                     openFiles[updateI].file_type === null ? <div className="h-[12rem] primary-bg flex items-center text-secondary justify-center flex-col space-y-4 p-6 rounded-md">
                                         <FolderIcon className="w-8" />
@@ -132,7 +157,7 @@ export default function MediaViewer() {
                                         </div>
                                     </>
                                 }
-                            </div>
+                            </motion.div>
                         </>
                     }
 

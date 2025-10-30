@@ -165,12 +165,12 @@ export default function InfoCard({ data }: { data: InfoData }) {
                         <div className="flex justify-between mt-6">
                             <div className="flex flex-col">
                                 <p className="text-sm text-primary"> Created </p>
-                                <p className=" text-4xl text-gray-300 font-medium"> {image.created_at.substring(0, 10)} </p>
+                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {image.created_at.substring(0, 10)} </p>
                             </div>
 
                             <div className="flex flex-col">
                                 <p className="flex justify-end text-sm text-primary"> Opened </p>
-                                <p className=" text-4xl text-gray-300 font-medium"> {image.updated_at.substring(0, 10)} </p>
+                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {image.updated_at.substring(0, 10)} </p>
                             </div>
                         </div>
 

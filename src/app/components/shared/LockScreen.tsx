@@ -59,7 +59,7 @@ export default function LockScreen({
                                     placeholder="type the truth...."
                                 />
                                 {
-                                    error && <p className="text-sm text-red-400"> {error} </p>
+                                    error && <p className="absolute mt-14 text-sm text-red-400"> {error} </p>
                                 }
                             </div>
                             <motion.button
