@@ -57,6 +57,7 @@ function CreateFolder() {
                                     name="name"
                                     className="w-[24rem] border-2 border-gray-400 p-2 outline-none rounded-lg"
                                     onChange={(e) => setName(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div className="flex flex-col space-y-2 mt-4">

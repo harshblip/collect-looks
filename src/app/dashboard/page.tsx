@@ -116,12 +116,12 @@ export default function Dashboard() {
     return (
         <>
             {
-                error || error && <div className="absolute top-20 right-50 left-50">
-                    <Status
-                        type="ERROR"
-                        message={error}
-                    />
-                </div>
+                // error || error && <div className="absolute top-20 right-50 left-50">
+                //     <Status
+                //         type="ERROR"
+                //         message={error}
+                //     />
+                // </div>
             }
             {
                 showError ? <div className="flex justify-center z-1 mt-[15%]">
