@@ -148,7 +148,7 @@ export default function Dashboard() {
                         locked ? <LockScreen
                             password={password}
                             setLocked={setLocked}
-                        /> : <div className="flex flex-col mt-16 bg-white">
+                        /> : <div className="flex flex-col mt-16 bg-white z-1">
                             {
                                 files && files.length ? <MoreOptions /> : <motion.div
                                     initial={{ opacity: 0, y: -10 }}

@@ -67,6 +67,7 @@ export default function MediaViewer() {
                                     </div>
                                     <div className="bg-gray-50 p-5 rounded-md flex items-center justify-center text-white">
                                         <div className="flex justify-start items-center space-x-2 -ml-">
+
                                             <input
                                                 type={`${see ? `text` : `password`}`}
                                                 placeholder="type your password"
@@ -166,7 +167,7 @@ export default function MediaViewer() {
                         className="w-10 text-white hover absolute top-[50%] right-20" />
                 </div>
 
-            </div>
+            </div >
         </>
     )
 }

@@ -37,7 +37,7 @@ export default function LockScreen({
                 <BugAntIcon
                     className="w-24 text-gray-300 rotate-45 mr-44 -mt-44 z-2"
                 />
-                <div className="z-1 flex flex-col">
+                <div className="flex flex-col">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}

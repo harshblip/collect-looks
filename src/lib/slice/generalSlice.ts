@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface GeneralState {
     mode: string
-    searchSuggestions: Files[]
+    searchSuggestions: (string | Files)[]
     viewInfo: boolean
     infoData: InfoData
     viewMedia: boolean
@@ -64,7 +64,7 @@ export const generalSlice = createSlice({
     name: "utility",
     initialState,
     reducers: {
-        setSearchSuggestions: (state, action: PayloadAction<Files[]>) => {
+        setSearchSuggestions: (state, action: PayloadAction<(string | Files)[]>) => {
             state.searchSuggestions = action.payload
         },
         setMode: (state, action: PayloadAction<string>) => {

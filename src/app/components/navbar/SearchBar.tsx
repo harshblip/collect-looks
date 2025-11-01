@@ -57,16 +57,15 @@ export default function SearchBar() {
         dispatch(setViewMediaFiles(data))
     }
 
-    function addToSuggesstions(x: Files) {
-        if (searchSuggestions) {
-            dispatch(setSearchSuggestions([...searchSuggestions, x]))
-        } else {
-            dispatch(setSearchSuggestions([x]));
-        }
-    }
-
     function removeSuggestion(x: number) {
         dispatch(setSearchSuggestions(searchSuggestions.filter((_, i) => i !== x)))
+    }
+
+    function updateSuggestions() {
+        console.log(searchQuery, searchSuggestions)
+        data && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
+            dispatch(setSearchSuggestions([...searchSuggestions, data[0]])) :
+            dispatch(setSearchSuggestions([...searchSuggestions, searchQuery]))
     }
     console.log(data)
     return (
@@ -79,7 +78,10 @@ export default function SearchBar() {
             }
             <div className="relative w-[30rem]">
                 <MagnifyingGlassIcon
-                    onClick={() => refetch()}
+                    onClick={() => {
+                        setVisible(true)
+                        refetch()
+                    }}
                     className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
                 />
                 <div
@@ -92,6 +94,7 @@ export default function SearchBar() {
                         onKeyDown={(e) => {
                             dispatch(setSearchQuery(searchQuery))
                             if (e.key === 'Enter') {
+                                updateSuggestions()
                                 navigate.push('/dashboard/search')
                             }
                         }}
@@ -101,34 +104,36 @@ export default function SearchBar() {
                     />
                     <AnimatePresence>
                         {
-                            !data ? visible && searchSuggestions.length ?
+                            !searchQuery ? visible && searchSuggestions.length ?
                                 <motion.div
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 absolute mt-16 w-full p-2 z-2"
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-16 w-full p-2 z-2 absolute"
                                     onClick={() => console.log("clicked div")}
                                 >
                                     {
-                                        data && searchSuggestions.map((_, i) => <SuggestionButtons
+                                        searchSuggestions && searchSuggestions.map((x, i) => <SuggestionButtons
                                             key={i}
                                             index={i}
-                                            searchSuggestions={data}
-                                            searchQuery={searchQuery}
+                                            idxValue={x}
+                                            searchSuggestions={searchSuggestions}
                                             setSearchQuery={setSearchQuerY}
+                                            searchQuery={searchQuery}
                                             removeSuggestion={removeSuggestion}
+                                            onClick={() => viewSuggestions(searchSuggestions)}
                                         />
                                         )
                                     }
                                 </motion.div>
-                                : '' : visible && <div className="absolute w-full mt-14">
+                                : '' : data && <div className="absolute w-full mt-14 z-2">
                                     <motion.div
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                        className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-2  p-2 z-2"
+                                        className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-2  p-2"
                                         onClick={() => console.log("clicked div")}
                                     >
                                         {
@@ -147,25 +152,27 @@ export default function SearchBar() {
                                     <motion.div className="mt-2">
                                         {
                                             searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
-                                                <div className="bg-white shadow-md text-secondary rounded-md p-4 flex space-x-8">
-                                                    {
-                                                        data[0].file_type === 'image' ? <Image
-                                                            src={`${data[0].file_url}`}
-                                                            alt={`${data[0].file_name}`}
-                                                            height={0}
-                                                            width={140}
-                                                            className="rounded-lg"
-                                                        /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md p-4">
-                                                            <PlayIcon
-                                                                className="w-12 text-red-300"
-                                                            />
+                                                <div className="bg-white shadow-md text-secondary rounded-md p-2">
+                                                    <div className="p-4 rounded-md flex space-x-8 bg-[#f8f9fa]">
+                                                        {
+                                                            data[0].file_type === 'image' ? <Image
+                                                                src={`${data[0].file_url}`}
+                                                                alt={`${data[0].file_name}`}
+                                                                height={0}
+                                                                width={140}
+                                                                className="rounded-lg"
+                                                            /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md p-4">
+                                                                <PlayIcon
+                                                                    className="w-12 text-red-300"
+                                                                />
+                                                            </div>
+                                                        }
+                                                        <div className="flex flex-col space-y-2 justify-center">
+                                                            <p className="text-xs"> <i>matches 100% with your query</i> </p>
+                                                            <p className="text-xl"> {data[0].file_name} </p>
+                                                            <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
+                                                            <p> {byteToSize(parseInt(data[0].size))} </p>
                                                         </div>
-                                                    }
-                                                    <div className="flex flex-col space-y-2 justify-center">
-                                                        <p className="text-xs"> <i>matches 100% with your query</i> </p>
-                                                        <p className="text-xl"> {data[0].file_name} </p>
-                                                        <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
-                                                        <p> {byteToSize(parseInt(data[0].size))} </p>
                                                     </div>
                                                 </div>
                                             </>
