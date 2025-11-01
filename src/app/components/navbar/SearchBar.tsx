@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useGetSuggestions } from "@/app/hooks/useMedia";
 import { Files } from "@/types/mediaTypes";
 import SearchResults from "@/app/dashboard/search/page";
-import { PlayIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon, PlayIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { byteToSize } from "@/app/utils/useful";
 import Image from "next/image";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
@@ -62,7 +62,7 @@ export default function SearchBar() {
     }
 
     function updateSuggestions() {
-        console.log(searchQuery, searchSuggestions)
+        console.log(searchQuery, typeof data)
         data && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
             dispatch(setSearchSuggestions([...searchSuggestions, data[0]])) :
             dispatch(setSearchSuggestions([...searchSuggestions, searchQuery]))
@@ -100,7 +100,7 @@ export default function SearchBar() {
                         }}
                         onChange={(e) => setSearchQuerY(e.target.value)}
                         value={searchQuery}
-                        onFocus={() => setVisible(!visible)}
+                        onClick={() => setVisible(!visible)}
                     />
                     <AnimatePresence>
                         {
@@ -118,6 +118,7 @@ export default function SearchBar() {
                                             key={i}
                                             index={i}
                                             idxValue={x}
+                                            type="suggestion"
                                             searchSuggestions={searchSuggestions}
                                             setSearchQuery={setSearchQuerY}
                                             searchQuery={searchQuery}
@@ -140,6 +141,8 @@ export default function SearchBar() {
                                             data.map((_, i) => <SuggestionButtons
                                                 key={i}
                                                 index={i}
+                                                type='data'
+                                                idxValue={data}
                                                 searchSuggestions={data}
                                                 setSearchQuery={setSearchQuerY}
                                                 searchQuery={searchQuery}
@@ -159,9 +162,9 @@ export default function SearchBar() {
                                                                 src={`${data[0].file_url}`}
                                                                 alt={`${data[0].file_name}`}
                                                                 height={0}
-                                                                width={140}
+                                                                width={150}
                                                                 className="rounded-lg"
-                                                            /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md p-4">
+                                                            /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md">
                                                                 <PlayIcon
                                                                     className="w-12 text-red-300"
                                                                 />
@@ -170,6 +173,20 @@ export default function SearchBar() {
                                                         <div className="flex flex-col space-y-2 justify-center">
                                                             <p className="text-xs"> <i>matches 100% with your query</i> </p>
                                                             <p className="text-xl"> {data[0].file_name} </p>
+                                                            <div className="mb-2 flex space-x-2 items-center">
+                                                                <button className="p-2 h-8 items-center hover rounded-md border border-amber-300 bg-amber-100  flex space-x-2 text-amber-500">
+                                                                    <StarIcon className="w-4" />
+                                                                    <p>star</p>
+                                                                </button>
+                                                                <button className="p-2 h-8 items-center hover rounded-md border border-gray-300 bg-secondary flex space-x-2 text-secondary">
+                                                                    <InformationCircleIcon className="w-4" />
+                                                                    <p>more</p>
+                                                                </button>
+                                                                <button className="p-2 h-8 items-center hover rounded-md border-dashed border border-red-200 bg-red-100 flex space-x-2 text-red-400">
+                                                                    <TrashIcon className="w-4" />
+                                                                    <p>delete</p>
+                                                                </button>
+                                                            </div>
                                                             <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
                                                             <p> {byteToSize(parseInt(data[0].size))} </p>
                                                         </div>

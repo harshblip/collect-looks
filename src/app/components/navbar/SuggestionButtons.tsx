@@ -8,18 +8,21 @@ interface PropTypes {
     searchSuggestions: (string | Files)[];
     searchQuery: string;
     idxValue: string | Files
+    type: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     removeSuggestion: (x: number) => void;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-export default function SuggestionButtons({ index, searchSuggestions, setSearchQuery, searchQuery, removeSuggestion, onClick, idxValue }: PropTypes) {
-    console.log(idxValue, typeof idxValue)
+export default function SuggestionButtons({ index, searchSuggestions, setSearchQuery, searchQuery, removeSuggestion, onClick, idxValue, type }: PropTypes) {
+    console.log(idxValue, searchSuggestions[index])
     return (
         <div
-            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full z-2"
+            className="flex items-center justify-between hover hover:bg-gray-100 p-2 rounded-lg transition-all w-full z-2 "
         >
-            <button className="flex justify-between w-full">
+            <button
+                onClick={onClick}
+                className="flex justify-between w-full hover">
                 <div className="flex items-center space-x-3">
                     <MagnifyingGlassIcon
                         className="w-6 h-6 text-gray-400"
@@ -30,7 +33,7 @@ export default function SuggestionButtons({ index, searchSuggestions, setSearchQ
                 </div>
                 <div className="flex space-x-2 items-center">
                     {
-                        typeof idxValue === 'object' &&
+                        typeof idxValue !== 'string' &&
                             searchSuggestions[index].file_type === 'image' && typeof searchSuggestions[index].file_url === 'string' && searchSuggestions[index].file_url.trim() !== '' &&
                             (/^(https?:\/\/|\/)/.test(searchSuggestions[index].file_url)) ? (
                             <Image
@@ -45,13 +48,15 @@ export default function SuggestionButtons({ index, searchSuggestions, setSearchQ
                     }
                 </div>
             </button>
-            <XMarkIcon
-                className="w-8 h-8 text-gray-400 hover:bg-gray-200 rounded-md p-1"
-                onClick={(e) => {
-                    e.preventDefault()
-                    removeSuggestion(index)
-                }}
-            />
+            {
+                type === 'suggestion' && <XMarkIcon
+                    className="w-8 h-8 text-gray-400 hover:bg-gray-200 rounded-md p-1"
+                    onClick={(e) => {
+                        e.preventDefault()
+                        removeSuggestion(index)
+                    }}
+                />
+            }
         </div>
     )
 }
