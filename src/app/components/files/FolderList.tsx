@@ -43,7 +43,7 @@ export default function FolderList({ show }: Props) {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0   bottom-0 w-full flex justify-center items-center font-product -ml-8 h-full z-2">
-                    <div className="bg-white bg-center bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-contain overflow-scroll h-[64%] w-[30rem] rounded-lg flex flex-col items-center text-primary">
+                    <div className="bg-white bg-center bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-contain overflow-scroll rounded-lg flex flex-col items-center text-primary">
                         {
                             created ? <p> {files.length} files added to {name} ✅ </p> : <>
                                 <div className=" flex flex-col mt-6 space-y-6 p-4">
@@ -67,7 +67,7 @@ export default function FolderList({ show }: Props) {
                                             )
                                         }
                                     </div>
-                                    <div className={`flex justify-around w-full items-center mt-16`}>
+                                    <div className={`flex justify-around w-full items-center mt-0`}>
                                         {
                                             id > 0 ? <motion.div
                                                 initial={{ opacity: 0, y: -10 }}

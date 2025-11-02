@@ -47,9 +47,12 @@ function CreateFolder() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
-                    <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-center bg-contain h-[64%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary">
+                    <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-center bg-contain p-6 rounded-lg flex flex-col justify-center text-primary">
                         {created ? <p className="text-xl"> folder {name} created ✅ </p> : <>
-                            <p className="text-2xl mt-2"> Create a new folder </p>
+                            <p className="flex items-start text-2xl mt-2"> Create a new folder </p>
+                            <hr 
+                                className="w-32 border-[0.14rem] border-gray-400 rounded-full mt-2"
+                            />
                             <div className="flex flex-col space-y-2 mt-10">
                                 <p className="text-secondary text-sm"> folder's name </p>
                                 <input
@@ -81,7 +84,7 @@ function CreateFolder() {
                                         />
                                     </div>
                                 }
-                                <div className="flex items-center space-x-2 mt-4">
+                                <div className="flex justify-center w-full items-center space-x-2 mt-4">
                                     {!locked && <p className="text-secondary text-md"> locked ? </p>}
                                     <div className={`${locked && `flex space-x-2`}`}>
                                         {

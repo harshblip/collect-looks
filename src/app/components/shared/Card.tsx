@@ -53,20 +53,20 @@ export default function Card({ data }: {
                     <p className="text-lg font-medium">
                         {data.size && byteToSize(parseInt(data.size))}
                     </p>
-                    {
-                        show && <div className="absolute">
-                            <MoreDialog
-                                cardInfo={data}
-                                showMe={setShow}
-                            />
-                        </div>
-                    }
                     <button
-                        className="hover text-lg font-medium"
+                        className="hover text-lg font-medium z-1"
                         onClick={() => setShow(true)}
                     > <EllipsisVerticalIcon className="w-5" /> </button>
                 </div>
             </div>
+            {
+                show && <div className="fixed right-30 -mt-20">
+                    <MoreDialog
+                        cardInfo={data}
+                        showMe={setShow}
+                    />
+                </div>
+            }
         </>
     )
 }

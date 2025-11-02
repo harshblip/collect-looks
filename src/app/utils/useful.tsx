@@ -1,4 +1,4 @@
-import { setSelectedFolders, setViewFolder } from "@/lib/slice/filesSlice"
+import { setSelectedFolders, setViewFolder } from "@/lib/slice/folderSlice"
 import { useAppSelector } from "@/lib/store"
 import { Files } from "@/types/mediaTypes"
 import axios from "axios"
@@ -31,4 +31,33 @@ export function byteToSize(kb: number): string {
     const arr = ['bytes', 'KB', 'MB'];
     const i = Math.floor(Math.log(kb) / Math.log(1024));
     return `${(kb / (1024 ** i)).toFixed(0)} ${arr[i]}`;
+}
+
+export function getFileCategory(mimeType: string): 'image' | 'video' | 'document' | 'audio' | 'other' {
+    if (!mimeType) return 'other';
+
+    const type = mimeType.toLowerCase();
+
+    if (type.startsWith('image/')) return 'image';
+    if (type.startsWith('video/')) return 'video';
+    if (type.startsWith('audio/')) return 'audio';
+
+    // document types
+    const docTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+        'text/plain',
+        'text/csv',
+        'application/json',
+        'application/x-zip-compressed', // zip treated as document/archive
+        'application/zip',
+    ];
+    if (docTypes.includes(type)) return 'document';
+
+    return 'other';
 }

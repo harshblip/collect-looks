@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { handleDragLeave, handleDragOver, handleDrop, handleFileInput, handleRemove, handleUpload } from '@/app/utils/fileUploader';
 import { CameraIcon, FolderIcon, PhotoIcon, TrashIcon } from '@heroicons/react/24/solid';
 import UploadingModal from '../ui/fileuploader/UploadingModal';
+import { BugAntIcon, DocumentDuplicateIcon, DocumentIcon, PlayIcon, SignalIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { byteToSize, getFileCategory } from '@/app/utils/useful';
 
 export default function FileUploader({ show }: { show: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [files, setFiles] = useState<File[]>([]);
@@ -36,8 +38,8 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                 >
                     {
                         uploading ? (
-                            <UploadingModal 
-                                progress = {progress}
+                            <UploadingModal
+                                progress={progress}
                             />
                         ) : (
                             <div className={`w-[32rem] ${files.length ? `max-h-[40rem]` : `h-[32rem]`} rounded-lg flex flex-col items-center p-6 justify-center text-center cursor-pointer transition-colors duration-300 ${isDragging ? 'bg-gray-100 border-gray-400' : 'border-gray-300 bg-white'}`}>
@@ -73,7 +75,7 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                                         files.length ? `Drop that one file you forgot` : `Drag & Drop files here`
                                                     }
                                                 </p>
-                                                <Button variant="outline" className="mt-4 text-md">Or <span className='text-emerald-400 font-semibold'> Browse </span>  to upload</Button>
+                                                <Button variant="outline" className="mt-4 text-md">Or <span className='text-emerald-500 font-semibold'> Browse </span>  to upload</Button>
                                                 {
                                                     !files.length && <p className='text-sm text-gray-400 mt-4'> supports all general image, video, <br /> audio  and doc formats </p>
                                                 }
@@ -89,32 +91,45 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                     />
                                 </div>
                                 {files.length > 0 && (
-                                    <div className='max-h-[24rem] w-full rounded-md shadow-md overflow-auto p-3 bg-gray-50 mt-6'>
-                                        <motion.div
-                                            className="w-full mt-2"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                        >
-                                            <ul className="space-y-2">
-                                                {files.map((file, index) => (
-                                                    <motion.li
-                                                        key={index}
-                                                        className="flex justify-between items-center p-2 bg-white rounded-md shadow-sm text-gray-600 -mt-0"
-                                                        initial={{ opacity: 0, scale: 0.9 }}
-                                                        animate={{ opacity: 1, scale: 1 }}
-                                                        exit={{ opacity: 0, y: -20 }}
-                                                    >
-                                                        <span className="text-sm truncate max-w-xs">{file.name}</span>
-                                                        <Button
-                                                            size="sm"
-                                                            variant="destructive"
-                                                            onClick={() => handleRemove(index, setFiles, files)}
-                                                            className='hover'
-                                                        ><TrashIcon /></Button>
-                                                    </motion.li>
-                                                ))}
-                                            </ul>
-                                        </motion.div>
+                                    <div className='flex flex-col w-full text-start'>
+                                        <p className='text-secondary mt-4 text-lg'> uploaded files </p>
+                                        <div className='max-h-[20rem] w-full rounded-md shadow-md overflow-auto mt-2'>
+                                            <motion.div
+                                                className="w-full mt-2"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                            >
+                                                <ul className="space-y-4">
+                                                    {files.map((file, index) => (
+                                                        <motion.li
+                                                            key={index}
+                                                            className="flex justify-between items-center p-3 bg-white border border-gray-400 rounded-md shadow-sm text-gray-600 -mt-0"
+                                                            initial={{ opacity: 0, scale: 0.9 }}
+                                                            animate={{ opacity: 1, scale: 1 }}
+                                                            exit={{ opacity: 0, y: -20 }}
+                                                        >
+                                                            <div className='flex space-x-4 items-center'>
+                                                                <div className='w-6 text-secondary ml-2'>
+                                                                {
+                                                                    getFileCategory(file.type) === 'image' ? <PhotoIcon /> : getFileCategory(file.type) === 'video' ? <PlayIcon /> : getFileCategory(file.type) === 'document' ? <DocumentDuplicateIcon /> : getFileCategory(file.type) === 'audio' ? <SignalIcon /> : <BugAntIcon />
+                                                                }
+                                                                </div>
+                                                                <div className='flex flex-col'>
+                                                                    <span className="text-md truncate max-w-xs">{file.name}</span>
+                                                                    <p className="text-sm truncate max-w-xs text-gray-400">
+                                                                        {byteToSize(file.size)}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <button
+                                                                onClick={() => handleRemove(index, setFiles, files)}
+                                                                className='hover:text-white hover text-gray-500 w-8 mr-2 hover:bg-red-400 rounded-md p-2'
+                                                            ><XMarkIcon/></button>
+                                                        </motion.li>
+                                                    ))}
+                                                </ul>
+                                            </motion.div>
+                                        </div>
                                     </div>
                                 )}
                                 {
