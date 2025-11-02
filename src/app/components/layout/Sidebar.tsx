@@ -15,6 +15,7 @@ import LockModal from "../files/LockModal";
 import { useDispatch } from "react-redux";
 import { setViewCreateFolder } from "@/lib/slice/folderSlice";
 import { useKeyboardShortcuts } from "@/app/hooks/useMedia";
+import { setViewMedia } from "@/lib/slice/generalSlice";
 
 export default function Sidebar() {
 
@@ -29,6 +30,10 @@ export default function Sidebar() {
     const viewLockModal = useAppSelector(state => state.utility.viewLockModal)
 
     const router = useRouter()
+
+    useEffect(() => {
+        dispatch(setViewMedia(false))
+    }, [])
 
     useKeyboardShortcuts({
         "^": () => dispatch(setViewCreateFolder(true)),

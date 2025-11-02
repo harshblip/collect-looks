@@ -24,7 +24,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2"
+                    className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-10"
                 >
                     <div className="bg-white overflow-auto rounded-md p-6 h-[40rem] w-[32rem] flex flex-col space-y-6">
                         <div className="flex justify-center items-center flex-col">

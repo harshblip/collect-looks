@@ -1,8 +1,8 @@
 'use client'
 
-import { setViewMedia } from "@/lib/slice/generalSlice"
+import { setInfoData, setViewInfo, setViewMedia } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
-import { ArrowLeftIcon, ArrowRightIcon, FolderIcon, QrCodeIcon, SparklesIcon } from "@heroicons/react/24/outline"
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, FolderIcon, InformationCircleIcon, QrCodeIcon, SparklesIcon } from "@heroicons/react/24/outline"
 import { ArrowsPointingInIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -16,6 +16,8 @@ import Player from "../media-player/VideoPlayer"
 import { EyeIcon } from "lucide-react"
 import { useUpdateLastOpened } from "@/app/hooks/useUser"
 import { AnimatePresence, motion } from "framer-motion"
+import { byteToSize } from "@/app/utils/useful"
+import { prefetchInfo } from "@/app/hooks/useMedia"
 
 export default function MediaViewer() {
 
@@ -31,27 +33,28 @@ export default function MediaViewer() {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     const { mutate: updateLastOpened } = useUpdateLastOpened()
+    const { data, refetch } = prefetchInfo(3, openFiles[updateI].id)
 
-    console.log(openFiles[updateI].is_locked, openFiles[updateI].password)
+    console.log(openFiles[updateI].is_locked, openFiles[updateI].id)
 
     useEffect(() => {
         const type = openFiles[updateI].file_type === null ? 'folders' : 'files'
         updateLastOpened({ type: type, fileId: openFiles[updateI].id })
     }, [])
 
+    useEffect(() => {
+        data && dispatch(setInfoData(data))
+    }, [data])
+
     return (
         <>
             <div
                 className="font-product absolute bg-black/20 flex flex-col justify-center items-center w-full top-0 bottom-0 -ml-8 z-2"
             >
-                <ArrowsPointingInIcon
-                    onClick={() => dispatch(setViewMedia(false))}
-                    className="text-primary w-10 hover bg-white p-2 absolute top-20 right-20 rounded-md"
-                />
                 <div className="flex space-x-4">
                     <ArrowLeftIcon
                         onClick={() => setUpdateI((x) => x > 0 ? x - 1 : x)}
-                        className="w-10 text-white hover absolute top-[50%] left-20" />
+                        className="w-9 p-2 rounded-md text-secondary active:scale-95 bg-white hover absolute top-[50%] left-20" />
                     {
                         !show && openFiles[updateI].is_locked ? <>
                             <AnimatePresence>
@@ -119,14 +122,40 @@ export default function MediaViewer() {
                                         <p> This is a folder </p>
                                         <p className="-mt-2"> exit this view and double tap on it to open </p>
                                     </div> : openFiles[updateI].file_type === 'image' ? <>
-                                        <Image
-                                            src={openFiles[updateI].file_url || ''}
-                                            alt={openFiles[updateI].file_name || ''}
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            className="h-auto max-h-full w-auto max-w-full object-contain rounded-xl"
-                                        />
+                                        <div className="flex flex-col">
+                                            <div className="bg-white rounded-md w-[60%] top-10 left-[20%] absolute p-2 shadow-md">
+                                                <div className="bg-gray-100 p-2 rounded-md flex items-center justify-between text-secondary">
+                                                    <div className="flex space-x-4">
+                                                        <button className="ml-2 border border-gray-400 rounded-md p-2"> <ArrowUpRightIcon className="w-4" /> </button>
+                                                        <ArrowsPointingInIcon
+                                                            onClick={() => dispatch(setViewMedia(false))}
+                                                            className="text-primary w-10 hover border border-gray-400 p-2 rounded-md"
+                                                        />
+                                                        <InformationCircleIcon
+                                                            onClick={() => {
+                                                                refetch()
+                                                                dispatch(setViewInfo(true))
+                                                            }}
+                                                            className="text-primary w-10 hover border border-gray-400 p-2 rounded-md"
+                                                        />
+                                                    </div>
+                                                    <p className=" text-xl p-2 ml-12 rounded-md"> {openFiles[updateI].file_name} </p>
+                                                    <div className="flex items-center space-x-1">
+                                                        <p className="p-2 rounded-md"> {openFiles[updateI].created_at.substring(0, 10)} </p>
+                                                        <p className="text-xl">|</p>
+                                                        <p className="p-2 rounded-md"> {byteToSize(parseInt(openFiles[updateI].size))} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <Image
+                                                src={openFiles[updateI].file_url || ''}
+                                                alt={openFiles[updateI].file_name || ''}
+                                                width={0}
+                                                height={0}
+                                                sizes="100vw"
+                                                className="h-auto max-h-full w-auto max-w-full object-contain rounded-xl mt-12"
+                                            />
+                                        </div>
                                     </> : openFiles[updateI].file_type === 'video' ? <>
                                         <Player
                                             url={openFiles[updateI].file_url || ''}
@@ -164,7 +193,7 @@ export default function MediaViewer() {
 
                     <ArrowRightIcon
                         onClick={() => setUpdateI((x) => x < openFiles.length ? x + 1 : x)}
-                        className="w-10 text-white hover absolute top-[50%] right-20" />
+                        className="w-9 p-2 rounded-md text-secondary hover absolute top-[50%] right-20 active:scale-95 bg-white" />
                 </div>
 
             </div >
