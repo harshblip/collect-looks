@@ -12,17 +12,22 @@ export async function uploadFile(formData: FormData): Promise<string> {
     return response.data.message
 }
 
-export async function fetchAllFiles(user_id: number, page: number): Promise<Files[]> {
-    const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
-        params: { user_id, page },
-    });
-    
-    console.log("response", response)
-    if (response.status !== 200) {
-        throw new Error(response.data?.message)
+export async function fetchAllFiles(user_id: number, page: number, authToken: string): Promise<Files[]> {
+    try {
+        const response = await axios.get(`${BASE_URL}/upload/getAllFiles`, {
+            params: { user_id, page },
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        });
+        
+        return response.data.message
+
+    } catch (err: any) {
+        console.log("efe", err.response.data.message)
+        throw new Error(err.response.data.message)
     }
-    
-    return response.data.message
+
 }
 
 export async function starFile(userId: number, id: number): Promise<string> {

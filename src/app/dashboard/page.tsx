@@ -29,10 +29,11 @@ const pixel = Pixelify_Sans({
 
 export default function Dashboard() {
 
-    const token = useAppSelector((state) => state.user.authToken);
     const files = useAppSelector(state => state.files.files)
     const viewFolder = useAppSelector(state => state.folders.viewFolder)
     const folderItemsArray = useAppSelector(state => state.folders.folderItems)
+    const userId = useAppSelector(state => state.user.EUID.userId)
+    const access_token = useAppSelector(state => state.user.EUID.authToken)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -44,17 +45,18 @@ export default function Dashboard() {
     const [password, setPassword] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
-    const { data: allFiles, error } = useGetAllFiles(3, currentPage)
-    const { data: folderItems } = useGetFolderItems(3, selectedFolderId)
+    const { data: allFiles, error: getAllFilesError, isSuccess } = useGetAllFiles(userId, currentPage, access_token)
+    const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(userId, selectedFolderId)
+    const globalError: any = getAllFilesError || getFolderItemsError
 
     useEffect(() => {
-        // if (!user) {
-        //     setShowError(true)
-        //     const timeout = setTimeout(() => {
-        //         // router.push('/')
-        //     }, 2000)
-        //     return () => clearTimeout(timeout)
-        // }
+        if (!userId) {
+            setShowError(true)
+            const timeout = setTimeout(() => {
+                router.push('/')
+            }, 2000)
+            return () => clearTimeout(timeout)
+        }
     }, [])
 
     useEffect(() => {
@@ -108,20 +110,29 @@ export default function Dashboard() {
     const openFiles = useAppSelector(state => state.files.viewMediaFiles)
     const pages = viewFolder ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15)) : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15))
 
+    useEffect(() => {
+        !userId ? setShowError(true) : setShowError(false)
+    }, [userId])
+
     const [btns, setBtns] = useState<number[]>([])
     useEffect(() => {
         setBtns(Array(pages).fill(0))
     }, [pages])
-    console.log("error", error)
+    console.log("error", userId)
     return (
         <>
             {
-                // error || error && <div className="absolute top-20 right-50 left-50">
-                //     <Status
-                //         type="ERROR"
-                //         message={error}
-                //     />
-                // </div>
+                getAllFilesError && <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute bottom-5 right-5">
+                    <Status
+                        type="ERROR"
+                        message={getAllFilesError.message}
+                    />
+                </motion.div>
             }
             {
                 showError ? <div className="flex justify-center z-1 mt-[15%]">

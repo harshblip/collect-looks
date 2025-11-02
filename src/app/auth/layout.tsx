@@ -15,11 +15,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                         backgroundSize: "96px 64px, 96px 64px, 100% 100%",
                     }}
                     className="bg-[#353535] text-[#DEE2E6] md:h-screen md:rounded-r-3xl md:rounded-bl-none rounded-bl-[4rem] rounded-br-[4rem] md:rounded-br-3xl md:w-1/2">
-                    <div className="md:p-32 p-20 flex flex-col">
+                    <div className="md:p-32 p-20 flex flex-col font-glook">
                         <Logo />
-                        <p className={`font-glook text-3xl mt-8`}>collect</p>
-                        <p className={`font-glook text-5xl mt-18 fade-in`}>Welcome to Collect</p>
-                        <p className={`font-glook hidden md:flex text-[#999999] text-md mt-4    `}>a  best-in-class app for your photo and video sharing and some more more random things you’d like</p>
+                        <p className={`text-3xl mt-8`}>collect</p>
+                        <p className={`text-5xl mt-18 fade-in`}>Welcome to Collect</p>
+                        <p className={`hidden md:flex text-[#999999] text-md mt-4    `}>a  best-in-class app for your photo and video sharing and some more more random things you’d like</p>
                     </div>
                 </div>
                 <div className="primary-bg rounded-md h-screen md:w-1/2">

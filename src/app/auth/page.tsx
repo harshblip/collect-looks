@@ -10,6 +10,8 @@ import ForgotModal from "../components/auth/ForgotModal";
 import { useLoginUser, useSignupUser } from "../hooks/useUser";
 import Status from "../components/shared/Status";
 import { motion } from 'framer-motion'
+import { jwtDecode } from 'jwt-decode'
+import { setEUID } from "@/lib/slice/userSlice";
 
 export default function Auth() {
 
@@ -19,8 +21,9 @@ export default function Auth() {
     const [visible, setVisible] = useState<boolean>(false)
     const [checked, setChecked] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(true)
+    const euid = useAppSelector(state => state.user.EUID)
 
-    const { mutate: loginUser, isSuccess, error } = useLoginUser(email, password, checked)
+    const { mutate: loginUser, isSuccess, error, data } = useLoginUser()
     const { mutate: signupUser } = useSignupUser()
     const router = useRouter()
     const dispatch = useDispatch()
@@ -29,23 +32,26 @@ export default function Auth() {
 
     useEffect(() => {
         if (isSuccess) {
+
+            const accessKey = data.access_token
+            const decoded: any = jwtDecode(accessKey)
+            console.log(accessKey, decoded)
+
+            dispatch(setEUID({
+                email: decoded.email,
+                username: decoded.username,
+                userId: decoded.id,
+                authToken: accessKey
+            }))
+
             const timeout = setTimeout(() => {
                 router.push('/dashboard')
             }, 2000)
+
             return () => clearTimeout(timeout)
         }
     }, [isSuccess])
-
-    useEffect(() => {
-        // if (user) {
-        //     const timeout = setTimeout(() => {
-        //         setShow(false)
-        //         router.back()
-        //     }, 2000)
-        //     return () => clearTimeout(timeout)
-        // }
-    }, [])
-
+    
     const mode = useAppSelector(state => state.utility.mode) || 'Create an account'
 
     return (
@@ -100,7 +106,7 @@ export default function Auth() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.1, ease: 'easeInOut' }}
-                            className="font-product mt-12 text-4xl text-secondary"> Hey "user.username" 👋</motion.p>
+                            className="font-product mt-12 text-4xl text-secondary"> Hey {euid.username} 👋</motion.p>
                     }
                 </div>
 

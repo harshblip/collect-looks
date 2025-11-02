@@ -4,25 +4,14 @@ import { BeakerIcon, FireIcon } from "@heroicons/react/24/solid";
 import CardButton from "../shared/CardButton";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAppSelector } from "@/lib/store";
 
 export default function ProfileCard({ toggle }: {
     toggle: React.Dispatch<React.SetStateAction<'menu' | 'profile' | 'settings' | ''>>
 }) {
     const router = useRouter()
-    const user = {
-        username: '',
-        email: ''
-    }
+    const user = useAppSelector(state => state.user.EUID)
     
-    useEffect(() => {
-        // if (!user) {
-        //     const timeout = setTimeout(() => {
-        //         router.push('/')
-        //     }, 2000)
-        //     return () => clearTimeout(timeout)
-        // }
-    }, [])
-
     return (
         <>
             <motion.div

@@ -2,36 +2,34 @@ import { Files } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 export interface IAuthState {
-    authToken: string
-    email: string
-    userId: number
+    EUID: {
+        email: string,
+        username: string,
+        userId: number
+        authToken: string
+    }
 }
 
 const initialState: IAuthState = {
-    authToken: "",
-    email: '',
-    userId: 3,
+    EUID: {
+        email: '',
+        username: '',
+        userId: 0,
+        authToken: "",
+    },
 };
 
 export const authSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setAuthState: (state, action: PayloadAction<string>) => {
-            state.authToken = action.payload;
-        },
-        setUserId: (state, action: PayloadAction<number>) => {
-            state.userId = action.payload
-        },
-        setMail: (state, action: PayloadAction<string>) => {
-            state.email = action.payload
-        },
+        setEUID: (state, action: PayloadAction<{ email: string, username: string, userId: number, authToken: string }>) => {
+            state.EUID = action.payload
+        }
     },
 });
 
 export const {
-    setAuthState,
-    setMail,
-    setUserId,
+    setEUID
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;

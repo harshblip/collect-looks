@@ -20,7 +20,7 @@ const pixel = Pixelify_Sans({
 
 export default function MyProfile() {
 
-    const id = useAppSelector(state => state.user.userId)
+    const id = useAppSelector(state => state.user.EUID.userId)
     const { data } = useGetUserData(3)
     console.log(id, data)
 
