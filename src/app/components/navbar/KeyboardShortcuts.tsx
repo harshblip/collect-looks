@@ -21,16 +21,15 @@ export default function KeyboardShortcuts() {
                         </div>
                         <div className="flex flex-col space-y-8 mt-8">
                             {
-                                shortcuts.map((x, _) => <>
-                                    <div className="flex justify-between items-center">
-                                        <p className="text-secondary"> {x.action} </p>
-                                        <div className="flex space-x-2 items-center text-sm">
-                                            <code className="p-2 text-secondary border border-gray-400 rounded-md"> {x.modifier} </code>
-                                            <p className="text-secondary">+</p>
-                                            <code className="p-2 text-secondary border border-gray-400 rounded-md"> {x.key} </code>
-                                        </div>
+                                shortcuts.map((x, i) => <div key={i} className="flex justify-between items-center">
+                                    <p className="text-secondary"> {x.action} </p>
+                                    <div className="flex space-x-2 items-center text-sm">
+                                        <code className="p-2 text-secondary border border-gray-400 rounded-md"> {x.modifier} </code>
+                                        <p className="text-secondary">+</p>
+                                        <code className="p-2 text-secondary border border-gray-400 rounded-md"> {x.key} </code>
                                     </div>
-                                </>
+                                </div>
+
                                 )
                             }
                         </div>

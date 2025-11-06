@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
 import { setIndex, setParentId } from "@/lib/slice/folderSlice";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon, EyeIcon, FingerPrintIcon, FolderIcon, FolderOpenIcon, MagnifyingGlassIcon, PlusIcon, SparklesIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setViewMedia } from "@/lib/slice/generalSlice"
@@ -41,7 +41,7 @@ export default function Dashboard() {
     const [count, setCount] = useState<number>(1)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [show, setShow] = useState<boolean>(false)
-    const [showError, setShowError] = useState<boolean>(false)
+    const [showError, setShowError] = useState<boolean>(true)
     const [password, setPassword] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
@@ -111,7 +111,7 @@ export default function Dashboard() {
     const pages = viewFolder ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15)) : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15))
 
     useEffect(() => {
-        !userId ? setShowError(true) : setShowError(false)
+        // !userId ? setShowError(true) : setShowError(false)
     }, [userId])
 
     const [btns, setBtns] = useState<number[]>([])
@@ -122,7 +122,7 @@ export default function Dashboard() {
     return (
         <>
             {
-                getAllFilesError && <motion.div
+                globalError && <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -130,20 +130,47 @@ export default function Dashboard() {
                     className="absolute bottom-5 right-5">
                     <Status
                         type="ERROR"
-                        message={getAllFilesError.message}
+                        message={globalError.message}
                     />
                 </motion.div>
             }
             {
-                showError ? <div className="flex justify-center z-1 mt-[15%]">
-                    <div className="font-product text-xl w-1/2 h-[12rem] rounded-md p-4 flex flex-col space-y-2 items-center justify-between">
-                        <div className="flex items-center space-x-6 mt-10">
-                            <p className={`text-red-200 text-2xl -mt-1`}> error </p>
-                            <div>
-                                <p className={`text-gray-200 text-7xl`}> LOL </p>
-                            </div>
-                        </div>
+                showError ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[5%]">
+                    <p className="text-secondary text-2xl"> Say hi to the Demo </p>
+                    <div className="flex space-x-4 items-center mt-10">
+                        <p>1.</p>
+                        <input
+                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                        />
                     </div>
+                    <div className="flex space-x-4 items-center mt-8">
+                        <p>2.</p>
+                        <input
+                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                        />
+                    </div>
+                    <div className="flex space-x-4 items-center mt-8">
+                        <p>3.</p>
+                        <input
+                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                        />
+                    </div>
+                    <div className="flex space-x-4 items-center mt-8">
+                        <p>4.</p>
+                        <input
+                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                        />
+                    </div>
+                    <div className="flex space-x-4 items-center mt-8">
+                        <p>4.</p>
+                        <input
+                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                        />
+                    </div>
+
+                    <button
+                        onClick={() => setShowError(false)}
+                        className="border border-black w-[12rem] p-2 text-gray-600 hover hover:bg-gray-600 hover:text-white transition mt-10">Lets get started</button>
                 </div> : <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                     {
                         viewFolder ? <ToggleHeading
@@ -161,22 +188,60 @@ export default function Dashboard() {
                             setLocked={setLocked}
                         /> : <div className="flex flex-col mt-16 bg-white">
                             {
-                                files && files.length ? <MoreOptions /> : <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -20 }}
-                                    transition={{ duration: 0.2 }}
-                                    className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
-                                    onClick={() => setShow(!show)}
-                                >
-                                    <div
-                                        className={`transition-transform duration-300 ease-in-out ${show ? 'rotate-90' : 'rotate-0'}`}
+                                files && files.length ? <MoreOptions /> : <div className="flex flex-col">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.2 }}
+                                        className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
+                                        onClick={() => setShow(!show)}
                                     >
-                                        <ChevronRightIcon className="w-6" />
-                                    </div>
+                                        <div
+                                            className={`transition-transform duration-300 ease-in-out ${show ? 'rotate-90' : 'rotate-0'}`}
+                                        >
+                                            <ChevronRightIcon className="w-6" />
+                                        </div>
 
-                                    <p className="text-xl text-primary"> Your files </p>
-                                </motion.div>
+                                        <p className="text-xl text-primary"> Your files </p>
+                                    </motion.div>
+                                    {
+                                        !show && <div>
+                                            <div className="mt-12 flex flex-col">
+                                                <div className="flex justify-center items-center">
+                                                    <div className={`${pixel.className} flex space-x-12 items-center text-secondary z-1 justify-center mt-18 mb-20`}>
+                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
+                                                            <div className="text-secondary flex space-x-2">
+                                                                <StarIcon width={42} />
+                                                                <FingerPrintIcon width={30} />
+                                                            </div>
+                                                            <p className="mt-2"> star, trash, hide/unhide files </p>
+                                                        </div>
+                                                        <hr
+                                                            className="border border-gray-300 w-16"
+                                                        />
+                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
+                                                            <div className="text-gray-400 flex gap-y-2">
+                                                                <FolderOpenIcon width={62} />
+                                                            </div>
+                                                            <p> create folders. protect them w/ passwords </p>
+                                                        </div>
+                                                        <hr
+                                                            className="border border-gray-300 w-16"
+                                                        />
+                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
+                                                            <div className="text-secondary flex space-x-2 mt-2">
+                                                                <MagnifyingGlassIcon width={42} />
+                                                                <SparklesIcon width={30} />
+                                                            </div>
+                                                            <p className="mt-4"> search and find them through Collect's fast search </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             }
                             <AnimatePresence>
                                 {show && (

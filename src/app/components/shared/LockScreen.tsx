@@ -23,6 +23,11 @@ export default function LockScreen({
     function verify(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         password === typedPassword ? (setLocked(false), setError("")) : setError("password's wrong. pls try again")
+
+        const timeout = setTimeout(() => {
+            setError("")
+        }, 2000)
+        return () => clearTimeout(timeout)
     }
 
     return (

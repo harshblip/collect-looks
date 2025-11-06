@@ -101,7 +101,7 @@ export async function setFileLock(password: string, fileId: number): Promise<str
 }
 
 export async function unlockFile(fileId: number): Promise<string> {
-    const response = await axios.post(`${BASE_URL}/upload/lockfile`, {
+    const response = await axios.post(`${BASE_URL}/upload/unlockfile`, {
         fileId
     })
 

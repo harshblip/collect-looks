@@ -6,6 +6,7 @@ import { CameraIcon, FolderIcon, PhotoIcon, TrashIcon } from '@heroicons/react/2
 import UploadingModal from '../ui/fileuploader/UploadingModal';
 import { BugAntIcon, DocumentDuplicateIcon, DocumentIcon, PlayIcon, SignalIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { byteToSize, getFileCategory } from '@/app/utils/useful';
+import { useAppSelector } from '@/lib/store';
 
 export default function FileUploader({ show }: { show: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [files, setFiles] = useState<File[]>([]);
@@ -13,6 +14,8 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
     const [progress, setProgress] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const accessToken = useAppSelector(state => state.user.EUID.authToken)
 
     useEffect(() => {
         if (progress === 100) {
@@ -143,7 +146,8 @@ export default function FileUploader({ show }: { show: React.Dispatch<React.SetS
                                             files,
                                             setFiles,
                                             setUploading,
-                                            setProgress
+                                            setProgress,
+                                            accessToken
                                         )}>Upload</Button>
                                     </div>
                                 }

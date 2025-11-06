@@ -4,7 +4,8 @@ export async function handleUpload(
     files: File[],
     setFiles: React.Dispatch<React.SetStateAction<File[]>>,
     setUploading: React.Dispatch<React.SetStateAction<boolean>>,
-    setProgress: React.Dispatch<React.SetStateAction<number>>
+    setProgress: React.Dispatch<React.SetStateAction<number>>,
+    accessToken: string
 ) {
     if (!files.length) return;
 
@@ -21,6 +22,9 @@ export async function handleUpload(
                 const percent = Math.round((progressEvent.loaded * 100) / total);
                 setProgress(percent);
             },
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
         });
 
         setFiles([]);

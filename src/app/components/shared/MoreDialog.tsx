@@ -22,7 +22,7 @@ export default function MoreDialog({ cardInfo, showMe }: {
     const { data, refetch } = prefetchInfo(3, id)
 
     const files: Files[] = []
-
+    console.log("typee", file_type)
     useEffect(() => {
         data && dispatch(setInfoData(data))
     }, [data])
@@ -60,7 +60,7 @@ export default function MoreDialog({ cardInfo, showMe }: {
                             dispatch(setLockModal({
                                 lock: is_locked || false,
                                 id: id,
-                                type: file_type,
+                                type: file_type || 'folder',
                                 password: password || ''
                             }))
                             dispatch(setViewLockModal(true))

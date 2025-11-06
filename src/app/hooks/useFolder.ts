@@ -22,7 +22,7 @@ export const useCreateFolder = () => {
             console.error("Failed to create folder: ", error)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFiles", 'folderItems'] })
+            queryClient.invalidateQueries({ queryKey: ["allFiles", "folderItems", "allFolders"] })
         }
     })
 }
@@ -43,7 +43,7 @@ export const useAddFilestoFolder = () => {
             console.error("Failed to add files to folder:  ", error)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFolders"] })
+            queryClient.invalidateQueries({ queryKey: ["allFolders", 'allFiles'] })
         }
     })
 }
@@ -53,7 +53,7 @@ export const useGetFolders = (id: number) => {
         queryKey: ['allFolders', id],
         queryFn: () => getFolders(id),
         enabled: !!id,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }
@@ -63,7 +63,7 @@ export const useGetFolderItems = (userId: number, folderId: number) => {
         queryKey: ['folderItems', folderId],
         queryFn: () => getFolderItems(userId, folderId),
         enabled: !!userId,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }

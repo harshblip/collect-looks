@@ -25,7 +25,7 @@ export const useGetAllFiles = (user_id: number, page: number, authToken: string)
         queryKey: ['allFiles', user_id, page],
         queryFn: () => fetchAllFiles(user_id, page, authToken),
         enabled: !!user_id,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2,
     })
 }
@@ -69,7 +69,7 @@ export const useGetStarredFiles = (userId: number) => {
         queryKey: ['starFiles', userId],
         queryFn: () => getStarFile(userId),
         enabled: !!userId,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }
@@ -80,7 +80,7 @@ export const useGetSuggestions = (word: string, userId: number) => {
         queryKey: ['suggestions', userId],
         queryFn: () => getSuggestions(word, userId),
         enabled: false,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }
@@ -90,7 +90,7 @@ export const prefetchInfo = (user_id: number, id: number) => {
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
         enabled: !!user_id,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }
@@ -100,7 +100,7 @@ export const useGetFileInfo = (user_id: number, id: number) => {
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
         enabled: !!user_id,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }
@@ -110,7 +110,7 @@ export const useGetLastSeen = (userId: number) => {
         queryKey: ['lastSeen', userId],
         queryFn: () => getLastSeen(userId),
         enabled: !!userId,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }

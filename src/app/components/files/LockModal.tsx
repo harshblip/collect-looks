@@ -2,6 +2,7 @@ import { useLockFolder, useUnlockFolder } from "@/app/hooks/useFolder"
 import { useLockFile, useUnlockFile } from "@/app/hooks/useMedia"
 import { setViewLockModal } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
+import { XMarkIcon } from "@heroicons/react/24/outline"
 import { EyeSlashIcon } from "@heroicons/react/24/solid"
 import { AnimatePresence, motion } from "framer-motion"
 import { EyeIcon } from "lucide-react"
@@ -21,13 +22,23 @@ export default function LockModal() {
     const [password, setPassword] = useState<string>('')
     const [gayab, setGayab] = useState<boolean>(false)
 
-    useEffect(() => {
+    console.log(temp)
+
+    function setLockUnlock() {
+        setGayab(true)
+        temp.type === 'folder' ? !temp.lock ? setFolderLock({
+            password: password,
+            folderId: temp.id
+        }) : password === temp.password && unlockFolder({ folderId: temp.id }) : !temp.lock ? setFileLock({
+            password: password,
+            fileId: temp.id
+        }) : password === temp.password && unlockFile({ fileId: temp.id })
         const timeout = setTimeout(() => {
             dispatch(setViewLockModal(false))
-        }, 1000)
-        clearInterval(timeout)
-    }, [gayab])
-    console.log(temp)
+        }, 2000)
+        return () => clearInterval(timeout)
+    }
+
     return (
         <>
             <AnimatePresence>
@@ -39,18 +50,19 @@ export default function LockModal() {
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
                     <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-center bg-contain h-[44%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-4">
                         {
-                            gayab ? <p className="text-secondary text-sm"> {temp.type} successfully locked ✅ </p> : <> <div className="w-full flex justify-between items-center"> 
-                            <button className="ml-14"></button>
-                            <p className="text-secondary text-2xl">
-                                {
-                                    temp.lock ? `unlock ` : `Lock `
-                                }
-                                {temp.type}
-                            </p>
-                                <button 
-                                className="hover:border hover:border-black rounded-md transition hover mr-4 text-xl p-0 h-8 w-10 "
-                                onClick={() => dispatch(setViewLockModal(false))}
-                                > x </button>
+                            gayab ? <div className="-mt-44 p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></div> : <> <div className="w-full flex justify-between items-center">
+                                <button className="ml-14"></button>
+                                <p className="text-secondary text-2xl">
+                                    {
+                                        temp.lock ? `unlock ` : `Lock `
+                                    }
+                                    {temp.type}
+                                </p>
+                                <button
+                                    className="hover:border hover:border-black rounded-md transition hover mr-4 text-xl p-2 flex justify-center"
+                                    onClick={() => dispatch(setViewLockModal(false))}
+                                > <XMarkIcon className="
+                                w-4 text-secondary"/> </button>
                             </div>
                                 <p className="text-md text-gray-400 mt-8"> set a strong password for this file to protect it from <br /> <i> muhehehheheh </i> </p>
                                 <div className="mt-8 flex items-center space-x-2">
@@ -71,7 +83,7 @@ export default function LockModal() {
                                     >
                                         {
                                             see ? <EyeIcon
-                                                className="hover w-6"
+                                                className="hover w-6 mt-3"
                                                 onClick={() => setSee(!see)}
                                             /> : <EyeSlashIcon
                                                 className="hover w-6"
@@ -81,13 +93,7 @@ export default function LockModal() {
                                     </button>
                                 </div>
                                 <button
-                                    onClick={() => temp.type === 'folder' ? !temp.lock ? setFolderLock({
-                                        password: password,
-                                        folderId: temp.id
-                                    }) : password === temp.password && unlockFolder({ folderId: temp.id }) : !temp.lock ? setFileLock({
-                                        password: password,
-                                        fileId: temp.id
-                                    }) : password === temp.password && unlockFile({ fileId: temp.id })}
+                                    onClick={setLockUnlock}
                                     className="p-2 outline-none bg-gray-600 rounded-md w-32 flex justify-center mt-10 text-white hover">
                                     Go
                                 </button>

@@ -65,7 +65,7 @@ export async function setFolderLock(password: string, folderId: number): Promise
         password, folderId
     })
 
-    if(response.status !== 201){
+    if (response.status !== 201) {
         throw new Error(response.data?.message || 'error in setFolderLock')
     }
 
@@ -77,7 +77,7 @@ export async function unlockFolder(folderId: number): Promise<string> {
         folderId
     })
 
-    if(response.status !== 201){
+    if (response.status !== 201) {
         throw new Error(response.data?.message || 'error in unlockFolder')
     }
 

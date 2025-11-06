@@ -19,6 +19,7 @@ export default function FolderList({ show }: Props) {
     const [id, setId] = useState<number>(0)
     const [name, setName] = useState<string>("")
     const files = useAppSelector(state => state.files.files)
+    console.log("files", files)
     const dispatch = useDispatch()
     const [created, setCreated] = useState<boolean>(false)
 
@@ -79,7 +80,11 @@ export default function FolderList({ show }: Props) {
                                                 <p className="ml-4">Add file to {name} ?</p>
                                                 <div className="flex space-x-4 mr-4">
                                                     <button
-                                                        onClick={() => addFilesToFolder({ files: files, folderId: id })}
+                                                        onClick={() => {
+                                                            dispatch(setFileModal(false))
+                                                            addFilesToFolder({ files: files, folderId: id })
+                                                        }
+                                                        }
                                                         className="bg-white flex justify-center items-center outline-none text-primary p-2 active:scale-95 rounded-md h-8 w-[3rem] hover">
                                                         yes
                                                     </button>

@@ -20,13 +20,13 @@ export default function Status({ type, message }: {
     return (
         <>
             {
-                show && <div className={`font-product absolute w-[16rem] h-12 bottom-10 right-10 rounded-md p-2
+                show && <div className={`font-product max-w-xl absolute bottom-10 right-10 rounded-md
                     ${type === 'INFO' && `bg-blue-100 text-blue-400`} 
                     ${type === 'ERROR' && `bg-red-100 text-red-500`} 
                     ${type === 'SUCCESS' && `bg-green-100 text-green-400`}
                     flex justify-center items-center
                 `}>
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 p-2 mx-2">
                         {
                             type === 'SUCCESS' ? <CheckBadgeIcon className="w-6" /> :
                                 type === 'INFO' ? <InformationCircleIcon className="w-6" /> :

@@ -6,7 +6,7 @@ export const useGetUserData = (id: number) => {
         queryKey: ['userData', id],
         queryFn: () => getUserData(id),
         enabled: !!id,
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 5,
         retry: 2
     })
 }

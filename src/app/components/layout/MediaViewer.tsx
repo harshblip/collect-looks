@@ -28,6 +28,7 @@ export default function MediaViewer() {
     const [see, setSee] = useState<boolean>(false)
     const [password, setPassword] = useState<string>('')
     const [show, setShow] = useState<boolean>(false)
+    const [showPolice, setShowPolice] = useState<boolean>(false)
 
     const [updateI, setUpdateI] = useState<number>(index)
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -41,6 +42,14 @@ export default function MediaViewer() {
         const type = openFiles[updateI].file_type === null ? 'folders' : 'files'
         updateLastOpened({ type: type, fileId: openFiles[updateI].id })
     }, [])
+
+    function checkPass() {
+        password !== openFiles[updateI].password ? setShowPolice(true) : setShow(true)
+        const timeout = setTimeout(() => {
+            setShowPolice(false)
+        }, 2000)
+        return () => clearTimeout(timeout)
+    }
 
     useEffect(() => {
         data && dispatch(setInfoData(data))
@@ -65,7 +74,22 @@ export default function MediaViewer() {
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                                     className="flex flex-col space-y-4">
                                     <div className="flex justify-between items-end w-[34rem] h-[12rem] rounded-md bg-white p-8 text-gray-300">
-                                        <p className="text-5xl"> Locked... </p>
+                                        {
+                                            showPolice ? <div className="flex space-x-4 items-center">
+                                                <Image
+                                                    src='/pepe-officer.png'
+                                                    height={0}
+                                                    width={140}
+                                                    alt="wrong password"
+                                                    className="rounded-md transition duration-900 ease-in-out"
+                                                />
+                                                <p className="text-xl text-red-400"> nice try </p>
+                                            </div> : <motion.p
+                                                initial={{ opacity: 0, y: -4 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                                className="text-5xl transition duration-900 ease-in-out"> Locked... </motion.p>
+                                        }
                                         <QrCodeIcon className="w-16 mr-4 mb-14" />
                                     </div>
                                     <div className="bg-gray-50 p-5 rounded-md flex items-center justify-center text-white">
@@ -83,7 +107,7 @@ export default function MediaViewer() {
                                             >
                                                 {
                                                     see ? <EyeIcon
-                                                        className="hover w-6"
+                                                        className="hover w-6 mt-3"
                                                         onClick={() => setSee(!see)}
                                                     /> : <EyeSlashIcon
                                                         className="hover w-6"
@@ -93,9 +117,7 @@ export default function MediaViewer() {
                                             </button>
                                         </div>
                                         <button
-                                            onClick={() => {
-                                                password === openFiles[updateI].password ? setShow(true) : ''
-                                            }}
+                                            onClick={checkPass}
                                             className="p-4 outline-none text-gray-600 rounded-md flex justify-center bg-white hover ml-16 hover:bg-gray-400 hover:text-white transition">
                                             Go
                                         </button>
