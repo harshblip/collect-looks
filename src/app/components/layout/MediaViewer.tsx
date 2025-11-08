@@ -185,8 +185,8 @@ export default function MediaViewer() {
                                     </> : openFiles[updateI].file_type === 'audio' ? <>
                                         <AudioPlayer
                                             src={openFiles[updateI].file_url || ''}
-                                            color="#f7b5cd"
-                                            sliderColor="#ff669d"
+                                            color="#e9ecef"
+                                            sliderColor="#e9ecef"
                                             style={{
                                                 background: "#000",
                                                 borderRadius: "15px",

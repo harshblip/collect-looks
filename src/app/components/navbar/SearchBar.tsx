@@ -16,6 +16,7 @@ import { InformationCircleIcon, PlayIcon, StarIcon, TrashIcon } from "@heroicons
 import { byteToSize } from "@/app/utils/useful";
 import Image from "next/image";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
+import SearchMatchCard from "./SearchMatchCard";
 
 export default function SearchBar() {
 
@@ -63,7 +64,7 @@ export default function SearchBar() {
 
     function updateSuggestions() {
         console.log(searchQuery, typeof data)
-        data && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
+        data && data.length > 0  && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
             dispatch(setSearchSuggestions([...searchSuggestions, data[0]])) :
             dispatch(setSearchSuggestions([...searchSuggestions, searchQuery]))
     }
@@ -154,44 +155,8 @@ export default function SearchBar() {
                                     </motion.div>
                                     <motion.div className="mt-2">
                                         {
-                                            searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
-                                                <div className="bg-white shadow-md text-secondary rounded-md p-2">
-                                                    <div className="p-4 rounded-md flex space-x-8 bg-[#f8f9fa]">
-                                                        {
-                                                            data[0].file_type === 'image' ? <Image
-                                                                src={`${data[0].file_url}`}
-                                                                alt={`${data[0].file_name}`}
-                                                                height={0}
-                                                                width={150}
-                                                                className="rounded-lg"
-                                                            /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md">
-                                                                <PlayIcon
-                                                                    className="w-12 text-red-300"
-                                                                />
-                                                            </div>
-                                                        }
-                                                        <div className="flex flex-col space-y-2 justify-center">
-                                                            <p className="text-xs"> <i>matches 100% with your query</i> </p>
-                                                            <p className="text-xl"> {data[0].file_name} </p>
-                                                            <div className="mb-2 flex space-x-2 items-center">
-                                                                <button className="p-2 h-8 items-center hover rounded-md border border-amber-300 bg-amber-100  flex space-x-2 text-amber-500">
-                                                                    <StarIcon className="w-4" />
-                                                                    <p>star</p>
-                                                                </button>
-                                                                <button className="p-2 h-8 items-center hover rounded-md border border-gray-300 bg-secondary flex space-x-2 text-secondary">
-                                                                    <InformationCircleIcon className="w-4" />
-                                                                    <p>more</p>
-                                                                </button>
-                                                                <button className="p-2 h-8 items-center hover rounded-md border-dashed border border-red-200 bg-red-100 flex space-x-2 text-red-400">
-                                                                    <TrashIcon className="w-4" />
-                                                                    <p>delete</p>
-                                                                </button>
-                                                            </div>
-                                                            <p className="text-sm"> {data[0].created_at.substring(0, 10)} </p>
-                                                            <p> {byteToSize(parseInt(data[0].size))} </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            data.length > 0 && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
+                                                <SearchMatchCard result={data[0]}/>
                                             </>
                                         }
                                     </motion.div>

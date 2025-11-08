@@ -26,9 +26,6 @@ export default function MyProfile() {
 
     return (
         <>
-        <Head>
-            <title> {data?.username} </title>
-        </Head>
             <AnimatePresence>
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}

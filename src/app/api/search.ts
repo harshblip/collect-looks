@@ -18,3 +18,18 @@ export async function getSuggestions(word: string, userId: number): Promise<File
 
     return response.data.message
 }
+
+export async function getSearchResults(word: string, userId: number): Promise<Files[]> {
+    const response = await axios.get(`${BASE_URL}/upload/searchResults`, {
+        params: {
+            userId: userId,
+            words: word
+        }
+    })
+
+    if (response.status !== 200) {
+        throw new Error(response.data?.message || 'error in getSearchResults')
+    }
+
+    return response.data.message
+}

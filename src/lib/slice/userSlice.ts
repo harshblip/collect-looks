@@ -8,6 +8,7 @@ export interface IAuthState {
         userId: number
         authToken: string
     }
+    parent_id: number | null
 }
 
 const initialState: IAuthState = {
@@ -17,6 +18,7 @@ const initialState: IAuthState = {
         userId: 0,
         authToken: "",
     },
+    parent_id: null
 };
 
 export const authSlice = createSlice({
@@ -25,11 +27,15 @@ export const authSlice = createSlice({
     reducers: {
         setEUID: (state, action: PayloadAction<{ email: string, username: string, userId: number, authToken: string }>) => {
             state.EUID = action.payload
+        },
+        setParentId: (state, action: PayloadAction<number | null>) => {
+            state.parent_id = action.payload
         }
     },
 });
 
 export const {
-    setEUID
+    setEUID,
+    setParentId
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;

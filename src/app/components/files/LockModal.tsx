@@ -48,7 +48,7 @@ export default function LockModal() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
-                    <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-center bg-contain h-[44%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-4">
+                    <div className="bg-white  bg-center bg-contain h-[44%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-4">
                         {
                             gayab ? <div className="-mt-44 p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></div> : <> <div className="w-full flex justify-between items-center">
                                 <button className="ml-14"></button>

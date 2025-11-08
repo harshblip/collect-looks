@@ -23,9 +23,9 @@ function CreateFolder() {
     const [locked, setLocked] = useState<boolean>(false)
     const [see, setSee] = useState<boolean>(false)
     const [created, setCreated] = useState<boolean>(false)
-    const parent_id = useAppSelector(state => state.folders.parent_id)
+    const parent_id = useAppSelector(state => state.user.parent_id)
 
-    console.log(parent_id)
+    console.log("parent_id modal ke andar", parent_id)
 
     useEffect(() => {
         if (created) {
@@ -47,7 +47,7 @@ function CreateFolder() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
-                    <div className="bg-white bg-[url('https://cdn.dribbble.com/userupload/19677492/file/original-4d6874589a99f5b393cb158a1be31b38.png?resize=752x564&vertical=center')] bg-center bg-contain p-6 rounded-lg flex flex-col justify-center text-primary">
+                    <div className="bg-white  bg-center bg-contain p-6 rounded-lg flex flex-col justify-center text-primary">
                         {created ? <p className="text-xl"> folder {name} created ✅ </p> : <>
                             <p className="flex items-start text-2xl mt-2"> Create a new folder </p>
                             <hr 
@@ -116,7 +116,7 @@ function CreateFolder() {
                                             description: description,
                                             is_locked: locked,
                                             password: password,
-                                            parent_id: parent_id
+                                            parent_id: parent_id ?? null
                                         })
                                     }}
                                 >

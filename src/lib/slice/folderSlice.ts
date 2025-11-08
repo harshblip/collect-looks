@@ -15,7 +15,6 @@ export interface States {
     selectedFolders: FoldersArray[],
     folderItems: Files[],
     viewCreateFolder: boolean,
-    parent_id: number | null
 }
 
 const initialState: States = {
@@ -31,7 +30,6 @@ const initialState: States = {
         password: ''
     },
     viewCreateFolder: false,
-    parent_id: null
 };
 
 export const folderSlice = createSlice({
@@ -59,16 +57,12 @@ export const folderSlice = createSlice({
         setFolderItems: (state, action: PayloadAction<Files[]>) => {
             state.folderItems = action.payload
         },
-        setParentId: (state, action: PayloadAction<number | null>) => {
-            state.parent_id = action.payload
-        }
     },
 });
 
 export const { 
     setIndex, 
     setLockModal,  
-    setParentId, 
     setViewCreateFolder, 
     setFolders,
     setFolderItems,

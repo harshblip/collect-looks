@@ -2,7 +2,7 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { trashMedia, deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
 import { Files } from '@/types/mediaTypes';
 import { useEffect } from 'react';
-import { getSuggestions } from '../api/search';
+import { getSearchResults, getSuggestions } from '../api/search';
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
@@ -80,6 +80,16 @@ export const useGetSuggestions = (word: string, userId: number) => {
         queryKey: ['suggestions', userId],
         queryFn: () => getSuggestions(word, userId),
         enabled: false,
+        staleTime: 1000 * 5,
+        retry: 2
+    })
+}
+
+export const useGetSearchResults = (word: string, userId: number) => {
+    return useQuery({
+        queryKey: ['search', userId],
+        queryFn: () => getSearchResults(word, userId),
+        enabled: !!userId,
         staleTime: 1000 * 5,
         retry: 2
     })

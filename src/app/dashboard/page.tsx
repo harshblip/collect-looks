@@ -15,12 +15,13 @@ import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
-import { setIndex, setParentId } from "@/lib/slice/folderSlice";
+import { setIndex } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon, EyeIcon, FingerPrintIcon, FolderIcon, FolderOpenIcon, MagnifyingGlassIcon, PlusIcon, SparklesIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setViewMedia } from "@/lib/slice/generalSlice"
 import Status from "../components/shared/Status"
+import { setParentId } from "@/lib/slice/userSlice"
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -69,14 +70,8 @@ export default function Dashboard() {
 
     function openFolder(x: Files) {
         setCount(prevCount => prevCount + 1)
-        if (folders.length !== 1) {
-            console.log(selectedFolderId)
-            dispatch(setParentId(selectedFolderId))
-        }
-
         dispatch(setViewFolder(true))
         setSelectedFolderId(x.id)
-        console.log("locked ?", x.is_locked)
         const obj = {
             id: x.id,
             name: x.file_name
@@ -91,6 +86,16 @@ export default function Dashboard() {
             dispatch(setSelectedFolders([obj]))
         }
     }
+    
+    useEffect(() => {
+        if (folders.length >= 1) {
+            console.log("hi")
+            dispatch(setParentId(selectedFolderId))
+        }else {
+            dispatch(setParentId(null))
+        }
+    }, [folders])
+    console.log("parent_id", selectedFolderId, folders)
 
     function openMedia(x: number, type: string) {
         dispatch(setIndex(x))
@@ -117,6 +122,7 @@ export default function Dashboard() {
     const [btns, setBtns] = useState<number[]>([])
     useEffect(() => {
         setBtns(Array(pages).fill(0))
+        // folders.length < 1 && dispatch(setParentId(null))
     }, [pages])
     console.log("error", userId)
     return (
@@ -162,7 +168,7 @@ export default function Dashboard() {
                         />
                     </div>
                     <div className="flex space-x-4 items-center mt-8">
-                        <p>4.</p>
+                        <p>5.</p>
                         <input
                             className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
                         />

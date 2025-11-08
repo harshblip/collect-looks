@@ -15,15 +15,29 @@ export const useCreateFolder = () => {
         }) => {
             return await createFolder(name, description, is_locked, password, id, parent_id)
         },
-        onMutate: async () => {
-            console.log(`folder created mutate`)
+        onMutate: async (newFolder) => {
+            console.log(`folder created mutate`);
+
+            await queryClient.cancelQueries({ queryKey: ['allFiles', 'folderItems'] });
+
+            const previousData = queryClient.getQueryData(['allFiles', 'folderItems']);
+
+            queryClient.setQueryData(['allFiles', 'folderItems'], (old: any) => {
+                if (!old) return [newFolder];
+                return [...old, { ...newFolder, id: Date.now(), isOptimistic: true }];
+            });
+
+            return { previousData };
         },
-        onError: (error) => {
-            console.error("Failed to create folder: ", error)
+        onError: (error, _newFolder, context) => {
+            console.error("Failed to create folder: ", error);
+            if (context?.previousData) {
+                queryClient.setQueryData(['allFiles', 'folderItems'], context.previousData);
+            }
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["allFiles", "folderItems", "allFolders"] })
-        }
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles', 'folderItems'] });
+        },
     })
 }
 
