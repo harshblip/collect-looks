@@ -18,7 +18,7 @@ export default function SearchMatchCard({ result }: { result: Files }) {
         data && dispatch(setInfoData(data))
     }, [data])
 
-    console.log(result)
+    console.log("result", result, data)
     return (
         <>
             <div className="bg-white shadow-md text-secondary rounded-md p-2">
@@ -41,7 +41,7 @@ export default function SearchMatchCard({ result }: { result: Files }) {
                         <div className="flex space-x-2 mt-4 items-center">
                             <p className="text-xl"> {result.file_name} </p>
                             <button
-                                onClick={() => starFile({ userId: 3, fileId: result.id })}
+                                onClick={() => starFile({ userId: 3, fileId: result.id, starOrWhat: result.starred })}
                                 className={`p-1 h-6 items-center hover rounded-md border hover:bg-amber-400 hover:text-white transition flex space-x-2 ${result.starred ? `bg-amber-400 text-white border-amber-400` : `text-amber-500 border-amber-400`}`}>
                                 <StarIcon className="w-4" />
                             </button>
@@ -63,6 +63,7 @@ export default function SearchMatchCard({ result }: { result: Files }) {
                             <button
                                 onClick={() => {
                                     dispatch(setViewInfo(true))
+                                    refetch()
                                 }}
                                 className="p-2 h-8 items-center hover rounded-md border border-gray-400 flex space-x-2 text-secondary">
                                 <InformationCircleIcon className="w-4" />

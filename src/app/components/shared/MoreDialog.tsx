@@ -14,7 +14,7 @@ export default function MoreDialog({ cardInfo, showMe }: {
     cardInfo: Files
     showMe: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-    const { id, is_locked, file_type, password, file_name, file_url, size } = cardInfo
+    const { id, is_locked, file_type, password, file_name, file_url, size, starred } = cardInfo
     const dispatch = useDispatch()
     const { mutate: starFile } = useStarFile();
     const { mutate: trashMedia } = useDeleteFile()
@@ -39,10 +39,15 @@ export default function MoreDialog({ cardInfo, showMe }: {
                 >
                     <div
                         className="flex justify-center hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-full -ml-2"
-                        onClick={() => starFile({ userId: 3, fileId: id })}
+                        onClick={() => {
+                            starFile({ userId: 3, fileId: id, starOrWhat: starred })
+                            showMe(false)    
+                        }}
                     >
                         <StarIcon className="w-5 text-amber-400" />
-                        <p> star </p>
+                        {
+                            starred ? <p>de-star</p> : <p> star </p>
+                        }
                     </div>
                     <button
                         className="flex justify-center hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-full -ml-2"

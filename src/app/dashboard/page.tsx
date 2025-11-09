@@ -19,7 +19,7 @@ import { setIndex } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon, EyeIcon, FingerPrintIcon, FolderIcon, FolderOpenIcon, MagnifyingGlassIcon, PlusIcon, SparklesIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
-import { setViewMedia } from "@/lib/slice/generalSlice"
+import { setDemoCheck, setViewMedia } from "@/lib/slice/generalSlice"
 import Status from "../components/shared/Status"
 import { setParentId } from "@/lib/slice/userSlice"
 
@@ -35,6 +35,7 @@ export default function Dashboard() {
     const folderItemsArray = useAppSelector(state => state.folders.folderItems)
     const userId = useAppSelector(state => state.user.EUID.userId)
     const access_token = useAppSelector(state => state.user.EUID.authToken)
+    const check = useAppSelector(state => state.utility.demoCheck)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -135,7 +136,7 @@ export default function Dashboard() {
                 </motion.div>
             }
             {
-                showError ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[5%]">
+                check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[5%]">
                     <p className="text-secondary text-2xl"> Say hi to the Demo </p>
                     <div className="flex space-x-4 items-center mt-10">
                         <p>1.</p>
@@ -169,7 +170,7 @@ export default function Dashboard() {
                     </div>
 
                     <button
-                        onClick={() => setShowError(false)}
+                        onClick={() => dispatch(setDemoCheck(false))}
                         className="border border-black w-[12rem] p-2 text-gray-600 hover hover:bg-gray-600 hover:text-white transition mt-10">Lets get started</button>
                 </div> : <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                     {

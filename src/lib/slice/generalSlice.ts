@@ -9,6 +9,7 @@ export interface GeneralState {
     viewMedia: boolean
     viewLockModal: boolean
     searchQuery: string
+    demoCheck: boolean
 }
 
 const initialState: GeneralState = {
@@ -25,7 +26,7 @@ const initialState: GeneralState = {
                 file_type: "",
                 size: "",
                 created_at: "",
-                starred: "",
+                starred: false,
                 is_trashed: "",
                 folder_id: 0,
                 description: "",
@@ -47,7 +48,7 @@ const initialState: GeneralState = {
             file_type: "",
             size: "",
             created_at: "",
-            starred: "",
+            starred: false,
             is_trashed: "",
             folder_id: 0,
             description: "",
@@ -57,6 +58,7 @@ const initialState: GeneralState = {
             total_count: 0
         }
     ],
+    demoCheck: true,
     mode: "signup",
 }
 
@@ -84,7 +86,10 @@ export const generalSlice = createSlice({
         },
         setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload
-        }
+        },
+        setDemoCheck: (state, action: PayloadAction<boolean>) => {
+            state.demoCheck = action.payload
+        },
     }
 })
 
@@ -95,7 +100,8 @@ export const {
     setViewInfo,
     setInfoData,
     setViewLockModal,
-    setSearchQuery
+    setSearchQuery,
+    setDemoCheck
 } = generalSlice.actions
 
 export const generalReducer = generalSlice.reducer;

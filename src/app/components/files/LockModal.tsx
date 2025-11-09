@@ -44,7 +44,7 @@ export default function LockModal() {
 
     return (
         <>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -53,7 +53,14 @@ export default function LockModal() {
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
                     <div className="bg-white  bg-center bg-contain w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-6">
                         {
-                            gayab ? <div className="p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></div> : <> <div className="w-full flex justify-between items-center">
+                            gayab ? <AnimatePresence mode="wait">
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2, ease: 'easeInOut' }}
+                                    className="p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></motion.div>
+                            </AnimatePresence> : <> <div className="w-full flex justify-between items-center">
                                 <button className="ml-14"></button>
                                 <p className="text-secondary text-2xl">
                                     {
@@ -75,6 +82,11 @@ export default function LockModal() {
                                             placeholder="set a password"
                                             className="w-[18rem] p-4 bg-gray-100/75 border-none text-secondary placeholder:text-gray-400 placeholder:font-stretch-50% outline-none"
                                             onChange={(e) => setPassword(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    setLockUnlock()
+                                                }
+                                            }}
                                         />
                                         {
                                             temp.lock && temp.password !== password && password !== '' && <p className="text-sm text-red-400"> oye, don't fool me. password's wrong </p>

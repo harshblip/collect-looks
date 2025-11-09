@@ -8,7 +8,7 @@ import MoreDialog from "./MoreDialog";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
 import { setFiles } from "@/lib/slice/filesSlice";
-import { FolderIcon } from "@heroicons/react/24/outline";
+import { DocumentIcon, DocumentTextIcon, FolderIcon } from "@heroicons/react/24/outline";
 
 export default function Card({ data }: {
     data: Files
@@ -40,7 +40,7 @@ export default function Card({ data }: {
                     {
                         data.file_type === "image" ? <PhotoIcon className="text-emerald-500 w-6" /> :
                             data.file_type === "video" ?
-                                <PlayIcon className="w-6 text-red-500" /> : data.file_type === "audio" ? <SignalIcon className="w-6 text-cyan-500" /> : <FolderIcon className="w-6 text-indigo-500" />
+                                <PlayIcon className="w-6 text-red-500" /> : data.file_type === "audio" ? <SignalIcon className="w-6 text-cyan-500" /> : data.file_type === 'document' ? <DocumentTextIcon className="w-6 text-orange-600" /> : <FolderIcon className="w-6 text-indigo-500" />
                     }
                     <p className="text-lg font-medium"> {data.file_name} </p>
                     {

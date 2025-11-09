@@ -86,6 +86,7 @@ export async function getFileInfo(user_id: number, id: number): Promise<InfoData
     return response.data.message
 }
 
+
 export async function setFileLock(password: string, fileId: number): Promise<string> {
     const response = await axios.post(`${BASE_URL}/upload/lockfile`, {
         password, fileId

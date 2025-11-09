@@ -96,6 +96,8 @@ export default function SearchBar() {
                             dispatch(setSearchQuery(searchQuery))
                             if (e.key === 'Enter') {
                                 updateSuggestions()
+                                setVisible(true)
+                                refetch()
                                 navigate.push('/dashboard/search')
                             }
                         }}
@@ -111,7 +113,7 @@ export default function SearchBar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-16 w-full p-2 z-2 absolute"
+                                    className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-16 w-full p-2 z-5 absolute"
                                     onClick={() => console.log("clicked div")}
                                 >
                                     {
@@ -135,7 +137,7 @@ export default function SearchBar() {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.1, ease: 'easeInOut' }}
-                                        className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-2  p-2"
+                                        className="bg-white shadow-lg rounded-lg flex-col space-y-2 mt-2 z-5 p-2"
                                         onClick={() => console.log("clicked div")}
                                     >
                                         {

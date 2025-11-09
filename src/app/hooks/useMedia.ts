@@ -48,12 +48,45 @@ export const useUploadFile = () => {
 export const useStarFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ userId, fileId }: { userId: number, fileId: number }) => {
+        mutationFn: async ({ userId, fileId }: { starOrWhat: boolean, userId: number, fileId: number }) => {
             console.log("mutationFn called")
             return await starFile(userId, fileId)
         },
-        onMutate: async ({ userId, fileId }: { userId: number, fileId: number }) => {
+        onMutate: async ({ userId, fileId, starOrWhat }: { starOrWhat: boolean, userId: number, fileId: number }) => {
             console.log(`marked file ${fileId} of user ${userId} as starred`);
+            await queryClient.cancelQueries({ queryKey: ['allFiles', userId] })
+            await queryClient.cancelQueries({ queryKey: ['suggestions', userId] })
+
+            const prevFolderItems = queryClient.getQueryData(['allFiles', userId])
+            const suggestionItems = queryClient.getQueryData(['suggestions', userId])
+
+            queryClient.setQueriesData(
+                { queryKey: ['allFiles'], type: 'active' },
+                (old: any) =>
+                    old
+                        ? old.map((file: any) =>
+                            file.id === fileId
+                                ? { ...file, starred: !starOrWhat }
+                                : file
+                        )
+                        : old
+            );
+
+            queryClient.setQueriesData(
+                { queryKey: ['suggestions'], type: 'active' },
+                (old: any) =>
+                    old
+                        ? old.map((file: any) =>
+                            file.id === fileId
+                                ? { ...file, starred: !starOrWhat }
+                                : file
+                        )
+                        : old
+            );
+
+
+            return { suggestionItems, prevFolderItems }
+
         },
         onError: (error) => {
             console.error("Failed to mark file:", error);
@@ -89,7 +122,7 @@ export const useGetSearchResults = (word: string, userId: number) => {
     return useQuery({
         queryKey: ['search', userId],
         queryFn: () => getSearchResults(word, userId),
-        enabled: !!userId,
+        enabled: false,
         staleTime: 1000 * 5,
         retry: 2
     })
@@ -99,7 +132,7 @@ export const prefetchInfo = (user_id: number, id: number) => {
     return useQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => getFileInfo(user_id, id),
-        enabled: !!user_id,
+        enabled: false,
         staleTime: 1000 * 5,
         retry: 2
     })
