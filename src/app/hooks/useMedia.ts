@@ -128,11 +128,29 @@ export const useGetLastSeen = (userId: number) => {
 export const useLockFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ password, fileId }: { password: string, fileId: number }) => {
+        mutationFn: async ({ parent_id, password, fileId }: { parent_id: number | null, password: string, fileId: number }) => {
             return await setFileLock(password, fileId)
         },
-        onMutate: async ({ password, fileId }: { password: string, fileId: number }) => {
+        onMutate: async ({ parent_id, password, fileId }: { parent_id: number | null, password: string, fileId: number }) => {
             console.log(`locked file with fileId ${fileId}`);
+            await queryClient.cancelQueries({ queryKey: ['folderItems', parent_id] })
+
+            const prevFolderItems = queryClient.getQueryData(['folderItems', parent_id])
+
+            queryClient.setQueriesData(
+                { queryKey: ['folderItems'], type: 'active' },
+                (old: any) =>
+                    old
+                        ? old.map((file: any) =>
+                            file.id === fileId
+                                ? { ...file, is_locked: true, password }
+                                : file
+                        )
+                        : old
+            );
+
+
+            return { prevFolderItems }
         },
         onError: (error) => {
             console.error("Failed to lock file:", error);
@@ -146,11 +164,30 @@ export const useLockFile = () => {
 export const useUnlockFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ fileId }: { fileId: number }) => {
+        mutationFn: async ({ parent_id, fileId }: { parent_id: number | null, fileId: number }) => {
             return await unlockFile(fileId)
         },
-        onMutate: async ({ fileId }: { fileId: number }) => {
+        onMutate: async ({ parent_id, fileId }: { parent_id: number | null, fileId: number }) => {
             console.log(`file unlocked with fileId ${fileId}`);
+
+            await queryClient.cancelQueries({ queryKey: ['folderItems', parent_id] })
+
+            const prevFolderItems = queryClient.getQueryData(['folderItems', parent_id])
+
+            queryClient.setQueriesData(
+                { queryKey: ['folderItems'], type: 'active' },
+                (old: any) =>
+                    old
+                        ? old.map((file: any) =>
+                            file.id === fileId
+                                ? { ...file, is_locked: false, password: '' }
+                                : file
+                        )
+                        : old
+            );
+
+
+            return { prevFolderItems }
         },
         onError: (error) => {
             console.error("Failed to unlock file:", error);

@@ -36,7 +36,7 @@ export default function MediaViewer() {
     const { mutate: updateLastOpened } = useUpdateLastOpened()
     const { data, refetch } = prefetchInfo(3, openFiles[updateI].id)
 
-    console.log(openFiles[updateI].is_locked, openFiles[updateI].id)
+    console.log(openFiles[updateI].password, openFiles[updateI])
 
     useEffect(() => {
         const type = openFiles[updateI].file_type === null ? 'folders' : 'files'

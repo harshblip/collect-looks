@@ -2,6 +2,7 @@ import { useGetFolderItems } from "@/app/hooks/useFolder";
 import { setViewCreateFolder, setViewFolder } from "@/lib/slice/folderSlice";
 import { setSelectedFolders } from "@/lib/slice/folderSlice";
 import { setFolderItems } from "@/lib/slice/folderSlice";
+import { setParentId } from "@/lib/slice/userSlice";
 import { useAppSelector } from "@/lib/store";
 import { FoldersArray } from "@/types/mediaTypes";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/24/solid";
@@ -19,7 +20,8 @@ export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<R
         folderItems && dispatch(setFolderItems(folderItems))
     }, [folders])
 
-    function filterFolders(a: number) {
+    function filterFolders(id: number, a: number) {
+        dispatch(setParentId(id))
         dispatch(setSelectedFolders(folders.slice(0, a + 1)))
     }
 
@@ -39,6 +41,7 @@ export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<R
                                 dispatch(setViewFolder(false))
                                 dispatch(setSelectedFolders([]))
                                 isLocked(false)
+                                dispatch(setParentId(null))
                             }}
                             className="w-10 text-secondary hover hover:bg-gray-200 rounded-lg p-2"
                         />
@@ -55,7 +58,7 @@ export default function ToggleHeading({ isLocked }: { isLocked: React.Dispatch<R
                                     x && <>
                                         <ChevronRightIcon className="w-6 text-secondary" />
                                         <button
-                                            onClick={() => filterFolders(i)}
+                                            onClick={() => filterFolders(x.id, i)}
                                             className="text-primary hover text-md">
                                             {x.name}
                                         </button>

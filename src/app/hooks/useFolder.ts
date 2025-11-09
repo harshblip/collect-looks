@@ -18,25 +18,41 @@ export const useCreateFolder = () => {
         onMutate: async (newFolder) => {
             console.log(`folder created mutate`);
 
-            await queryClient.cancelQueries({ queryKey: ['allFiles', 'folderItems'] });
+            await queryClient.cancelQueries({ queryKey: ['allFiles'] })
+            await queryClient.cancelQueries({ queryKey: ['folderItems', newFolder.parent_id] })
 
-            const previousData = queryClient.getQueryData(['allFiles', 'folderItems']);
+            // Store previous data so we can rollback if mutation fails
+            const prevAllFiles = queryClient.getQueryData(['allFiles'])
+            const prevFolderItems = queryClient.getQueryData(['folderItems', newFolder.parent_id])
 
-            queryClient.setQueryData(['allFiles', 'folderItems'], (old: any) => {
-                if (!old) return [newFolder];
-                return [...old, { ...newFolder, id: Date.now(), isOptimistic: true }];
-            });
-
-            return { previousData };
-        },
-        onError: (error, _newFolder, context) => {
-            console.error("Failed to create folder: ", error);
-            if (context?.previousData) {
-                queryClient.setQueryData(['allFiles', 'folderItems'], context.previousData);
+            // Update cache immediately
+            if (prevFolderItems) {
+                queryClient.setQueryData(['folderItems', newFolder.parent_id], (old: any) => [
+                    ...(old || []),
+                    {
+                        file_name: newFolder.name,
+                        description: newFolder.description,
+                        is_locked: newFolder.is_locked,
+                        password: newFolder.password,
+                        parent_id: newFolder.parent_id,
+                        user_id: newFolder.id
+                    },
+                ])
             }
+
+            return { prevAllFiles, prevFolderItems }
+
         },
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ['allFiles', 'folderItems'] });
+        onError: (err, newFolder, context) => {
+            console.error("Failed to create folder: ", err);
+            if (context?.prevAllFiles)
+                queryClient.setQueryData(['allFiles'], context.prevAllFiles)
+            if (context?.prevFolderItems)
+                queryClient.setQueryData(['folderItems', newFolder.parent_id], context.prevFolderItems)
+        },
+        onSettled: (data, newFolder) => {
+            queryClient.invalidateQueries({ queryKey: ['allFiles'] })
+            queryClient.invalidateQueries({ queryKey: ['folderItems'] })
         },
     })
 }
@@ -85,10 +101,10 @@ export const useGetFolderItems = (userId: number, folderId: number) => {
 export const useLockFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ password, folderId }: { password: string, folderId: number }) => {
+        mutationFn: async ({ password, folderId }: { parent_id: number | null, password: string, folderId: number }) => {
             return await setFolderLock(password, folderId)
         },
-        onMutate: async ({ folderId }: { password: string, folderId: number }) => {
+        onMutate: async ({ folderId }: { parent_id: number | null, password: string, folderId: number }) => {
             console.log(`locked folder with folderId ${folderId}`);
         },
         onError: (error) => {
@@ -103,10 +119,10 @@ export const useLockFolder = () => {
 export const useUnlockFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: async ({ folderId }: { folderId: number }) => {
+        mutationFn: async ({ folderId }: { parent_id: number | null, folderId: number }) => {
             return await unlockFolder(folderId)
         },
-        onMutate: async ({ folderId }: { folderId: number }) => {
+        onMutate: async ({ folderId }: { parent_id: number | null, folderId: number }) => {
             console.log(`folder unlocked with folderId ${folderId}`);
         },
         onError: (error) => {

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux"
 
 export default function LockModal() {
     const temp = useAppSelector(state => state.folders.lockModal)
+    const folderId = useAppSelector(state => state.user.parent_id)
     const dispatch = useDispatch()
 
     const { mutate: setFileLock } = useLockFile()
@@ -28,11 +29,13 @@ export default function LockModal() {
         setGayab(true)
         temp.type === 'folder' ? !temp.lock ? setFolderLock({
             password: password,
-            folderId: temp.id
-        }) : password === temp.password && unlockFolder({ folderId: temp.id }) : !temp.lock ? setFileLock({
+            folderId: temp.id,
+            parent_id: folderId
+        }) : password === temp.password && unlockFolder({ parent_id: folderId, folderId: temp.id }) : !temp.lock ? setFileLock({
             password: password,
-            fileId: temp.id
-        }) : password === temp.password && unlockFile({ fileId: temp.id })
+            fileId: temp.id,
+            parent_id: folderId
+        }) : password === temp.password && unlockFile({ parent_id: folderId, fileId: temp.id })
         const timeout = setTimeout(() => {
             dispatch(setViewLockModal(false))
         }, 2000)
@@ -48,9 +51,9 @@ export default function LockModal() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
-                    <div className="bg-white  bg-center bg-contain h-[44%] w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-4">
+                    <div className="bg-white  bg-center bg-contain w-[30rem] rounded-lg flex flex-col justify-center items-center text-primary p-6">
                         {
-                            gayab ? <div className="-mt-44 p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></div> : <> <div className="w-full flex justify-between items-center">
+                            gayab ? <div className="p-2 rounded-md"><p className="text-secondary text-lg"> {temp.type} successfully {temp.lock ? `unlocked ✅` : `locked ✅`} </p></div> : <> <div className="w-full flex justify-between items-center">
                                 <button className="ml-14"></button>
                                 <p className="text-secondary text-2xl">
                                     {

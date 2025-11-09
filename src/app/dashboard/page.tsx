@@ -46,7 +46,7 @@ export default function Dashboard() {
     const [password, setPassword] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
-    const { data: allFiles, error: getAllFilesError, isSuccess } = useGetAllFiles(userId, currentPage, access_token)
+    const { data: allFiles, error: getAllFilesError } = useGetAllFiles(userId, currentPage, access_token)
     const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(userId, selectedFolderId)
     const globalError: any = getAllFilesError || getFolderItemsError
 
@@ -69,32 +69,25 @@ export default function Dashboard() {
     const folders = useAppSelector(state => state.folders.selectedFolders)
 
     function openFolder(x: Files) {
-        setCount(prevCount => prevCount + 1)
-        dispatch(setViewFolder(true))
-        setSelectedFolderId(x.id)
         const obj = {
             id: x.id,
             name: x.file_name
-        }
-        if (x.is_locked) {
-            setLocked(true)
-            setPassword(x.password || '')
         }
         if (folders) {
             dispatch(setSelectedFolders([...folders, obj]))
         } else {
             dispatch(setSelectedFolders([obj]))
         }
-    }
-    
-    useEffect(() => {
-        if (folders.length >= 1) {
-            console.log("hi")
-            dispatch(setParentId(selectedFolderId))
-        }else {
-            dispatch(setParentId(null))
+        setCount(prevCount => prevCount + 1)
+        dispatch(setViewFolder(true))
+        setSelectedFolderId(x.id)
+        dispatch(setParentId(x.id))
+        if (x.is_locked) {
+            setLocked(true)
+            setPassword(x.password || '')
         }
-    }, [folders])
+    }
+
     console.log("parent_id", selectedFolderId, folders)
 
     function openMedia(x: number, type: string) {
@@ -103,6 +96,7 @@ export default function Dashboard() {
         if (type === 'allFiles' && allFiles) {
             dispatch(setViewMediaFiles(allFiles))
         } else if (type === 'folderFiles' && folderItems) {
+            console.log("folderItems", folderItems)
             dispatch(setViewMediaFiles(folderItems))
         }
     }
