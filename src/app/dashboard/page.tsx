@@ -136,36 +136,11 @@ export default function Dashboard() {
                 </motion.div>
             }
             {
-                check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[5%]">
-                    <p className="text-secondary text-2xl"> Say hi to the Demo </p>
-                    <div className="flex space-x-4 items-center mt-10">
-                        <p>1.</p>
-                        <input
-                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
-                        />
-                    </div>
-                    <div className="flex space-x-4 items-center mt-8">
-                        <p>2.</p>
-                        <input
-                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
-                        />
-                    </div>
-                    <div className="flex space-x-4 items-center mt-8">
-                        <p>3.</p>
-                        <input
-                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
-                        />
-                    </div>
-                    <div className="flex space-x-4 items-center mt-8">
-                        <p>4.</p>
-                        <input
-                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
-                        />
-                    </div>
-                    <div className="flex space-x-4 items-center mt-8">
-                        <p>5.</p>
-                        <input
-                            className={`${pixel.className} outline-none w-[32rem] p-2 border border-gray-400 rounded-md transition focus:shadow-md`}
+                check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
+                    <p className={`${pixel.className} text-secondary text-2xl`}> welcome to <span className="font-product text-primary text-3xl ml-1">Collect</span> </p>
+                    <div className="flex space-x-4 items-center mt-4">
+                        <textarea
+                            className={`${pixel.className} outline-none border border-gray-200 h-[26rem] w-[36rem] p-4 text-lg active:border-none active:shadow-md text-gray-600 rounded-md transition focus:shadow-md`}
                         />
                     </div>
 

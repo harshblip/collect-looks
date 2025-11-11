@@ -175,7 +175,7 @@ export default function MediaViewer() {
                                                 width={0}
                                                 height={0}
                                                 sizes="100vw"
-                                                className="h-auto max-h-full w-auto max-w-full object-contain rounded-xl mt-12"
+                                                className="h-auto max-h-full w-auto max-w-4xl object-contain rounded-xl mt-8"
                                             />
                                         </div>
                                     </> : openFiles[updateI].file_type === 'video' ? <>

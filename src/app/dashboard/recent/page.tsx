@@ -12,7 +12,7 @@ export default function Recent() {
         <>
             <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
                 {
-                    data ? <> <p className="text-4xl w-[75%] fixed font-medium h-16 pt-10 -mt-12 text-primary bg-white"> Recently Opened </p>
+                    data ? <> <p className="text-4xl w-[75%] fixed font-medium h-28 pt-10 -mt-12 text-primary bg-white"> Recently Opened </p>
                         <div className="flex flex-col mt-8 bg-white">
                             <AnimatePresence>
                                 <motion.div

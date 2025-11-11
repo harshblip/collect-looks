@@ -1,6 +1,6 @@
 'use client'
 
-import { setSearchQuery, setSearchSuggestions, setViewMedia } from "@/lib/slice/generalSlice";
+import { setDemoCheck, setSearchQuery, setSearchSuggestions, setViewMedia } from "@/lib/slice/generalSlice";
 import { useAppSelector } from "@/lib/store";
 import { AdjustmentsHorizontalIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
@@ -64,7 +64,7 @@ export default function SearchBar() {
 
     function updateSuggestions() {
         console.log(searchQuery, typeof data)
-        data && data.length > 0  && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
+        data && data.length > 0 && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() ?
             dispatch(setSearchSuggestions([...searchSuggestions, data[0]])) :
             dispatch(setSearchSuggestions([...searchSuggestions, searchQuery]))
     }
@@ -77,14 +77,22 @@ export default function SearchBar() {
                     show={show}
                 />
             }
+            <button 
+            onClick={() => dispatch(setDemoCheck(true))}
+            className="absolute bg-transparent text-transparent hover mt-24">
+                reset
+            </button>
             <div className="relative w-[30rem]">
-                <MagnifyingGlassIcon
+                <button
                     onClick={() => {
                         setVisible(true)
                         refetch()
                     }}
                     className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary absolute left-2 top-1/2 transform -translate-y-1/2"
-                />
+                >
+                    <MagnifyingGlassIcon
+                    />
+                </button>
                 <div
                     className="flex flex-col"
                 >
@@ -158,7 +166,7 @@ export default function SearchBar() {
                                     <motion.div className="mt-2">
                                         {
                                             data.length > 0 && searchQuery.toLowerCase() === data[0].file_name.toLowerCase() && <>
-                                                <SearchMatchCard result={data[0]}/>
+                                                <SearchMatchCard result={data[0]} />
                                             </>
                                         }
                                     </motion.div>

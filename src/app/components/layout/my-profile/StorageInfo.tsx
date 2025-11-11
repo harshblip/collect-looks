@@ -18,9 +18,11 @@ export default function StorageInfo({photo, video, audio, doc} : {
     const data = [
         { label: "Photos", size: `${byteToSize(parseInt(photo))}` },
         { label: "Videos", size: `${byteToSize(parseInt(video))}` },
-        { label: "Documents", size: `${byteToSize(parseInt(audio))}` },
-        { label: "Audio", size: `${byteToSize(parseInt(video))}` },
+        { label: "Documents", size: `${byteToSize(parseInt(doc))}` },
+        { label: "Audio", size: `${byteToSize(parseInt(audio))}` },
     ];
+
+    console.log("data", data)
 
     return (
         <>
