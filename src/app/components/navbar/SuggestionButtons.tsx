@@ -7,7 +7,7 @@ interface PropTypes {
     index: number;
     searchSuggestions: (string | Files)[];
     searchQuery: string;
-    idxValue: string | Files
+    idxValue: (string | Files)
     type: string
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
     removeSuggestion: (x: number) => void;

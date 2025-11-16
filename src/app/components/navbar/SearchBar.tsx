@@ -17,6 +17,7 @@ import { byteToSize } from "@/app/utils/useful";
 import Image from "next/image";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
 import SearchMatchCard from "./SearchMatchCard";
+import { setIndex } from "@/lib/slice/folderSlice";
 
 export default function SearchBar() {
 
@@ -28,17 +29,7 @@ export default function SearchBar() {
     const [show, setShow] = useState<boolean>(false)
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
 
-    // console.log(searchSuggestions)
-    // console.log(data)
-
     const inputRef = useRef<HTMLInputElement>(null);
-
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         refetch()
-    //     }, 2000)
-    //     return () => clearTimeout(timeout)
-    // }, [searchQuery, refetch])
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,8 +43,8 @@ export default function SearchBar() {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
-    function viewSuggestions(data: Files[]) {
-        // setSearchQuerY()
+    function viewSuggestions(x: number, data: Files[]) {
+        dispatch(setIndex(x))
         dispatch(setViewMedia(true))
         dispatch(setViewMediaFiles(data))
     }
@@ -77,9 +68,9 @@ export default function SearchBar() {
                     show={show}
                 />
             }
-            <button 
-            onClick={() => dispatch(setDemoCheck(true))}
-            className="absolute bg-transparent text-transparent hover mt-24">
+            <button
+                onClick={() => dispatch(setDemoCheck(true))}
+                className="absolute bg-transparent text-transparent hover mt-24">
                 reset
             </button>
             <div className="relative w-[30rem]">
@@ -101,7 +92,6 @@ export default function SearchBar() {
                         className={`bg-white font-product text-primary rounded-xl focus:shadow-md py-2 pl-14 pr-10 w-full outline-none h-14`}
                         placeholder="Search in Collect   |   cmd+k"
                         onKeyDown={(e) => {
-                            dispatch(setSearchQuery(searchQuery))
                             if (e.key === 'Enter') {
                                 updateSuggestions()
                                 setVisible(true)
@@ -109,7 +99,10 @@ export default function SearchBar() {
                                 navigate.push('/dashboard/search')
                             }
                         }}
-                        onChange={(e) => setSearchQuerY(e.target.value)}
+                        onChange={(e) => {
+                            dispatch(setSearchQuery(e.target.value === '' ? searchQuery : e.target.value))
+                            setSearchQuerY(e.target.value)
+                        }}
                         value={searchQuery}
                         onClick={() => setVisible(!visible)}
                     />
@@ -134,7 +127,7 @@ export default function SearchBar() {
                                             setSearchQuery={setSearchQuerY}
                                             searchQuery={searchQuery}
                                             removeSuggestion={removeSuggestion}
-                                            onClick={() => viewSuggestions(searchSuggestions)}
+                                            onClick={() => viewSuggestions(i, searchSuggestions)}
                                         />
                                         )
                                     }
@@ -158,7 +151,7 @@ export default function SearchBar() {
                                                 setSearchQuery={setSearchQuerY}
                                                 searchQuery={searchQuery}
                                                 removeSuggestion={removeSuggestion}
-                                                onClick={() => viewSuggestions(data)}
+                                                onClick={() => viewSuggestions(i, data)}
                                             />
                                             )
                                         }

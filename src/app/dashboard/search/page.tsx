@@ -13,9 +13,13 @@ export default function SearchResults() {
     const { data, refetch } = useGetSearchResults(searchQuery, 3)
     // const { data } = useGetStarredFiles(3)
     useEffect(() => {
-        refetch()
+        const timeout = setTimeout(() => {
+            refetch()
+            console.log("2 sec happened")
+        }, 2000)
+        return () => clearTimeout(timeout)
     }, [searchQuery])
-    
+
     console.log("search", data, searchQuery)
     return (
         <>
