@@ -47,7 +47,7 @@ function CreateFolder() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                     className="absolute bg-black/20 top-0 bottom-0 w-full flex justify-center items-center -ml-12 font-product z-2">
-                    <div className="bg-white  bg-center bg-contain p-6 rounded-lg flex flex-col justify-center text-primary">
+                    <div className="bg-white bg-[url('/sample-bg.png')] bg-center bg-contain p-6 rounded-lg flex flex-col justify-center text-primary">
                         {created ? <p className="text-xl"> folder {name} created ✅ </p> : <>
                             <p className="flex items-start text-2xl mt-2"> Create a new folder </p>
                             <hr 

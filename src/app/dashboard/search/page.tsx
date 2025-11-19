@@ -1,6 +1,6 @@
 'use client'
 import Card from "@/app/components/shared/Card"
-import { useGetSearchResults, useGetStarredFiles } from "@/app/hooks/useMedia"
+import { useGetSearchResults } from "@/app/hooks/useMedia"
 import { useAppSelector } from "@/lib/store"
 import { HomeIcon } from "@heroicons/react/24/solid"
 import { AnimatePresence, motion } from "framer-motion"
@@ -11,11 +11,9 @@ export default function SearchResults() {
     const searchQuery = useAppSelector(state => state.utility.searchQuery)
     const navigate = useRouter()
     const { data, refetch } = useGetSearchResults(searchQuery, 3)
-    // const { data } = useGetStarredFiles(3)
     useEffect(() => {
         const timeout = setTimeout(() => {
             refetch()
-            console.log("2 sec happened")
         }, 2000)
         return () => clearTimeout(timeout)
     }, [searchQuery])

@@ -28,6 +28,18 @@ export default function SearchBar() {
     const [visible, setVisible] = useState<boolean>(false)
     const [show, setShow] = useState<boolean>(false)
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
+    const [filter, setFilter] = useState<{
+        type: 'image' | 'video' | 'audio' | 'document' | '';
+        locked: boolean;
+        starred: boolean;
+        date: string;
+
+    }>({
+        type: '',
+        locked: false,
+        starred: false,
+        date: ''
+    })
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +76,8 @@ export default function SearchBar() {
         <>
             {
                 show && <FilterModal
+                    setFilters={setFilter}
+                    filters={filter}
                     setShow={setShow}
                     show={show}
                 />
