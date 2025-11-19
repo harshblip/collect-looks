@@ -20,7 +20,7 @@ export default function Status({ type, message }: {
     return (
         <>
             {
-                show && <div className={`z-10 w-32 font-product max-w-xl absolute bottom-10 right-10 rounded-md
+                show && <div className={`z-10 w-52 font-product max-w-xl absolute bottom-10 right-10 rounded-md
                     ${type === 'INFO' && `bg-blue-100 text-blue-400`} 
                     ${type === 'ERROR' && `bg-red-100 text-red-500`} 
                     ${type === 'SUCCESS' && `bg-green-100 text-green-400`}
