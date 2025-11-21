@@ -30,14 +30,14 @@ export default function SearchBar() {
     const { refetch, data } = useGetSuggestions(searchQuery, 3)
     const [filter, setFilter] = useState<{
         type: 'image' | 'video' | 'audio' | 'document' | '';
-        locked: boolean;
-        starred: boolean;
+        locked: boolean | null;
+        starred: boolean | null;
         date: string;
 
     }>({
         type: '',
-        locked: false,
-        starred: false,
+        locked: null,
+        starred: null,
         date: ''
     })
 
