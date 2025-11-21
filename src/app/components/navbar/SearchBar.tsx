@@ -181,10 +181,12 @@ export default function SearchBar() {
                         }
                     </AnimatePresence>
                 </div>
-                <AdjustmentsHorizontalIcon
+                <button
                     className="w-10 h-10 hover hover:bg-gray-200 active:scale-95 rounded-lg p-2 transition-all text-primary absolute right-4 top-1/2 transform -translate-y-1/2"
                     onClick={() => setShow(true)}
-                />
+                >
+                    <AdjustmentsHorizontalIcon />
+                </button>
             </div>
         </>
     )

@@ -76,13 +76,13 @@ export default function Storage() {
                     </div>
                     <div className="flex space-x-4 ml-4">
                         {
-                            segments.map((seg, i) => <>
+                            segments.map((seg, i) => <div key={i}>
                                 <div className="flex space-x-2 items-center">
                                     <div className={`${seg.color} p-2 w-4 rounded-md`}>
                                     </div>
                                     <p className="text-gray-400">{seg.label}</p>
                                 </div>
-                            </>
+                            </div>
                             )
                         }
                     </div>
