@@ -23,15 +23,26 @@ export default function Auth() {
     const [show, setShow] = useState<boolean>(true)
     const euid = useAppSelector(state => state.user.EUID)
 
-    const { mutate: loginUser, isSuccess, error: loginError, data, status: loginStatus } = useLoginUser()
-    const { mutate: signupUser, error: signupError, status: signupStatus } = useSignupUser()
+    const {
+        mutate: loginUser,
+        isSuccess: loginStatus,
+        error: loginError,
+        data,
+    } = useLoginUser()
+    const {
+        mutate: signupUser,
+        error: signupError,
+        isSuccess: signupStatus
+    } = useSignupUser()
     const router = useRouter()
     const dispatch = useDispatch()
     const successStatus = signupStatus || loginStatus
     const errorStatus = loginError || signupError
 
+    const message = signupStatus ? "Account created" : "Welcome"
+
     useEffect(() => {
-        if (isSuccess) {
+        if (loginStatus) {
             console.log(data)
 
             const accessKey = data
@@ -53,14 +64,14 @@ export default function Auth() {
 
             return () => clearTimeout(timeout)
         }
-    }, [isSuccess])
+    }, [loginStatus])
 
     const mode = useAppSelector(state => state.utility.mode) || 'Create an account'
 
     return (
         <>
             {
-                isSuccess ? <Status type="SUCCESS" message={successStatus} /> : errorStatus ? <Status type="ERROR" message={errorStatus?.response.data.message} /> : ''
+                successStatus ? <Status type="SUCCESS" message={message} /> : errorStatus ? <Status type="ERROR" message={errorStatus?.response.data.message} /> : ''
             }
             <div className="primary md:mt-0 mt-24 lg:items-center justify-center items-center flex flex-col h-screen">
                 {
@@ -73,7 +84,36 @@ export default function Auth() {
                 <div className="md:p-32 flex flex-col items-center p-24">
                     <SmallLogo />
                     {
-                        !isSuccess ? <>
+                        loginStatus ? <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.1, ease: 'easeInOut' }}
+                            className="font-product mt-12 text-4xl text-secondary"> Hey {euid.username} 👋</motion.p> : signupStatus ? <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.1, ease: 'easeInOut' }}
+                                className="text-gray-500 flex flex-col space-y-2 rounded-md p-4 max-w-2xl mt-8 bg-[url('/sample-bg.png')] bg-accent bg-cover"
+                            >
+                                <code>
+                                    {'{'}
+                                </code>
+                                <div className="ml-6 flex flex-col space-y-2">
+                                    <code>
+                                        "username" : {username}
+                                    </code>
+                                    <code>
+                                        "email": {email}
+                                    </code>
+                                    <code>
+                                        "password": "kpvaG4gRG9lIiwiYWRtW4iOnRydWU"
+                                    </code>
+                                </div>
+                                <code>
+                                    {'}'}
+                                </code>
+                            </motion.div> : <>
                             <p className={`font-glook text-primary text-3xl mt-8`}>{mode}</p> {mode === 'Create an account' ? <div className="fade-in">
                                 <AuthForm
                                     mode={mode}
@@ -104,12 +144,7 @@ export default function Auth() {
                                 />
                             </div>
                             }
-                        </> : <motion.p
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.1, ease: 'easeInOut' }}
-                            className="font-product mt-12 text-4xl text-secondary"> Hey {euid.username} 👋</motion.p>
+                        </>
                     }
                 </div>
 

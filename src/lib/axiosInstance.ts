@@ -25,7 +25,12 @@ axiosInstance.interceptors.response.use(
     },
     (error: AxiosError<{ message: string }>) => {
         const message = error.response?.data?.message || "An unexpected error occurred";
+        const customError = new Error(message);
 
-        return Promise.reject(new Error(message));
+        if (error.stack) {
+            customError.stack = error.stack;
+        }
+
+        return Promise.reject(customError);
     }
 )

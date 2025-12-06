@@ -38,7 +38,7 @@ export const useSignupUser = () => {
             console.error("Failed to create user: ", error)
         },
         onSuccess: () => {
-            console.error("user created")
+            console.log("user created")
         }
     })
 }
