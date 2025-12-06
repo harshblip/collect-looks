@@ -54,7 +54,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                 <div className={`transition text-gray-600 items-center flex space-x-4  ${pixel.className}`}>
                                     <button onClick={() => setFilters(fil => ({
                                         ...fil,
-                                        type: 'image'
+                                        type: fil.type === 'image' ? '' : 'image'
                                     }))}
                                         className={`flex justify-center w-full p-2  hover ${filters.type === 'image' ? `bg-gray-600 text-white` : `hover:bg-gray-100`}`}>
                                         <PhotoIcon
@@ -66,7 +66,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: 'video'
+                                            type: fil.type === 'video' ? '' : 'video'
                                         }))}
                                         className={`p-2 flex justify-center hover  ${filters.type === 'video' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`}`}>
                                         <PlayIcon
@@ -78,7 +78,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: 'audio'
+                                            type: fil.type === 'audio' ? '' : 'audio'
                                         }))}
                                         className={`w-full p-2 flex justify-center hover ${filters.type === 'audio' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`}`}>
                                         <SignalIcon
@@ -90,7 +90,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: 'document'
+                                            type: fil.type === 'document' ? '' : 'document'
                                         }))}
                                         className={`${filters.type === 'document' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`} p-2  hover flex justify-center`}>
                                         <DocumentDuplicateIcon
@@ -169,7 +169,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                             <button
                                 onClick={() => setShow(false)}
                                 className="w-full text-gray-600 p-2 hover:bg-gray-600 hover:text-white transition border border-gray-600 hover">
-                                Apply this shit
+                                Apply
                             </button>
                         </div>
                     </motion.div>

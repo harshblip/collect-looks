@@ -1,13 +1,12 @@
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { trashMedia, deleteFiles, fetchAllFiles, getFileInfo, getLastSeen, getStarFile, setFileLock, starFile, unlockFile, uploadFile } from "../api/files";
-import { Files } from '@/types/mediaTypes';
+import { FileService } from "../api/files";
 import { useEffect } from 'react';
-import { getSearchResults, getSuggestions } from '../api/search';
+import { SearchService } from '../api/search';
 
 export const useDeleteMedia = (images: string[], username: string, id: number) => {
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn: () => deleteFiles(id, username, images),
+        mutationFn: () => FileService.deleteFiles(id, username, images),
         onMutate: async (id) => {
             console.log(`${username}, files were successfully deleted`)
         },
@@ -23,7 +22,7 @@ export const useDeleteMedia = (images: string[], username: string, id: number) =
 export const useGetAllFiles = (user_id: number, page: number, authToken: string) => {
     return useQuery({
         queryKey: ['allFiles', user_id, page],
-        queryFn: () => fetchAllFiles(user_id, page, authToken),
+        queryFn: () => FileService.getAll(user_id, page),
         enabled: !!user_id,
         staleTime: 1000 * 5,
         retry: 2,
@@ -34,7 +33,7 @@ export const useUploadFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ formData }: { formData: FormData }) => {
-            return await uploadFile(formData)
+            return await FileService.uploadFile(formData)
         },
         onMutate: () => {
             console.log(`file uploaded`)
@@ -50,7 +49,7 @@ export const useStarFile = () => {
     return useMutation({
         mutationFn: async ({ userId, fileId }: { starOrWhat: boolean, userId: number, fileId: number }) => {
             console.log("mutationFn called")
-            return await starFile(userId, fileId)
+            return await FileService.starFile(userId, fileId)
         },
         onMutate: async ({ userId, fileId, starOrWhat }: { starOrWhat: boolean, userId: number, fileId: number }) => {
             console.log(`marked file ${fileId} of user ${userId} as starred`);
@@ -100,7 +99,7 @@ export const useStarFile = () => {
 export const useGetStarredFiles = (userId: number) => {
     return useQuery({
         queryKey: ['starFiles', userId],
-        queryFn: () => getStarFile(userId),
+        queryFn: () => FileService.getStarFile(userId),
         enabled: !!userId,
         staleTime: 1000 * 5,
         retry: 2
@@ -111,7 +110,7 @@ export const useGetSuggestions = (word: string, userId: number) => {
     console.log("came here1", word)
     return useQuery({
         queryKey: ['suggestions', userId],
-        queryFn: () => getSuggestions(word, userId),
+        queryFn: () => SearchService.getSuggestions(word, userId),
         enabled: false,
         staleTime: 1000 * 5,
         retry: 2
@@ -121,7 +120,7 @@ export const useGetSuggestions = (word: string, userId: number) => {
 export const useGetSearchResults = (word: string, userId: number) => {
     return useQuery({
         queryKey: ['search', userId],
-        queryFn: () => getSearchResults(word, userId),
+        queryFn: () => SearchService.getSearchResults(word, userId),
         enabled: false,
         staleTime: 1000 * 5,
         retry: 2
@@ -131,7 +130,7 @@ export const useGetSearchResults = (word: string, userId: number) => {
 export const prefetchInfo = (user_id: number, id: number) => {
     return useQuery({
         queryKey: ['fileInfo', user_id],
-        queryFn: () => getFileInfo(user_id, id),
+        queryFn: () => FileService.getFileInfo(user_id, id),
         enabled: false,
         staleTime: 1000 * 5,
         retry: 2
@@ -141,7 +140,7 @@ export const prefetchInfo = (user_id: number, id: number) => {
 export const useGetFileInfo = (user_id: number, id: number) => {
     return useQuery({
         queryKey: ['fileInfo', user_id],
-        queryFn: () => getFileInfo(user_id, id),
+        queryFn: () => FileService.getFileInfo(user_id, id),
         enabled: !!user_id,
         staleTime: 1000 * 5,
         retry: 2
@@ -151,7 +150,7 @@ export const useGetFileInfo = (user_id: number, id: number) => {
 export const useGetLastSeen = (userId: number) => {
     return useQuery({
         queryKey: ['lastSeen', userId],
-        queryFn: () => getLastSeen(userId),
+        queryFn: () => FileService.getLastSeen(userId),
         enabled: !!userId,
         staleTime: 1000 * 5,
         retry: 2
@@ -162,7 +161,7 @@ export const useLockFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ parent_id, password, fileId }: { parent_id: number | null, password: string, fileId: number }) => {
-            return await setFileLock(password, fileId)
+            return await FileService.setFileLock(password, fileId)
         },
         onMutate: async ({ parent_id, password, fileId }: { parent_id: number | null, password: string, fileId: number }) => {
             console.log(`locked file with fileId ${fileId}`);
@@ -198,7 +197,7 @@ export const useUnlockFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ parent_id, fileId }: { parent_id: number | null, fileId: number }) => {
-            return await unlockFile(fileId)
+            return await FileService.unlockFile(fileId)
         },
         onMutate: async ({ parent_id, fileId }: { parent_id: number | null, fileId: number }) => {
             console.log(`file unlocked with fileId ${fileId}`);
@@ -235,7 +234,7 @@ export const useDeleteFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ files }: { files: any }) => {
-            return await trashMedia(files)
+            return await FileService.trashMedia(files)
         },
         onMutate: async ({ files }: { files: any }) => {
             console.log(`${files.length} files deleted`);

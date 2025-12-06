@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getUserData, loginUser, signupUser, updateLastOpened, updateUserData } from "../api/user"
+import { UserService } from "../api/user"
 
 export const useGetUserData = (id: number) => {
     return useQuery({
         queryKey: ['userData', id],
-        queryFn: () => getUserData(id),
+        queryFn: () => UserService.getUserData(id),
         enabled: !!id,
         staleTime: 1000 * 5,
         retry: 2
@@ -14,12 +14,7 @@ export const useGetUserData = (id: number) => {
 export const useLoginUser = () => {
 
     return useMutation({
-        mutationFn: ({ email, password, checked }: { email: string; password: string; checked: boolean }) => loginUser(email, password, checked),
-
-        onSuccess: (data) => {
-            console.log(data, data.access_token)
-            const token = data.access_token
-        },
+        mutationFn: ({ email, password, checked }: { email: string; password: string; checked: boolean }) => UserService.loginUser(email, password, checked),
 
         onError: (error: any) => {
             console.error('Login failed:', error)
@@ -34,7 +29,7 @@ export const useSignupUser = () => {
             email: string,
             password: string
         }) => {
-            return await signupUser(username, email, password)
+            return await UserService.signupUser(username, email, password)
         },
         onMutate: async () => {
             console.log("user created")
@@ -56,7 +51,7 @@ export const useUpdateUser = () => {
             email: string,
             id: number
         }) => {
-            return await updateUserData(username, email, id)
+            return await UserService.updateUserData(username, email, id)
         },
         onMutate: async () => {
             console.log("user data updated")
@@ -77,7 +72,7 @@ export const useUpdateLastOpened = () => {
             type: string,
             fileId: number
         }) => {
-            return await updateLastOpened(type, fileId)
+            return await UserService.updateLastOpened(type, fileId)
         },
         onMutate: async () => {
             console.log("last opened updated")

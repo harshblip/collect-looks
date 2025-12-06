@@ -23,19 +23,22 @@ export default function Auth() {
     const [show, setShow] = useState<boolean>(true)
     const euid = useAppSelector(state => state.user.EUID)
 
-    const { mutate: loginUser, isSuccess, error, data } = useLoginUser()
-    const { mutate: signupUser } = useSignupUser()
+    const { mutate: loginUser, isSuccess, error: loginError, data, status: loginStatus } = useLoginUser()
+    const { mutate: signupUser, error: signupError, status: signupStatus } = useSignupUser()
     const router = useRouter()
     const dispatch = useDispatch()
-
-    // console.log(data)
+    const successStatus = signupStatus || loginStatus
+    const errorStatus = loginError || signupError
 
     useEffect(() => {
         if (isSuccess) {
+            console.log(data)
 
-            const accessKey = data.access_token
+            const accessKey = data
             const decoded: any = jwtDecode(accessKey)
             console.log(accessKey, decoded)
+
+            localStorage.setItem("access_token", accessKey)
 
             dispatch(setEUID({
                 email: decoded.email,
@@ -51,13 +54,13 @@ export default function Auth() {
             return () => clearTimeout(timeout)
         }
     }, [isSuccess])
-    
+
     const mode = useAppSelector(state => state.utility.mode) || 'Create an account'
 
     return (
         <>
             {
-                isSuccess ? <Status type="SUCCESS" message={`Welcome`} /> : error ? <Status type="ERROR" message={error?.response.data.message} /> : ''
+                isSuccess ? <Status type="SUCCESS" message={successStatus} /> : errorStatus ? <Status type="ERROR" message={errorStatus?.response.data.message} /> : ''
             }
             <div className="primary md:mt-0 mt-24 lg:items-center justify-center items-center flex flex-col h-screen">
                 {

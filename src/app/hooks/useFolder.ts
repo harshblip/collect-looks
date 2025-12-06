@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addFilesToFolder, createFolder, getFolderItems, getFolders, setFolderLock, unlockFolder } from "../api/folder";
+import { FolderService } from "../api/folder";
 import { Files } from "@/types/mediaTypes";
 
 export const useCreateFolder = () => {
@@ -13,7 +13,7 @@ export const useCreateFolder = () => {
             id: number,
             parent_id: number | null
         }) => {
-            return await createFolder(name, description, is_locked, password, id, parent_id)
+            return await FolderService.createFolder(name, description, is_locked, password, id, parent_id)
         },
         onMutate: async (newFolder) => {
             console.log(`folder created mutate`);
@@ -64,7 +64,7 @@ export const useAddFilestoFolder = () => {
             files: Files[],
             folderId: number
         }) => {
-            return await addFilesToFolder(files, folderId)
+            return await FolderService.addFilesToFolder(files, folderId)
         },
         onMutate: async () => {
             console.log(`files added to folder useAddFiles mutate`)
@@ -81,7 +81,7 @@ export const useAddFilestoFolder = () => {
 export const useGetFolders = (id: number) => {
     return useQuery({
         queryKey: ['allFolders', id],
-        queryFn: () => getFolders(id),
+        queryFn: () => FolderService.getFolders(id),
         enabled: !!id,
         staleTime: 1000 * 5,
         retry: 2
@@ -91,7 +91,7 @@ export const useGetFolders = (id: number) => {
 export const useGetFolderItems = (userId: number, folderId: number) => {
     return useQuery({
         queryKey: ['folderItems', folderId],
-        queryFn: () => getFolderItems(userId, folderId),
+        queryFn: () => FolderService.getFolderItems(userId, folderId),
         enabled: !!userId,
         staleTime: 1000 * 5,
         retry: 2
@@ -102,7 +102,7 @@ export const useLockFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ password, folderId }: { parent_id: number | null, password: string, folderId: number }) => {
-            return await setFolderLock(password, folderId)
+            return await FolderService.setFolderLock(password, folderId)
         },
         onMutate: async ({ password, folderId, parent_id }: { parent_id: number | null, password: string, folderId: number }) => {
             console.log(`locked folder with folderId ${folderId}`);
@@ -151,7 +151,7 @@ export const useUnlockFolder = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async ({ folderId }: { parent_id: number | null, folderId: number }) => {
-            return await unlockFolder(folderId)
+            return await FolderService.unlockFolder(folderId)
         },
         onMutate: async ({ folderId, parent_id }: { parent_id: number | null, folderId: number }) => {
             console.log(`folder unlocked with folderId ${folderId}`);
