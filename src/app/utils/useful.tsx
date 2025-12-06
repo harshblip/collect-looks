@@ -1,30 +1,3 @@
-import { setSelectedFolders, setViewFolder } from "@/lib/slice/folderSlice"
-import { useAppSelector } from "@/lib/store"
-import { Files } from "@/types/mediaTypes"
-import axios from "axios"
-import { useDispatch } from "react-redux"
-
-export const updatePassword = async (
-    email: string,
-    password: string,
-    setError: React.Dispatch<React.SetStateAction<string>>
-) => {
-    try {
-        const response = await axios.put('http://localhost:4000/user/reset-password', {
-            email, password
-        })
-
-        if (response.status === 200) {
-            console.log("password updated")
-        } else {
-            console.log("different response code")
-        }
-    } catch (err: any) {
-        setError(err.response.data.message)
-        console.log("internal server error", err)
-    }
-}
-
 export function byteToSize(kb: number): string {
     if (kb === 0) return `0 bytes`;
 
@@ -42,22 +15,22 @@ export function getFileCategory(mimeType: string): 'image' | 'video' | 'document
     if (type.startsWith('video/')) return 'video';
     if (type.startsWith('audio/')) return 'audio';
 
-    // document types
     const docTypes = [
         'application/pdf',
         'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'application/vnd.ms-excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'text/plain',
         'text/csv',
         'application/json',
-        'application/x-zip-compressed', // zip treated as document/archive
+        'application/x-zip-compressed', 
         'application/zip',
     ];
     if (docTypes.includes(type)) return 'document';
 
     return 'other';
 }
+

@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/index.js", "pages/api/welcome-email.js", "pages/api/forgot-password.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/index.js", "pages/api/welcome-email.js", "src/app/api/forgot-password.ts"],
   "exclude": ["node_modules"]
 }

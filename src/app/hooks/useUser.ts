@@ -86,3 +86,43 @@ export const useUpdateLastOpened = () => {
     })
 }
 
+export const useForgotPassword = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ email }: {
+            email: string
+        }) => {
+            return await UserService.forgotPassword(email)
+        },
+        onMutate: async () => {
+            console.log("password changed")
+        },
+        onError: (error) => {
+            console.error("Failed to update password: ", error)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["userData"] })
+        }
+    })
+}
+
+export const useUpdatePassword = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ email, password }: {
+            email: string,
+            password: string
+        }) => {
+            return await UserService.updatePassword(email, password)
+        },
+        onMutate: async () => {
+            console.log("password updated")
+        },
+        onError: (error) => {
+            console.error("Failed to update password: ", error)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["userData"] })
+        }
+    })
+}

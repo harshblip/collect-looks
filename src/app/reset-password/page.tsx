@@ -1,24 +1,25 @@
 'use client'
 
-import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/react/24/solid";
+import { KeyIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { updatePassword } from "../utils/useful";
 import { useAppSelector } from "@/lib/store";
 import ResetForm from "../components/auth/ResetForm";
+import { useUpdatePassword } from "../hooks/useUser";
 
 export default function ResetPassword() {
     const [see, setSee] = useState<boolean>(false)
     const [a, setA] = useState<string>('')
     const [b, setB] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const { mutate: updatePassword } = useUpdatePassword()
 
-    const email = useAppSelector(state => state.states.email)
+    const email = useAppSelector(state => state.user.EUID.email)
 
     function submit() {
         if (a != b) {
             setError('passwords don\'t match. try again')
         } else {
-            updatePassword(email, a, setError)
+            updatePassword({ email: email, password: a })
         }
     }
 

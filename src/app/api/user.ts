@@ -38,5 +38,15 @@ export const UserService = {
 
     updateLastOpened: async (type: string, fileId: number): Promise<string> => {
         return apiClient.post<string>(`${BASE_URL}/upload/updateLastOpened`, { type, fileId })
+    },
+
+    forgotPassword: async (email: string): Promise<string> => {
+        return apiClient.post('/api/forgot-password', {
+            email
+        })
+    },
+
+    updatePassword: async(email: string, password: string): Promise<string> => {
+        return apiClient.patch(`${BASE_URL}/user/reset-password`, { email, password })
     }
 }
