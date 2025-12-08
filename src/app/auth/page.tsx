@@ -5,7 +5,7 @@ import AuthForm from "@/app/components/auth/AuthForm";
 import { useAppSelector } from "@/lib/store";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import SmallLogo from "../components/ui/SmallLogo";
+import SmallLogo from "../components/ui/primitives/SmallLogo";
 import ForgotModal from "../components/auth/ForgotModal";
 import { useLoginUser, useSignupUser } from "../hooks/useUser";
 import Status from "../components/shared/Status";

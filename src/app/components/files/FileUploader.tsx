@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { handleDragLeave, handleDragOver, handleDrop, handleFileInput, handleRemove, handleUpload } from '@/app/utils/fileUploader';
 import { CameraIcon, FolderIcon, PhotoIcon, TrashIcon } from '@heroicons/react/24/solid';
-import UploadingModal from '../ui/fileuploader/UploadingModal';
+import UploadingModal from '../ui/modals/UploadingModal';
 import { BugAntIcon, DocumentDuplicateIcon, DocumentIcon, PlayIcon, SignalIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { byteToSize, getFileCategory } from '@/app/utils/useful';
 import { useAppSelector } from '@/lib/store';

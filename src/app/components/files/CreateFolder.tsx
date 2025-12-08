@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react"
-import Checkbox from "../ui/Checkbox"
+import Checkbox from "../ui/primitives/Checkbox"
 import { AnimatePresence, motion } from "framer-motion"
 import { EyeIcon } from "@heroicons/react/24/solid"
 import { useCreateFolder } from "@/app/hooks/useFolder"

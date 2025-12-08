@@ -5,13 +5,15 @@ import CardButton from "../shared/CardButton";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAppSelector } from "@/lib/store";
+import { useLogout } from "@/app/utils/auth";
 
 export default function ProfileCard({ toggle }: {
     toggle: React.Dispatch<React.SetStateAction<'menu' | 'profile' | 'settings' | ''>>
 }) {
     const router = useRouter()
     const user = useAppSelector(state => state.user.EUID)
-    
+    const logout = useLogout()
+
     return (
         <>
             <motion.div
@@ -55,7 +57,7 @@ export default function ProfileCard({ toggle }: {
                                     <CardButton
                                         label="log out"
                                         icon={<FireIcon />}
-                                        // onClick={}
+                                        onClick={logout}
                                     />
                                 </div></> : <>
                                 <motion.div

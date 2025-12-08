@@ -1,7 +1,7 @@
 'use client'
 
 import Card from "@/app/components/shared/Card";
-import EmptyStarPage from "@/app/components/ui/EmptyStarPage";
+import EmptyStarPage from "@/app/components/ui/placeholders/EmptyStarPage";
 import { useGetStarredFiles } from "@/app/hooks/useMedia";
 import { AnimatePresence, motion } from "framer-motion";
 

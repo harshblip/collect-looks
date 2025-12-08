@@ -3,7 +3,7 @@
 import { FolderOpenIcon, MapIcon, PlayPauseIcon, SignalIcon } from "@heroicons/react/24/solid"
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
-import MenuItem from "../ui/MenuItem"
+import MenuItem from "../ui/widgets/MenuItem"
 
 export default function Menu() {
     const [clicked, setClicked] = useState<boolean>(false)

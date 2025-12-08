@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import Logo from "../components/ui/logo"
+import Logo from "../components/ui/primitives/logo"
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (

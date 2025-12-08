@@ -30,12 +30,16 @@ export const authSlice = createSlice({
         },
         setParentId: (state, action: PayloadAction<number | null>) => {
             state.parent_id = action.payload
-        }
+        },
+        resetEUID: (state) => {
+            state.EUID = initialState.EUID;
+        },
     },
 });
 
 export const {
     setEUID,
-    setParentId
+    setParentId,
+    resetEUID
 } = authSlice.actions;
 export const authReducer = authSlice.reducer;

@@ -6,9 +6,9 @@ import { useEffect, useState } from "react"
 import { useGetAllFiles } from "../hooks/useMedia"
 import { motion, AnimatePresence } from 'framer-motion';
 import Card from "../components/shared/Card"
-import MoreOptions from "../components/ui/MoreOptions"
-import ColumnHeaders from "../components/ui/ColumnHeaders"
-import ToggleHeading from "../components/ui/ToggleHeading"
+import MoreOptions from "../components/ui/widgets/MoreOptions"
+import ColumnHeaders from "../components/ui/primitives/ColumnHeaders"
+import ToggleHeading from "../components/ui/widgets/ToggleHeading"
 import { setSelectedFolders, setFolderItems, setViewFolder } from "@/lib/slice/folderSlice"
 import { Files } from "@/types/mediaTypes"
 import { useGetFolderItems } from "../hooks/useFolder"
@@ -22,6 +22,9 @@ import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setDemoCheck, setViewMedia } from "@/lib/slice/generalSlice"
 import Status from "../components/shared/Status"
 import { setParentId } from "@/lib/slice/userSlice"
+import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel"
+import MotionFileItem from "../components/ui/primitives/PageTransition"
+import ErrorPage from "../components/ui/placeholders/ErrorPage"
 
 const pixel = Pixelify_Sans({
     weight: ['400', '500'],
@@ -111,7 +114,7 @@ export default function Dashboard() {
     const pages = viewFolder ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15)) : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15))
 
     useEffect(() => {
-        // !userId ? setShowError(true) : setShowError(false)
+        !userId ? setShowError(true) : setShowError(false)
     }, [userId])
 
     const [btns, setBtns] = useState<number[]>([])
@@ -123,20 +126,16 @@ export default function Dashboard() {
     return (
         <>
             {
-                globalError && <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.2 }}
+                globalError && <MotionFileItem
                     className="absolute bottom-5 right-5">
                     <Status
                         type="ERROR"
                         message={globalError.message}
                     />
-                </motion.div>
+                </MotionFileItem>
             }
             {
-                check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
+                showError ? <ErrorPage /> : check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
                     <p className={`${pixel.className} text-secondary text-2xl`}> welcome to <span className="font-product text-primary text-3xl ml-1">Collect</span> </p>
                     <div className="flex space-x-4 items-center mt-4">
                         <textarea
@@ -151,12 +150,8 @@ export default function Dashboard() {
                     {
                         viewFolder ? <ToggleHeading
                             isLocked={setLocked}
-                        /> : <motion.p
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.2 }}
-                            className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </motion.p>
+                        /> : <MotionFileItem
+                            className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </MotionFileItem>
                     }
                     {
                         locked ? <LockScreen
@@ -165,11 +160,7 @@ export default function Dashboard() {
                         /> : <div className="flex flex-col mt-16 bg-white">
                             {
                                 files && files.length ? <MoreOptions /> : <div className="flex flex-col">
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.2 }}
+                                    <MotionFileItem
                                         className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
                                         onClick={() => setShow(!show)}
                                     >
@@ -180,52 +171,15 @@ export default function Dashboard() {
                                         </div>
 
                                         <p className="text-xl text-primary"> Your files </p>
-                                    </motion.div>
+                                    </MotionFileItem>
                                     {
-                                        !show && <div>
-                                            <div className="mt-12 flex flex-col">
-                                                <div className="flex justify-center items-center">
-                                                    <div className={`${pixel.className} flex space-x-12 items-center text-secondary z-1 justify-center mt-18 mb-20`}>
-                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
-                                                            <div className="text-secondary flex space-x-2">
-                                                                <StarIcon width={42} />
-                                                                <FingerPrintIcon width={30} />
-                                                            </div>
-                                                            <p className="mt-2"> star, trash, hide/unhide files </p>
-                                                        </div>
-                                                        <hr
-                                                            className="border border-gray-300 w-16"
-                                                        />
-                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
-                                                            <div className="text-gray-400 flex gap-y-2">
-                                                                <FolderOpenIcon width={62} />
-                                                            </div>
-                                                            <p> create folders. protect them w/ passwords </p>
-                                                        </div>
-                                                        <hr
-                                                            className="border border-gray-300 w-16"
-                                                        />
-                                                        <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
-                                                            <div className="text-secondary flex space-x-2 mt-2">
-                                                                <MagnifyingGlassIcon width={42} />
-                                                                <SparklesIcon width={30} />
-                                                            </div>
-                                                            <p className="mt-4"> search and find them through Collect's fast search </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        !show && <KeyFeaturesPanel />
                                     }
                                 </div>
                             }
                             <AnimatePresence>
                                 {show && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{ duration: 0.2 }}
+                                    <MotionFileItem
                                         className={`${viewFolder && `-mt-10`} p-6`}
                                     >
                                         {/* Column Headers */}
@@ -234,33 +188,25 @@ export default function Dashboard() {
                                         <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                             {
                                                 viewFolder ? folderItemsArray?.map((x, i) => (
-                                                    <motion.div
-                                                        initial={{ opacity: 0, y: -10 }}
-                                                        animate={{ opacity: 1, y: 0 }}
-                                                        exit={{ opacity: 0, y: -20 }}
-                                                        transition={{ duration: 0.2 }}
+                                                    <MotionFileItem
                                                         key={i}
                                                         onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'folderFiles')}
                                                         className="-mt-0"
                                                     >
                                                         <Card data={x} />
-                                                    </motion.div>
+                                                    </MotionFileItem>
                                                 ))
                                                     : allFiles?.map((x, i) => (
-                                                        <motion.div
-                                                            initial={{ opacity: 0, y: -10 }}
-                                                            animate={{ opacity: 1, y: 0 }}
-                                                            exit={{ opacity: 0, y: -20 }}
-                                                            transition={{ duration: 0.2 }}
+                                                        <MotionFileItem
                                                             key={i}
                                                             onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'allFiles')}
                                                         >
                                                             <Card data={x} />
-                                                        </motion.div>
+                                                        </MotionFileItem>
                                                     ))
                                             }
                                         </div>
-                                    </motion.div>
+                                    </MotionFileItem>
                                 )}
                             </AnimatePresence>
                             {
