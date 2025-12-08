@@ -18,6 +18,7 @@ import { useUpdateLastOpened } from "@/app/hooks/useUser"
 import { AnimatePresence, motion } from "framer-motion"
 import { byteToSize } from "@/app/utils/useful"
 import { prefetchInfo } from "@/app/hooks/useMedia"
+import MediaHeader from "../ui/widgets/MediaHeader"
 
 export default function MediaViewer() {
 
@@ -143,68 +144,52 @@ export default function MediaViewer() {
                                         <FolderIcon className="w-8" />
                                         <p> This is a folder </p>
                                         <p className="-mt-2"> exit this view and double tap on it to open </p>
-                                    </div> : openFiles[updateI].file_type === 'image' ? <>
+                                    </div> : <>
                                         <div className="flex flex-col">
-                                            <div className="bg-white rounded-md w-[60%] top-10 left-[20%] absolute p-2 shadow-md">
-                                                <div className="bg-gray-100 p-2 rounded-md flex items-center justify-between text-secondary">
-                                                    <div className="flex space-x-4">
-                                                        <button className="ml-2 border border-gray-400 rounded-md p-2"> <ArrowUpRightIcon className="w-4" /> </button>
-                                                        <ArrowsPointingInIcon
-                                                            onClick={() => dispatch(setViewMedia(false))}
-                                                            className="text-primary w-10 hover border border-gray-400 p-2 rounded-md"
-                                                        />
-                                                        <InformationCircleIcon
-                                                            onClick={() => {
-                                                                refetch()
-                                                                dispatch(setViewInfo(true))
-                                                            }}
-                                                            className="text-primary w-10 hover border border-gray-400 p-2 rounded-md"
-                                                        />
-                                                    </div>
-                                                    <p className=" text-xl p-2 ml-12 rounded-md"> {openFiles[updateI].file_name} </p>
-                                                    <div className="flex items-center space-x-1">
-                                                        <p className="p-2 rounded-md"> {openFiles[updateI].created_at.substring(0, 10)} </p>
-                                                        <p className="text-xl">|</p>
-                                                        <p className="p-2 rounded-md"> {byteToSize(parseInt(openFiles[updateI].size))} </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <Image
-                                                src={openFiles[updateI].file_url || ''}
-                                                alt={openFiles[updateI].file_name || ''}
-                                                width={0}
-                                                height={0}
-                                                sizes="100vw"
-                                                className="h-auto max-h-full w-auto max-w-4xl object-contain rounded-xl mt-8"
+                                            <MediaHeader
+                                                refetch={refetch}
+                                                file={openFiles[updateI]}
                                             />
-                                        </div>
-                                    </> : openFiles[updateI].file_type === 'video' ? <>
-                                        <Player
-                                            url={openFiles[updateI].file_url || ''}
-                                        />
-                                    </> : openFiles[updateI].file_type === 'audio' ? <>
-                                        <AudioPlayer
-                                            src={openFiles[updateI].file_url || ''}
-                                            color="#e9ecef"
-                                            sliderColor="#e9ecef"
-                                            style={{
-                                                background: "#000",
-                                                borderRadius: "15px",
-                                                padding: "30px",
-                                                width: '24rem',
-                                                height: '1rem',
-                                                marginTop: '8rem'
-                                            }}
-                                        />
-                                    </> : <>
-                                        <div className="absolute w-[50%] h-[100vh] p-10">
                                             {
-                                                openFiles[updateI].file_url && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                                                    <Viewer
-                                                        fileUrl={openFiles[updateI].file_url}
-                                                        plugins={[defaultLayoutPluginInstance]}
+                                                openFiles[updateI].file_type === 'image' ? <>
+                                                    <Image
+                                                        src={openFiles[updateI].file_url || ''}
+                                                        alt={openFiles[updateI].file_name || ''}
+                                                        width={0}
+                                                        height={0}
+                                                        sizes="100vw"
+                                                        className="h-auto max-h-full w-auto max-w-4xl object-contain rounded-xl mt-8"
                                                     />
-                                                </Worker>
+                                                </> : openFiles[updateI].file_type === 'video' ? <>
+                                                    <Player
+                                                        url={openFiles[updateI].file_url || ''}
+                                                    />
+                                                </> : openFiles[updateI].file_type === 'audio' ? <>
+                                                    <AudioPlayer
+                                                        src={openFiles[updateI].file_url || ''}
+                                                        color="#e9ecef"
+                                                        sliderColor="#e9ecef"
+                                                        style={{
+                                                            background: "#000",
+                                                            borderRadius: "15px",
+                                                            padding: "30px",
+                                                            width: '24rem',
+                                                            height: '1rem',
+                                                            marginTop: '8rem'
+                                                        }}
+                                                    />
+                                                </> : <>
+                                                    <div className="w-[50vw] h-[95vh] mt-26 z-1 p-10">
+                                                        {
+                                                            openFiles[updateI].file_url && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                                                <Viewer
+                                                                    fileUrl={openFiles[updateI].file_url}
+                                                                    plugins={[defaultLayoutPluginInstance]}
+                                                                />
+                                                            </Worker>
+                                                        }
+                                                    </div>
+                                                </>
                                             }
                                         </div>
                                     </>
