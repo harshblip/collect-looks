@@ -17,25 +17,23 @@ const initialState: GeneralState = {
     viewInfo: false,
     infoData: {
         filePath: [],
-        image: [
-            {
-                id: 0,
-                user_id: 0,
-                file_name: "",
-                file_url: "",
-                file_type: "",
-                size: "",
-                created_at: "",
-                starred: false,
-                is_trashed: "",
-                folder_id: 0,
-                description: "",
-                is_locked: false,
-                password: "",
-                updated_at: "",
-                total_count: 0
-            }
-        ]
+        file: {
+            id: 0,
+            user_id: 0,
+            file_name: "",
+            file_url: "",
+            file_type: "",
+            size: "",
+            created_at: "",
+            starred: false,
+            is_trashed: "",
+            folder_id: 0,
+            description: "",
+            is_locked: false,
+            password: "",
+            updated_at: "",
+            total_count: 0
+        }
     },
     viewLockModal: false,
     searchQuery: '',

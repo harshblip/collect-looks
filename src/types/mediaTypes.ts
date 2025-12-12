@@ -4,7 +4,7 @@ export interface Files {
     user_id: number,
     file_name: string,
     file_url?: string,
-    file_type: string,
+    file_type: 'image' | 'video' | 'audio' | 'document' | '',
     size: string,
     created_at: string,
     starred: boolean,
@@ -37,6 +37,6 @@ export interface FoldersArray {
 }
 
 export interface InfoData {
-    image: Files[],
+    file: Files,
     filePath: string[]
 }

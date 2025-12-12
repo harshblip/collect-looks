@@ -1,15 +1,20 @@
 import './checkbox.css'
 
-export default function Checkbox({ setChecked }: {
-    setChecked: React.Dispatch<React.SetStateAction<boolean>>
+export default function Checkbox({ setChecked, check, onClick }: {
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>,
+    check: boolean | undefined
+    onClick: () => void
 }) {
     return (
         <>
-            <div className="checkbox-container">
+            <div
+                onClick={onClick}
+                className="checkbox-container">
                 <label className="ios-checkbox red">
                     <input
                         type="checkbox"
                         onChange={(e) => setChecked(e.target.checked)}
+                        checked={check}
                     />
                     <div className="checkbox-wrapper">
                         <div className="checkbox-bg"></div>

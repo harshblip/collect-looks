@@ -44,6 +44,24 @@ export const useUploadFile = () => {
     })
 }
 
+export const useEnableAutoDelete = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: ({
+            checked, userId
+        }: { checked: boolean, userId: number }) => FileService.enableAutoDelete(checked, userId),
+        onMutate: async (id) => {
+            console.log(`auto delete enabled`)
+        },
+        onError: (error) => {
+            console.error("Failed to enable:", error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["allFiles"] });
+        },
+    })
+}
+
 export const useStarFile = () => {
     const queryClient = useQueryClient()
     return useMutation({
@@ -141,6 +159,16 @@ export const useGetFileInfo = (user_id: number, id: number) => {
     return useQuery({
         queryKey: ['fileInfo', user_id],
         queryFn: () => FileService.getFileInfo(user_id, id),
+        enabled: !!user_id,
+        staleTime: 1000 * 5,
+        retry: 2
+    })
+}
+
+export const useGetTrashedFiles = (user_id: number) => {
+    return useQuery({
+        queryKey: ['trashedFiles', user_id],
+        queryFn: () => FileService.getTrashedFiles(user_id),
         enabled: !!user_id,
         staleTime: 1000 * 5,
         retry: 2

@@ -61,10 +61,24 @@ export const FileService = {
             }
         })
     },
-    
+
     trashMedia: async (files: any): Promise<string> => {
         return apiClient.post<string>(`${BASE_URL}/upload/trashMedia`, {
             files
+        })
+    },
+
+    getTrashedFiles: async (userId: number): Promise<Files[]> => {
+        return apiClient.get(`${BASE_URL}/upload/getTrashedFiles`, {
+            params: {
+                userId: userId
+            }
+        })
+    },
+
+    enableAutoDelete: async (checked: boolean, userId: number): Promise<boolean> => {
+        return apiClient.post<boolean>(`${BASE_URL}/upload/enableAutoDelete`, {
+            checked, userId
         })
     }
 }

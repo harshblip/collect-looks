@@ -10,7 +10,7 @@ import { byteToSize } from "@/app/utils/useful";
 import { CubeIcon, CubeTransparentIcon, LanguageIcon, LinkIcon, MapPinIcon, Square3Stack3DIcon } from "@heroicons/react/24/outline";
 
 export default function InfoCard({ data }: { data: InfoData }) {
-    const image = data.image[0]
+    const file = data.file
     const filePath = data.filePath
 
     const dispatch = useDispatch()
@@ -30,26 +30,38 @@ export default function InfoCard({ data }: { data: InfoData }) {
                         <div className="flex justify-center items-center flex-col">
                             <button
                                 onClick={() => dispatch(setViewInfo(false))}
-                                className="active:scale-95 hover border border-black flex space-x-2 justify-center p-1 ml-[28.5rem] -mt-2 transition hover:bg-gray-400 hover:border-none hover:text-white text-gray-600">
+                                className="active:scale-95 hover border border-black flex space-x-2 justify-center p-1 ml-[28.5rem] -mt-2 transition hover:bg-gray-600 hover:border-none hover:text-white text-gray-600">
                                 <XMarkIcon
                                     className="w-5"
                                 />
                             </button>
                             {
-                                image.file_url ? <Image
-                                    src={image.file_url}
+                                file.file_type === 'image' ? <Image
+                                    src={file.file_url || ''}
                                     height={0}
                                     width={400}
                                     className=" rounded-md mt-4 bg-gray-50 p-4 border border-gray-400"
-                                    alt={`${image.file_name}`}
-                                /> : <FolderIcon />
+                                    alt={`${file.file_name}`}
+                                /> : file.file_type === 'document' ? <>
+                                    <div className="bg-gray-200 h-24 flex items-center justify-center rounded-md w-full mt-4">
+                                        <p className="text-2xl text-white">.pdf</p>
+                                    </div>
+                                </> : file.file_type === 'audio' ? <>
+                                    <div className="bg-violet-200 flex items-center justify-center rounded-md w-full">
+                                        <p className="text-2xl text-gray-200">.mp3</p>
+                                    </div>
+                                </> : <>
+                                    <div className="bg-red-200 mt-2 h-44 text-white flex items-center justify-center rounded-md w-full">
+                                        <p className="text-2xl">.mp4</p>
+                                    </div>
+                                </>
                             }
                         </div>
 
                         <div className="flex flex-col space-y-4">
                             <p className="text-xl text-secondary"> Who has access </p>
                             <Image
-                                src={image.file_url ? 'https://cdn.dribbble.com/userupload/44201289/file/original-77d7237957eff0cc9adf154a8a9cc6e3.png?resize=2048x1423&vertical=center' : ''}
+                                src={file.file_url ? 'https://cdn.dribbble.com/userupload/44201289/file/original-77d7237957eff0cc9adf154a8a9cc6e3.png?resize=2048x1423&vertical=center' : ''}
                                 height={0}
                                 width={40}
                                 className="h-12 w-12 rounded-full"
@@ -70,7 +82,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                             </div>
                             <div className="bg-gray-100 rounded-md space-y-2 p-4">
                                 {
-                                    !image.is_locked ? <div className="flex space-x-4 items-center">
+                                    !file.is_locked ? <div className="flex space-x-4 items-center">
                                         <CubeTransparentIcon
                                             className="text-secondary w-8"
                                         />
@@ -108,7 +120,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                                     <LanguageIcon className="text-secondary w-6" />
                                     <div className="flex flex-col">
                                         <p className="text-sm text-primary"> name </p>
-                                        <p className=" text-lg text-secondary font-medium"> {image.file_name} </p>
+                                        <p className=" text-lg text-secondary font-medium"> {file.file_name} </p>
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-4">
@@ -117,8 +129,8 @@ export default function InfoCard({ data }: { data: InfoData }) {
                                         <p className="text-sm text-primary"> size </p>
                                         <p className=" text-lg text-secondary font-medium">
                                             {byteToSize(
-                                                typeof image.size === "string" && !isNaN(parseInt(image.size))
-                                                    ? parseInt(image.size)
+                                                typeof file.size === "string" && !isNaN(parseInt(file.size))
+                                                    ? parseInt(file.size)
                                                     : 0
                                             )}
                                         </p>
@@ -157,7 +169,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
                                 <LinkIcon className="text-secondary w-6" />
                                 <div className="flex flex-col p-2 -ml-2">
                                     <p className="text-sm text-primary"> type </p>
-                                    <p className=" text-lg text-secondary font-medium"> {image.file_type === 'image' ? 'Image' : image.file_type === 'video' ? 'videos' : image.file_type === 'document' ? 'docs' : 'music'
+                                    <p className=" text-lg text-secondary font-medium"> {file.file_type === 'image' ? 'Image' : file.file_type === 'video' ? 'videos' : file.file_type === 'document' ? 'docs' : 'music'
                                     } </p>
                                 </div>
                             </div>
@@ -165,12 +177,12 @@ export default function InfoCard({ data }: { data: InfoData }) {
                         <div className="flex justify-between mt-6">
                             <div className="flex flex-col">
                                 <p className="text-sm text-primary"> Created </p>
-                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {image.created_at.substring(0, 10)} </p>
+                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {file.created_at.substring(0, 10)} </p>
                             </div>
 
                             <div className="flex flex-col">
                                 <p className="flex justify-end text-sm text-primary"> Opened </p>
-                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {image.updated_at.substring(0, 10)} </p>
+                                <p className=" text-4xl text-gray-300 font-medium mt-1"> {file.updated_at.substring(0, 10)} </p>
                             </div>
                         </div>
 
