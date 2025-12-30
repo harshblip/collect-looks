@@ -8,12 +8,11 @@ export default function Checkbox({ setChecked, check, onClick }: {
     return (
         <>
             <div
-                onClick={onClick}
                 className="checkbox-container">
                 <label className="ios-checkbox red">
                     <input
+                        onClick={onClick}
                         type="checkbox"
-                        onChange={(e) => setChecked(e.target.checked)}
                         checked={check}
                     />
                     <div className="checkbox-wrapper">

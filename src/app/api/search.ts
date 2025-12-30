@@ -1,14 +1,19 @@
 import { apiClient } from "@/lib/apiClient";
 import { BASE_URL } from "@/lib/constants";
-import { Files } from "@/types/mediaTypes";
+import { Files, Filter } from "@/types/mediaTypes";
 import axios from "axios";
 
 export const SearchService = {
-    getSuggestions: async (word: string, userId: number): Promise<Files[]> => {
+    getSuggestions: async (word: string, userId: number, filters: Filter): Promise<Files[]> => {
+        const { type, locked, starred, date } = filters
         return apiClient.get<Files[]>(`${BASE_URL}/upload/getSuggestions`, {
             params: {
                 userId: userId,
-                words: word
+                words: word,
+                type: type,
+                starred: starred,
+                locked: locked,
+                date: date
             }
         })
     },

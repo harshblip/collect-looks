@@ -16,14 +16,14 @@ import { useDispatch } from "react-redux"
 import { Pixelify_Sans } from "next/font/google"
 import LockScreen from "../components/shared/LockScreen";
 import { setIndex } from "@/lib/slice/folderSlice";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ExclamationTriangleIcon, EyeIcon, FingerPrintIcon, FolderIcon, FolderOpenIcon, MagnifyingGlassIcon, PlusIcon, SparklesIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation"
 import { setViewMediaFiles } from "@/lib/slice/filesSlice"
 import { setDemoCheck, setViewMedia } from "@/lib/slice/generalSlice"
 import Status from "../components/shared/Status"
 import { setParentId } from "@/lib/slice/userSlice"
 import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel"
-import MotionFileItem from "../components/ui/primitives/PageTransition"
+import MotionDiv from "../components/ui/primitives/PageTransition"
 import ErrorPage from "../components/ui/placeholders/ErrorPage"
 
 const pixel = Pixelify_Sans({
@@ -50,7 +50,7 @@ export default function Dashboard() {
     const [password, setPassword] = useState<string>("")
     const [locked, setLocked] = useState<boolean>(false)
 
-    const { data: allFiles, error: getAllFilesError } = useGetAllFiles(userId, currentPage, access_token)
+    const { data: allFiles, error: getAllFilesError,  } = useGetAllFiles(userId, currentPage, access_token)
     const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(userId, selectedFolderId)
     const globalError: any = getAllFilesError || getFolderItemsError
 
@@ -126,13 +126,13 @@ export default function Dashboard() {
     return (
         <>
             {
-                globalError && <MotionFileItem
+                globalError && <MotionDiv
                     className="absolute bottom-5 right-5">
                     <Status
                         type="ERROR"
                         message={globalError.message}
                     />
-                </MotionFileItem>
+                </MotionDiv>
             }
             {
                 showError ? <ErrorPage /> : check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
@@ -150,8 +150,8 @@ export default function Dashboard() {
                     {
                         viewFolder ? <ToggleHeading
                             isLocked={setLocked}
-                        /> : <MotionFileItem
-                            className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </MotionFileItem>
+                        /> : <MotionDiv
+                            className="text-4xl w-[75%] fixed font-medium h-40 pt-10 -mt-12 text-primary bg-white"> Welcome to Collect </MotionDiv>
                     }
                     {
                         locked ? <LockScreen
@@ -160,7 +160,7 @@ export default function Dashboard() {
                         /> : <div className="flex flex-col mt-16 bg-white">
                             {
                                 files && files.length ? <MoreOptions /> : <div className="flex flex-col">
-                                    <MotionFileItem
+                                    <MotionDiv
                                         className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
                                         onClick={() => setShow(!show)}
                                     >
@@ -171,7 +171,7 @@ export default function Dashboard() {
                                         </div>
 
                                         <p className="text-xl text-primary"> Your files </p>
-                                    </MotionFileItem>
+                                    </MotionDiv>
                                     {
                                         !show && <KeyFeaturesPanel />
                                     }
@@ -179,7 +179,7 @@ export default function Dashboard() {
                             }
                             <AnimatePresence>
                                 {show && (
-                                    <MotionFileItem
+                                    <MotionDiv
                                         className={`${viewFolder && `-mt-10`} p-6`}
                                     >
                                         {/* Column Headers */}
@@ -188,25 +188,25 @@ export default function Dashboard() {
                                         <div className="flex flex-col divide-y divide-gray-100 mt-4">
                                             {
                                                 viewFolder ? folderItemsArray?.map((x, i) => (
-                                                    <MotionFileItem
+                                                    <MotionDiv
                                                         key={i}
                                                         onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'folderFiles')}
                                                         className="-mt-0"
                                                     >
                                                         <Card data={x} />
-                                                    </MotionFileItem>
+                                                    </MotionDiv>
                                                 ))
                                                     : allFiles?.map((x, i) => (
-                                                        <MotionFileItem
+                                                        <MotionDiv
                                                             key={i}
                                                             onDoubleClick={() => x.file_type === null ? openFolder(x) : openMedia(i, 'allFiles')}
                                                         >
                                                             <Card data={x} />
-                                                        </MotionFileItem>
+                                                        </MotionDiv>
                                                     ))
                                             }
                                         </div>
-                                    </MotionFileItem>
+                                    </MotionDiv>
                                 )}
                             </AnimatePresence>
                             {

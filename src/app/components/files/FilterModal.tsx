@@ -8,16 +8,16 @@ import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 interface PropType {
     setFilters: React.Dispatch<React.SetStateAction<{
-        type: 'image' | 'video' | 'audio' | 'document' | '';
+        type: 'image' | 'video' | 'audio' | 'document' | null;
         locked: boolean | null;
         starred: boolean | null;
-        date: string
+        date: Date | undefined
     }>>
     filters: {
-        type: 'image' | 'video' | 'audio' | 'document' | '';
-        locked: null;
-        starred: null;
-        date: string
+        type: 'image' | 'video' | 'audio' | 'document' | null;
+        locked: boolean | null;
+        starred: boolean | null;
+        date: Date | undefined
     }
     show: boolean,
     setShow: React.Dispatch<React.SetStateAction<boolean>>
@@ -54,7 +54,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                 <div className={`transition text-gray-600 items-center flex space-x-4  ${pixel.className}`}>
                                     <button onClick={() => setFilters(fil => ({
                                         ...fil,
-                                        type: fil.type === 'image' ? '' : 'image'
+                                        type: fil.type === 'image' ? null : 'image'
                                     }))}
                                         className={`flex justify-center w-full p-2  hover ${filters.type === 'image' ? `bg-gray-600 text-white` : `hover:bg-gray-100`}`}>
                                         <PhotoIcon
@@ -66,7 +66,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: fil.type === 'video' ? '' : 'video'
+                                            type: fil.type === 'video' ? null : 'video'
                                         }))}
                                         className={`p-2 flex justify-center hover  ${filters.type === 'video' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`}`}>
                                         <PlayIcon
@@ -78,7 +78,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: fil.type === 'audio' ? '' : 'audio'
+                                            type: fil.type === 'audio' ? null : 'audio'
                                         }))}
                                         className={`w-full p-2 flex justify-center hover ${filters.type === 'audio' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`}`}>
                                         <SignalIcon
@@ -90,7 +90,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
-                                            type: fil.type === 'document' ? '' : 'document'
+                                            type: fil.type === 'document' ? null : 'document'
                                         }))}
                                         className={`${filters.type === 'document' ? `bg-gray-600 text-white` : `text-gray-600 hover:bg-gray-100`} p-2  hover flex justify-center`}>
                                         <DocumentDuplicateIcon
@@ -146,7 +146,9 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                             <div className="text-primary flex justify-between items-center">
                                 <p> Date </p>
                                 <div>
-                                    <Calendar29 />
+                                    <Calendar29 
+                                        setFilters={setFilters}
+                                    />
                                 </div>
                             </div>
                             {

@@ -5,7 +5,7 @@ interface MotionWrapperProps extends HTMLMotionProps<'div'> {
     children: ReactNode;
 }
 
-const MotionFileItem = forwardRef<HTMLDivElement, MotionWrapperProps>(
+const MotionDiv = forwardRef<HTMLDivElement, MotionWrapperProps>(
     ({ children, ...props }, ref) => {
 
         const animationProps = {
@@ -28,6 +28,6 @@ const MotionFileItem = forwardRef<HTMLDivElement, MotionWrapperProps>(
     }
 );
 
-MotionFileItem.displayName = 'MotionFileItem';
+MotionDiv.displayName = 'MotionDiv';
 
-export default MotionFileItem;
+export default MotionDiv;

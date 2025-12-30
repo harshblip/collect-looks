@@ -40,3 +40,10 @@ export interface InfoData {
     file: Files,
     filePath: string[]
 }
+
+export interface Filter {
+    type: 'image' | 'video' | 'audio' | 'document' | null;
+    locked: boolean | null;
+    starred: boolean | null;
+    date: Date | undefined;
+}
