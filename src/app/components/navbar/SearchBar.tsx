@@ -10,7 +10,6 @@ import { useAppSelector } from "@/lib/store";
 import {
   AdjustmentsHorizontalIcon,
   MagnifyingGlassIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -20,20 +19,11 @@ import SuggestionButtons from "./SuggestionButtons";
 import { useRouter } from "next/navigation";
 import { useGetSuggestions } from "@/app/hooks/useMedia";
 import { Files, Filter } from "@/types/mediaTypes";
-import SearchResults from "@/app/dashboard/search/page";
-import {
-  InformationCircleIcon,
-  PlayIcon,
-  StarIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
-import { byteToSize } from "@/app/utils/useful";
-import Image from "next/image";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
 import SearchMatchCard from "./SearchMatchCard";
 import { setIndex } from "@/lib/slice/folderSlice";
 import { formatDate } from "./DatePicker";
-import MotionDiv from "../ui/primitives/PageTransition";
+import FilterGroup from "../ui/widgets/FilterGroup";
 
 export default function SearchBar() {
   const searchSuggestions = useAppSelector(
@@ -87,7 +77,6 @@ export default function SearchBar() {
 
   const isFilterThere =
     filter.type || formatDate(filter.date) || filter.locked || filter.starred;
-  console.log(filter);
   return (
     <>
       {show && (
@@ -139,79 +128,7 @@ export default function SearchBar() {
             onClick={() => setVisible(!visible)}
           />
           {isFilterThere && (
-            <MotionDiv className="flex items-center space-x-2 absolute mt-[3.6rem] w-full rounded-md p-4 text-sm h-10 z-2">
-              <AnimatePresence>
-                {filter.type && (
-                  <button
-                    onClick={() =>
-                      setFilter((fil) => ({
-                        ...fil,
-                        type: null,
-                      }))
-                    }
-                    className="border border-gray-400 w-fit h-6 flex items-center justify-center rounded-md text-gray-400 p-3"
-                  >
-                    <XMarkIcon className="w-4 text-gray-400 mr-1 -ml-1" />
-                    {filter.type}
-                  </button>
-                )}
-                {formatDate(filter.date) && (
-                  <button
-                    onClick={() =>
-                      setFilter((fil) => ({
-                        ...fil,
-                        date: undefined,
-                      }))
-                    }
-                    className="border border-gray-400 w-fit h-6 flex items-center justify-center rounded-md text-gray-400 p-3"
-                  >
-                    <XMarkIcon className="w-4 text-gray-400 mr-1 -ml-1" />
-                    {`>`} {formatDate(filter.date)}
-                  </button>
-                )}
-                {filter.locked && (
-                  <button
-                    onClick={() =>
-                      setFilter((fil) => ({
-                        ...fil,
-                        locked: null,
-                      }))
-                    }
-                    className="border border-gray-400 w-fit h-6 flex items-center justify-center rounded-md text-gray-400 p-3"
-                  >
-                    <XMarkIcon className="w-4 text-gray-400 mr-1 -ml-1" />
-                    {filter.locked && "locked"}
-                  </button>
-                )}
-                {filter.starred && (
-                  <button
-                    onClick={() =>
-                      setFilter((fil) => ({
-                        ...fil,
-                        starred: null,
-                      }))
-                    }
-                    className="border border-gray-400 w-fit h-6 flex items-center justify-center rounded-md text-gray-400 p-3"
-                  >
-                    <XMarkIcon className="w-4 text-gray-400 mr-1 -ml-1" />
-                    {filter.starred ? "starred" : "unstarred"}
-                  </button>
-                )}
-                <button
-                  onClick={() =>
-                    setFilter({
-                      type: null,
-                      date: undefined,
-                      locked: null,
-                      starred: null,
-                    })
-                  }
-                  className="hover:cursor-pointer text-gray-400"
-                >
-                  clear
-                </button>
-              </AnimatePresence>
-            </MotionDiv>
+            <FilterGroup filter={filter} setFilter={setFilter} />
           )}
           <AnimatePresence>
             {!searchQuery ? (
