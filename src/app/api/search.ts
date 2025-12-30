@@ -1,7 +1,6 @@
 import { apiClient } from "@/lib/apiClient";
 import { BASE_URL } from "@/lib/constants";
 import { Files, Filter } from "@/types/mediaTypes";
-import axios from "axios";
 
 export const SearchService = {
     getSuggestions: async (word: string, userId: number, filters: Filter): Promise<Files[]> => {

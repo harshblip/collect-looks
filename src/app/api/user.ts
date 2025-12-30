@@ -20,7 +20,6 @@ export const UserService = {
             password
         });
 
-        // await apiClient.post('/api/welcome-email', {});
         return signup
     },
 
