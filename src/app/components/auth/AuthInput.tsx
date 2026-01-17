@@ -11,7 +11,6 @@ function AuthInput({
     value: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
-    const [a, setA] = useState('')
     return (
         <>
             <div className="flex flex-col">

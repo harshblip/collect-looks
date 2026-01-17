@@ -1,17 +1,14 @@
 import { FingerPrintIcon, FolderOpenIcon, MagnifyingGlassIcon, SparklesIcon, StarIcon } from "@heroicons/react/24/outline"
-import { Pixelify_Sans } from "next/font/google"
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
+
 
 export default function KeyFeaturesPanel() {
     return (
         <>
             <div className="mt-12 flex flex-col">
                 <div className="flex justify-center items-center">
-                    <div className={`${pixel.className} flex space-x-12 items-center text-secondary z-1 justify-center mt-18 mb-20`}>
+                    <div className={`font-pixel flex space-x-12 items-center text-secondary z-1 justify-center mt-18 mb-20`}>
                         <div className="p-10 flex flex-col text-center justify-center items-center space-y-4 border bg-gray-50/2 shadow-md rounded-md w-[16rem] h-[16rem]">
                             <div className="text-secondary flex space-x-2">
                                 <StarIcon width={42} />

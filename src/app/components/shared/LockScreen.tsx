@@ -2,13 +2,10 @@
 
 import { BugAntIcon } from "@heroicons/react/24/outline"
 import { motion } from "framer-motion"
-import { Pixelify_Sans } from "next/font/google"
+
 import { useState } from "react"
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function LockScreen({
     password,
@@ -50,7 +47,7 @@ export default function LockScreen({
                         transition={{ duration: 0.2 }}
                         className="flex flex-col justify-center items-center"
                     >
-                        <p className={`${pixel.className} text-4xl`}> Protected folder </p>
+                        <p className={`font-pixel text-4xl`}> Protected folder </p>
                         <form
                             className="flex items-center space-x-6 mt-16"
                             onSubmit={(e) => verify(e)}

@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/lib/constants";
 import axios from "axios";
 
 export async function handleUpload(
@@ -16,7 +17,7 @@ export async function handleUpload(
     files.forEach((file) => formData.append('file', file));
     formData.append('username', 'mihir')
     try {
-        await axios.post('http://localhost:4000/upload', formData, {
+        await axios.post(`${BASE_URL}/upload`, formData, {
             onUploadProgress: (progressEvent) => {
                 const total = progressEvent.total ?? 1;
                 const percent = Math.round((progressEvent.loaded * 100) / total);

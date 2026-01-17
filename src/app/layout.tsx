@@ -1,12 +1,10 @@
 'use client'
 
-import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProvider from "@/lib/reduxProvider";
-import { Gloock, Gochi_Hand } from "next/font/google";
-import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Gloock, Gochi_Hand, Pixelify_Sans } from "next/font/google";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouteLoader } from "./components/layout/RouteLoader";
-import PageTransition from "./components/ui/primitives/PageTransition";
 
 const glook = Gloock({
   weight: ['400'],
@@ -20,6 +18,12 @@ const gochi = Gochi_Hand({
   variable: '--font-gochi', // <- add variable
 })
 
+const pixel = Pixelify_Sans({
+    weight: ['400', '500'],
+    subsets: ['cyrillic', 'latin'],
+    variable: '--font-pixel'
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,9 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${gochi.variable} ${glook.variable} antialiased`}>
+        className={`${gochi.variable} ${glook.variable} ${pixel.variable} antialiased`}>
           <ReduxProvider>
-            <QueryClientProvider client={queryClient}>
+            <QueryClientProvider key={0} client={queryClient}>
               <RouteLoader />
                 {children}
             </QueryClientProvider>

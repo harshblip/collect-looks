@@ -13,7 +13,7 @@ import { setSelectedFolders, setFolderItems, setViewFolder } from "@/lib/slice/f
 import { Files } from "@/types/mediaTypes"
 import { useGetFolderItems } from "../hooks/useFolder"
 import { useDispatch } from "react-redux"
-import { Pixelify_Sans } from "next/font/google"
+
 import LockScreen from "../components/shared/LockScreen";
 import { setIndex } from "@/lib/slice/folderSlice";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
@@ -26,10 +26,7 @@ import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel"
 import MotionDiv from "../components/ui/primitives/PageTransition"
 import ErrorPage from "../components/ui/placeholders/ErrorPage"
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function Dashboard() {
 
@@ -136,10 +133,10 @@ export default function Dashboard() {
             }
             {
                 showError ? <ErrorPage /> : check ? <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
-                    <p className={`${pixel.className} text-secondary text-2xl`}> welcome to <span className="font-product text-primary text-3xl ml-1">Collect</span> </p>
+                    <p className={`font-pixel text-secondary text-2xl`}> welcome to <span className="font-product text-primary text-3xl ml-1">Collect</span> </p>
                     <div className="flex space-x-4 items-center mt-4">
                         <textarea
-                            className={`${pixel.className} outline-none border border-gray-200 h-[26rem] w-[36rem] p-4 text-lg active:border-none active:shadow-md text-gray-600 rounded-md transition focus:shadow-md`}
+                            className={`font-pixel outline-none border border-gray-200 h-[26rem] w-[36rem] p-4 text-lg active:border-none active:shadow-md text-gray-600 rounded-md transition focus:shadow-md`}
                         />
                     </div>
 

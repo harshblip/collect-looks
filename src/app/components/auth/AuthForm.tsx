@@ -40,13 +40,6 @@ function AuthForm({
 
     return (
         <>
-            {/* {
-                visible &&
-                <ForgotModal
-                    visible={visible}
-                    setVisible={setVisible}
-                />
-            } */}
             <AnimatePresence mode='wait'>
                 <motion.div
                     className="primary-bg flex justify-center items-center mt-10 flex-col space-y-8"

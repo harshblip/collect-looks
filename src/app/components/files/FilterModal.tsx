@@ -1,7 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Pixelify_Sans } from "next/font/google"
+
 import { DocumentDuplicateIcon, PhotoIcon, PlayIcon, SignalIcon } from "@heroicons/react/24/solid";
 import { Calendar29 } from "../navbar/DatePicker";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -22,11 +22,6 @@ interface PropType {
     show: boolean,
     setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
 
 export default function FilterModal({ setFilters, filters, show, setShow }: PropType) {
     const [showInfo, setShowInfo] = useState<boolean>(true)
@@ -51,7 +46,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                         <div className="flex flex-col space-y-6 p-4 mt-4 text-md">
                             <div className="text-primary flex flex-col space-y-2 justify-between">
                                 <p> Filter by type </p>
-                                <div className={`transition text-gray-600 items-center flex space-x-4  ${pixel.className}`}>
+                                <div className={`transition text-gray-600 items-center flex space-x-4 font-pixel`}>
                                     <button onClick={() => setFilters(fil => ({
                                         ...fil,
                                         type: fil.type === 'image' ? null : 'image'
@@ -103,7 +98,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                             </div>
                             <div className="text-primary flex justify-between items-center font-medium">
                                 <p> starred </p>
-                                <div className={`${pixel.className} flex items-center`}>
+                                <div className={`font-pixel flex items-center`}>
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,
@@ -124,7 +119,7 @@ export default function FilterModal({ setFilters, filters, show, setShow }: Prop
                             </div>
                             <div className="text-primary flex justify-between items-center">
                                 <p> locked </p>
-                                <div className={`${pixel.className} flex items-center`}>
+                                <div className={`font-pixel flex items-center`}>
                                     <button
                                         onClick={() => setFilters(fil => ({
                                             ...fil,

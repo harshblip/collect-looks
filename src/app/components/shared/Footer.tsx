@@ -1,10 +1,7 @@
 import { DocumentIcon, FolderIcon, PhotoIcon, SignalIcon } from "@heroicons/react/24/outline";
-import { Pixelify_Sans } from "next/font/google";
+;
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function Footer() {
 

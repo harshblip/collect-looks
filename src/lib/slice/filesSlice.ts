@@ -20,7 +20,7 @@ const initialState: StateManager = {
             file_type: "",
             size: "",
             created_at: "",
-            starred: "",
+            starred: false,
             is_trashed: "",
             folder_id: 0,
             description: "",

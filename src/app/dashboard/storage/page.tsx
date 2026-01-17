@@ -5,13 +5,10 @@ import { useGetLastSeen } from "@/app/hooks/useMedia"
 import { useGetUserData } from "@/app/hooks/useUser"
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"
 import { AnimatePresence, motion } from "framer-motion"
-import { Pixelify_Sans } from "next/font/google"
+
 import { useState } from "react"
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function Storage() {
     const { data } = useGetLastSeen(3)
@@ -32,7 +29,7 @@ export default function Storage() {
             <div className="mt-4 p-8 font-product">
                 <div className="bg-white z-2 flex flex-col space-y-8 fixed w-[75%] -mt-12">
                     <div className="flex items-center justify-between text-secondary">
-                        <p className={`${pixel.className} text-4xl bg-white h-16 mt-12`}>Storage</p>
+                        <p className={`font-pixel text-4xl bg-white h-16 mt-12`}>Storage</p>
                         <p className="italic text-gray-400"> Last, You uploaded 12 files including 10 images and 2 videos </p>
                     </div>
                     <div className="flex justify-between -mt-4">

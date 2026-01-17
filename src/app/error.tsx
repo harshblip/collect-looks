@@ -1,7 +1,7 @@
-'use client'; // Error boundaries must be Client Components
+'use client'; 
 
 import { useEffect } from 'react';
-import { Button } from "@/components/ui/button"; // Assuming you have shadcn/ui
+import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 
 export default function Error({
@@ -13,7 +13,6 @@ export default function Error({
 }) {
 
     useEffect(() => {
-        // Log the error to an error reporting service like Sentry or Datadog
         console.error("Global Error Captured:", error);
     }, [error]);
 
@@ -31,7 +30,6 @@ export default function Error({
             </div>
 
             <div className="flex gap-4">
-                {/* Attempt to recover by trying to re-render the segment */}
                 <Button onClick={() => reset()} variant="default">
                     Try Again
                 </Button>

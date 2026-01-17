@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Pixelify_Sans } from "next/font/google";
+;
 import { DocumentIcon, PhotoIcon, PlayIcon, SignalIcon } from "@heroicons/react/24/outline";
 
 interface StatCardProps {
@@ -9,10 +9,7 @@ interface StatCardProps {
     className?: string;
 }
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function StatCard({ label, size, className }: StatCardProps) {
     return (
@@ -23,7 +20,7 @@ export default function StatCard({ label, size, className }: StatCardProps) {
                     className
                 )}
             >
-                <p className={`${pixel.className} text-secondary p-4 text-2xl flex justify-end`}>{size}</p>
+                <p className={`font-pixel text-secondary p-4 text-2xl flex justify-end`}>{size}</p>
                  <hr className="w-full border-2 border-gray-100 -mt-12" />
                 <div className="flex justify-between items-end">
                     <div className="text-gray-200 w-16">

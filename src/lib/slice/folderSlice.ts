@@ -2,6 +2,7 @@ import { Files, Folders, FoldersArray, InfoData } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+type LockModal = {lock: boolean, id: number, type: string, password: string}
 export interface States {
     index: number,
     folders: Folders[],
@@ -39,7 +40,7 @@ export const folderSlice = createSlice({
         setIndex: (state, action: PayloadAction<number>) => {
             state.index = action.payload
         },
-        setLockModal: (state, action: PayloadAction<{lock: boolean, id: number, type: string, password: string}>) => {
+        setLockModal: (state, action: PayloadAction<LockModal>) => {
             state.lockModal = action.payload
         },
         setViewCreateFolder: (state, action: PayloadAction<boolean>) => {

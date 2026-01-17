@@ -2,8 +2,8 @@ import './checkbox.css'
 
 export default function Checkbox({ setChecked, check, onClick }: {
     setChecked: React.Dispatch<React.SetStateAction<boolean>>,
-    check: boolean | undefined
-    onClick: () => void
+    check?: boolean | undefined
+    onClick?: () => void
 }) {
     return (
         <>
@@ -12,6 +12,7 @@ export default function Checkbox({ setChecked, check, onClick }: {
                 <label className="ios-checkbox red">
                     <input
                         onClick={onClick}
+                        onChange={(e) => setChecked(e.target.checked)}
                         type="checkbox"
                         checked={check}
                     />

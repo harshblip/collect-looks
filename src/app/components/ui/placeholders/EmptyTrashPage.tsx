@@ -1,11 +1,8 @@
 import { EllipsisVerticalIcon, InformationCircleIcon, MapIcon, NewspaperIcon, PhotoIcon, PlayIcon, ScissorsIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-import { Pixelify_Sans } from "next/font/google";
+;
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function EmptyTrashPage() {
     return (
@@ -26,7 +23,7 @@ export default function EmptyTrashPage() {
                         <ScissorsIcon className="w-10 text-gray-400 mt-10" />
                         <ScissorsIcon className="w-12 text-gray-300 mt-10" />
                     </div>
-                    <p className={`${pixel.className} flex justify-center mt-24 text-secondary text-4xl`}>
+                    <p className={`font-pixel flex justify-center mt-24 text-secondary text-4xl`}>
                         NULL
                     </p>
                     <div className="flex justify-around mt-32">

@@ -2,14 +2,11 @@
 
 import { useUpdateUser } from "@/app/hooks/useUser";
 import { InformationCircleIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import { Pixelify_Sans } from "next/font/google";
+;
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const pixel = Pixelify_Sans({
-    weight: ['400', '500'],
-    subsets: ['cyrillic', 'latin']
-})
+
 
 export default function AccountInfo({ username, email }: {
     username: string,
@@ -36,19 +33,19 @@ export default function AccountInfo({ username, email }: {
         <>
             <div className="flex flex-col space-y-10 mt-12 mb-12">
                 <div className="flex justify-between">
-                    <p className={`${pixel.className} text-4xl ml-10`}> Account Info </p>
+                    <p className={`font-pixel text-4xl ml-10`}> Account Info </p>
                     <button
                         onClick={() => {
                             setIsEditMode((lol) => !lol)
                         }}
-                        className={`${pixel.className} mr-10 hover hover:bg-gray-600 hover:text-white transition-all w-24 p-2 rounded-md border-2 border-gray-600 active:scale-95`}
+                        className={`font-pixel mr-10 hover hover:bg-gray-600 hover:text-white transition-all w-24 p-2 rounded-md border-2 border-gray-600 active:scale-95`}
                     >
                         {isEditMode ? `Edit` : `Save`}
                     </button>
                 </div>
                 <div className="flex justify-around">
                     <div className=" rounded-md flex items-center space-x-4">
-                        <p className={`${pixel.className} text-md`}> name </p>
+                        <p className={`font-pixel text-md`}> name </p>
                         <hr
                             className="w-12 border-2 border-gray-100"
                         />
@@ -68,7 +65,7 @@ export default function AccountInfo({ username, email }: {
 
                     </div>
                     <div className=" rounded-md flex items-center space-x-4">
-                        <p className={`${pixel.className} text-md`}> email </p>
+                        <p className={`font-pixel text-md`}> email </p>
                         <hr
                             className="w-12 border-2 border-gray-100"
                         />
