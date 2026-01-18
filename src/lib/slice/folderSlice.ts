@@ -1,4 +1,4 @@
-import { Files, Folders, FoldersArray, InfoData } from "@/types/mediaTypes";
+import { Files, Folders, FoldersArray } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
