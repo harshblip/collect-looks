@@ -1,13 +1,13 @@
 'use client'
 
+import { Cog6ToothIcon, CubeTransparentIcon, UserIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import SearchBar from "../navbar/SearchBar";
-import { BeakerIcon, Cog6ToothIcon, CubeTransparentIcon, FingerPrintIcon, FireIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import ProfileCard from "../navbar/ProfileCard";
-import Menu from "../navbar/Menu";
 import KeyboardShortcuts from "../navbar/KeyboardShortcuts";
+import Menu from "../navbar/Menu";
+import ProfileCard from "../navbar/ProfileCard";
+import SearchBar from "../navbar/SearchBar";
 
 export default function Navbar() {
     const [toggle, setToggle] = useState<'settings' | 'menu' | 'profile' | ''>('')

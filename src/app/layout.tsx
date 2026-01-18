@@ -9,13 +9,13 @@ import { RouteLoader } from "./components/layout/RouteLoader";
 const glook = Gloock({
   weight: ['400'],
   subsets: ['cyrillic-ext'],
-  variable: '--font-glook', // <- add variable
+  variable: '--font-glook',
 })
 
 const gochi = Gochi_Hand({
   weight: ['400'],
   subsets: ['latin'],
-  variable: '--font-gochi', // <- add variable
+  variable: '--font-gochi',
 })
 
 const pixel = Pixelify_Sans({

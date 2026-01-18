@@ -40,7 +40,6 @@ function AuthForm({
 
     return (
         <>
-            <AnimatePresence mode='wait'>
                 <motion.div
                     className="primary-bg flex justify-center items-center mt-10 flex-col space-y-8"
                 >
@@ -143,7 +142,6 @@ function AuthForm({
                                 </a></p>
                     }
                 </motion.div >
-            </AnimatePresence>
         </>
     )
 }

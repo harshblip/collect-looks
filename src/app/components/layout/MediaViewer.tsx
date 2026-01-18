@@ -1,23 +1,22 @@
 'use client'
 
-import { setInfoData, setViewInfo, setViewMedia } from "@/lib/slice/generalSlice"
+import { prefetchInfo } from "@/app/hooks/useMedia"
+import { useUpdateLastOpened } from "@/app/hooks/useUser"
+import { setInfoData } from "@/lib/slice/generalSlice"
 import { useAppSelector } from "@/lib/store"
-import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon, FolderIcon, InformationCircleIcon, QrCodeIcon, SparklesIcon } from "@heroicons/react/24/outline"
-import { ArrowsPointingInIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
+import { ArrowLeftIcon, ArrowRightIcon, FolderIcon, QrCodeIcon, SparklesIcon } from "@heroicons/react/24/outline"
+import { EyeSlashIcon } from "@heroicons/react/24/solid"
+import { Viewer, Worker } from '@react-pdf-viewer/core'
+import '@react-pdf-viewer/core/lib/styles/index.css'
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout'
+import '@react-pdf-viewer/default-layout/lib/styles/index.css'
+import { AnimatePresence, motion } from "framer-motion"
+import { EyeIcon } from "lucide-react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { AudioPlayer } from 'react-audio-play'
 import { useDispatch } from "react-redux"
-import { AudioPlayer } from 'react-audio-play';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import Player from "../media-player/VideoPlayer"
-import { EyeIcon } from "lucide-react"
-import { useUpdateLastOpened } from "@/app/hooks/useUser"
-import { AnimatePresence, motion } from "framer-motion"
-import { byteToSize } from "@/app/utils/useful"
-import { prefetchInfo } from "@/app/hooks/useMedia"
 import MediaHeader from "../ui/widgets/MediaHeader"
 
 export default function MediaViewer() {

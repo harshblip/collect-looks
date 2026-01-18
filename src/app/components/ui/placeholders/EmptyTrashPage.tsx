@@ -1,48 +1,61 @@
-import { EllipsisVerticalIcon, InformationCircleIcon, MapIcon, NewspaperIcon, PhotoIcon, PlayIcon, ScissorsIcon } from "@heroicons/react/24/outline";
+import {
+  EllipsisVerticalIcon,
+  InformationCircleIcon,
+  MapIcon,
+  NewspaperIcon,
+  PhotoIcon,
+  PlayIcon,
+  ScissorsIcon,
+} from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
-;
-
-
-
 export default function EmptyTrashPage() {
-    return (
-        <>
-            <AnimatePresence>
-                <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-6 flex flex-col"
-                >
-                    <div className="flex items-center justify-around">
-                        <ScissorsIcon className="w-12 text-gray-300 -mt-12" />
-                        <ScissorsIcon className="w-12 text-gray-400 mt-12 -mr-24" />
-                        <ScissorsIcon className="w-6 text-gray-300 -mt-24" />
-                        <ScissorsIcon className="w-24 text-gray-400 -ml-[8rem] -mt-14" />
-                        <ScissorsIcon className="w-10 text-gray-400 mt-10" />
-                        <ScissorsIcon className="w-12 text-gray-300 mt-10" />
-                    </div>
-                    <p className={`font-pixel flex justify-center mt-24 text-secondary text-4xl`}>
-                        NULL
-                    </p>
-                    <div className="flex justify-around mt-32">
-                        <PhotoIcon className="w-12 text-gray-300 rotate-20" />
-                        <MapIcon className="w-12 text-gray-400 ml-12 rotate-40" />
-                        <PlayIcon className="w-6 text-gray-300 -mt-12 ml-24 -rotate-20" />
-                        <NewspaperIcon className="w-12 text-gray-400 rotate-10 ml-[8rem] mt-14" />
-                        <MapIcon className="w-10 text-gray-400 mt-10 rotate-90" />
-                        <PhotoIcon className="w-12 text-gray-300 -mt-4 ml-32" />
-                    </div>
-                    <div className="flex justify-center z-1 -mt-[4rem]">
-                        <div>
-                        </div>
-                        <div className="bg-gray-100 rounded-md p-4">
-                            <p className={` flex items-center text-gray-500 text-md`}> <span><InformationCircleIcon className="w-4 text-gray-600 mr-2" /></span> start by deleting files using the <EllipsisVerticalIcon className="w-4 text-gray-600" /> and clicking the bin icon</p>
-                        </div>
-                    </div>
-                </motion.div>
-            </AnimatePresence>
-        </>
-    )
+  return (
+    <>
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.2 }}
+          className="p-6 flex flex-col"
+        >
+          <div className="flex items-center justify-around">
+            <ScissorsIcon className="w-12 text-gray-300 -mt-12" />
+            <ScissorsIcon className="w-12 text-gray-400 mt-12 -mr-24" />
+            <ScissorsIcon className="w-6 text-gray-300 -mt-24" />
+            <ScissorsIcon className="w-24 text-gray-400 -ml-[8rem] -mt-14" />
+            <ScissorsIcon className="w-10 text-gray-400 mt-10" />
+            <ScissorsIcon className="w-12 text-gray-300 mt-10" />
+          </div>
+          <p
+            className={`font-pixel flex justify-center mt-24 text-secondary text-4xl`}
+          >
+            NULL
+          </p>
+          <div className="flex justify-around mt-32">
+            <PhotoIcon className="w-12 text-gray-300 rotate-20" />
+            <MapIcon className="w-12 text-gray-400 ml-12 rotate-40" />
+            <PlayIcon className="w-6 text-gray-300 -mt-12 ml-24 -rotate-20" />
+            <NewspaperIcon className="w-12 text-gray-400 rotate-10 ml-[8rem] mt-14" />
+            <MapIcon className="w-10 text-gray-400 mt-10 rotate-90" />
+            <PhotoIcon className="w-12 text-gray-300 -mt-4 ml-32" />
+          </div>
+          <div className="flex justify-center z-1 -mt-[4rem]">
+            <div></div>
+            <div className="bg-gray-100 rounded-md p-4">
+              <p className={` flex items-center text-gray-500 text-md`}>
+                {" "}
+                <span>
+                  <InformationCircleIcon className="w-4 text-gray-600 mr-2" />
+                </span>{" "}
+                start by deleting files using the{" "}
+                <EllipsisVerticalIcon className="w-4 text-gray-600" /> and
+                clicking the bin icon
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </>
+  );
 }
