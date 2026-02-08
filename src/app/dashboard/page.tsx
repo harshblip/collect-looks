@@ -63,8 +63,9 @@ export default function Dashboard() {
   );
   const globalError: any = getAllFilesError || getFolderItemsError;
 
+  console.log("error", globalError);
   useEffect(() => {
-    if (!userId) {
+    if (!userId) {  
       setShowError(true);
       const timeout = setTimeout(() => {
         router.push("/");
@@ -101,7 +102,7 @@ export default function Dashboard() {
     }
   }
 
-  console.log("parent_id", selectedFolderId, folders);
+  // console.log("parent_id", selectedFolderId, folders);
 
   function openMedia(x: number, type: string) {
     dispatch(setIndex(x));
@@ -134,7 +135,6 @@ export default function Dashboard() {
     setBtns(Array(pages).fill(0));
     // folders.length < 1 && dispatch(setParentId(null))
   }, [pages]);
-  console.log("error", userId);
   return (
     <>
       {globalError && (
