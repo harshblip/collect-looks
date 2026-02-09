@@ -1,6 +1,7 @@
 "use client";
 import Card from "@/app/components/shared/Card";
 import { useGetSearchResults } from "@/app/hooks/useMedia";
+import { useDebounce } from "@/app/utils/useDebounce";
 import { useAppSelector } from "@/lib/store";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,13 +11,11 @@ import { useEffect } from "react";
 export default function SearchResults() {
   const searchQuery = useAppSelector((state) => state.utility.searchQuery);
   const navigate = useRouter();
-  const { data, refetch } = useGetSearchResults(searchQuery, 3);
+  const debouncedQuery = useDebounce(searchQuery, 500);
+  const { data, refetch } = useGetSearchResults(debouncedQuery, 3);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      refetch();
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, [searchQuery]);
+    refetch();
+  }, [debouncedQuery]);
 
   console.log("search", data, searchQuery);
   return (

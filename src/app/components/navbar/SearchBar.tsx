@@ -24,10 +24,11 @@ import SearchMatchCard from "./SearchMatchCard";
 import { setIndex } from "@/lib/slice/folderSlice";
 import { formatDate } from "./DatePicker";
 import FilterGroup from "../ui/widgets/FilterGroup";
+import { useDebounce } from "@/app/utils/useDebounce";
 
 export default function SearchBar() {
   const searchSuggestions = useAppSelector(
-    (state) => state.utility.searchSuggestions
+    (state) => state.utility.searchSuggestions,
   );
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -40,9 +41,14 @@ export default function SearchBar() {
     starred: null,
     date: undefined,
   });
+  const debouncedQuery = useDebounce(searchQuery, 500)
   const { refetch, data } = useGetSuggestions(searchQuery, 3, filter);
-  console.log("data", data);
+  // console.log({data}, {searchSuggestions}, searchQuery);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    refetch()
+  }, [debouncedQuery])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -119,8 +125,8 @@ export default function SearchBar() {
             onChange={(e) => {
               dispatch(
                 setSearchQuery(
-                  e.target.value === "" ? searchQuery : e.target.value
-                )
+                  e.target.value === "" ? searchQuery : e.target.value,
+                ),
               );
               setSearchQuerY(e.target.value);
             }}
