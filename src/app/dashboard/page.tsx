@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
 import { setDemoCheck, setViewMedia } from "@/lib/slice/generalSlice";
 import Status from "../components/shared/Status";
-import { setParentId } from "@/lib/slice/userSlice";
+import { resetEUID, setParentId } from "@/lib/slice/userSlice";
 import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel";
 import MotionDiv from "../components/ui/primitives/PageTransition";
 import ErrorPage from "../components/ui/placeholders/ErrorPage";
@@ -39,7 +39,7 @@ export default function Dashboard() {
   const viewFolder = useAppSelector((state) => state.folders.viewFolder);
   const folderItemsArray = useAppSelector((state) => state.folders.folderItems);
   const userId = useAppSelector((state) => state.user.EUID.userId);
-  const access_token = useAppSelector((state) => state.user.EUID.authToken);
+  const access_token = localStorage.getItem("access_token")
   const check = useAppSelector((state) => state.utility.demoCheck);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function Dashboard() {
   const { data: allFiles, error: getAllFilesError } = useGetAllFiles(
     userId,
     currentPage,
-    access_token
+    access_token ? access_token : ''
   );
   const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(
     userId,
@@ -65,8 +65,9 @@ export default function Dashboard() {
 
   console.log("error", globalError);
   useEffect(() => {
-    if (!userId) {  
+    if (!access_token) {  
       setShowError(true);
+      dispatch(resetEUID())
       const timeout = setTimeout(() => {
         router.push("/");
       }, 2000);

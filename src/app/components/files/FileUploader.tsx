@@ -38,7 +38,7 @@ export default function FileUploader({
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const accessToken = useAppSelector((state) => state.user.EUID.authToken);
+  const accessToken = localStorage.getItem("access_token")
 
   useEffect(() => {
     if (progress === 100) {
