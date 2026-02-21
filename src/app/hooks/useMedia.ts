@@ -1,13 +1,13 @@
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { FileService } from "../api/files";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SearchService } from "../api/search";
 import { Filter } from "@/types/mediaTypes";
 
 export const useDeleteMedia = (
   images: string[],
   username: string,
-  id: number
+  id: number,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -27,7 +27,7 @@ export const useDeleteMedia = (
 export const useGetAllFiles = (
   user_id: number,
   page: number,
-  authToken: string
+  authToken: string,
 ) => {
   return useQuery({
     queryKey: ["allFiles", user_id, page],
@@ -40,15 +40,39 @@ export const useGetAllFiles = (
 
 export const useUploadFile = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: async ({ formData }: { formData: FormData }) => {
-      return await FileService.uploadFile(formData);
+    mutationFn: ({
+      files,
+      accessToken,
+      username,
+      userId,
+      setProgress,
+    }: {
+      files: File[];
+      accessToken: string;
+      username: string;
+      userId: number;
+      setProgress: React.Dispatch<React.SetStateAction<number>>;
+    }) =>
+      FileService.uploadFile(files, accessToken, username, userId, setProgress),
+    onSuccess: ({
+      setProgress,
+    }: {
+      setProgress: React.Dispatch<React.SetStateAction<number>>;
+    }) => {
+      setProgress(0);
+      queryClient.invalidateQueries({ queryKey: ["files"] });
     },
-    onMutate: () => {
-      console.log(`file uploaded`);
+    onMutate: ({
+      setProgress,
+    }: {
+      setProgress: React.Dispatch<React.SetStateAction<number>>;
+    }) => {
+      setProgress(0);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
+    onError: (error) => {
+      console.error("Upload error:", error);
     },
   });
 };
@@ -105,9 +129,9 @@ export const useStarFile = () => {
         (old: any) =>
           old
             ? old.map((file: any) =>
-                file.id === fileId ? { ...file, starred: !starOrWhat } : file
+                file.id === fileId ? { ...file, starred: !starOrWhat } : file,
               )
-            : old
+            : old,
       );
 
       queryClient.setQueriesData(
@@ -115,9 +139,9 @@ export const useStarFile = () => {
         (old: any) =>
           old
             ? old.map((file: any) =>
-                file.id === fileId ? { ...file, starred: !starOrWhat } : file
+                file.id === fileId ? { ...file, starred: !starOrWhat } : file,
               )
-            : old
+            : old,
       );
 
       return { suggestionItems, prevFolderItems };
@@ -144,7 +168,7 @@ export const useGetStarredFiles = (userId: number) => {
 export const useGetSuggestions = (
   word: string,
   userId: number,
-  filter: Filter
+  filter: Filter,
 ) => {
   console.log("came here1", word);
   return useQuery({
@@ -244,9 +268,9 @@ export const useLockFile = () => {
             ? old.map((file: any) =>
                 file.id === fileId
                   ? { ...file, is_locked: true, password }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       return { prevFolderItems };
@@ -295,9 +319,9 @@ export const useUnlockFile = () => {
             ? old.map((file: any) =>
                 file.id === fileId
                   ? { ...file, is_locked: false, password: "" }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       return { prevFolderItems };

@@ -7,7 +7,6 @@ import {
   handleDrop,
   handleFileInput,
   handleRemove,
-  handleUpload,
 } from "@/app/utils/fileUploader";
 import {
   CameraIcon,
@@ -26,6 +25,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { byteToSize, getFileCategory } from "@/app/utils/useful";
 import { useAppSelector } from "@/lib/store";
+import { useUploadFile } from "@/app/hooks/useMedia";
 
 export default function FileUploader({
   show,
@@ -33,18 +33,18 @@ export default function FileUploader({
   show: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [files, setFiles] = useState<File[]>([]);
-  const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const accessToken = localStorage.getItem("access_token");
 
-  const accessToken = localStorage.getItem("access_token")
+  const username = useAppSelector((state) => state.user.EUID.username);
+  const userId = useAppSelector((state) => state.user.EUID.userId);
+  const { mutate: uploadFile, isPending } = useUploadFile();
 
   useEffect(() => {
     if (progress === 100) {
       const timeout = setTimeout(() => {
-        setUploading(false);
-        setProgress(0);
         show(false);
       }, 2000);
       return () => clearTimeout(timeout);
@@ -60,7 +60,7 @@ export default function FileUploader({
         exit={{ opacity: 0, y: -20 }}
         className="absolute bg-black/20 top-0 bottom-0 w-[100%] flex justify-center items-center font-product z-2 -ml-8"
       >
-        {uploading ? (
+        {isPending ? (
           <UploadingModal progress={progress} />
         ) : (
           <div
@@ -195,13 +195,13 @@ export default function FileUploader({
                 <Button
                   className="mt-4 w-1/2 hover"
                   onClick={() =>
-                    handleUpload(
-                      files,
-                      setFiles,
-                      setUploading,
-                      setProgress,
-                      accessToken
-                    )
+                    uploadFile({
+                      accessToken: accessToken ?? "",
+                      files: files,
+                      userId: userId,
+                      username: username,
+                      setProgress: setProgress,
+                    })
                   }
                 >
                   Upload

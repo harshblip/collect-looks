@@ -10,8 +10,29 @@ export const FileService = {
     });
   },
 
-  uploadFile: async (formData: FormData): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload`, { formData });
+  uploadFile: async (
+    files: File[],
+    accessToken: string,
+    username: string,
+    userId: number,
+    setProgress: React.Dispatch<React.SetStateAction<number>>,
+  ): Promise<string> => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append("file", file));
+    formData.append("username", username);
+    formData.append("userId", userId.toString());
+    console.log(formData);
+    return apiClient.post<string>(`${BASE_URL}/upload`, formData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: (progressEvent) => {
+        const total = progressEvent.total ?? 1;
+        const percent = Math.round((progressEvent.loaded * 100) / total);
+        setProgress(percent)
+      },
+    });
   },
 
   starFile: async (userId: number, id: number): Promise<string> => {
@@ -32,7 +53,7 @@ export const FileService = {
   deleteFiles: async (
     id: number,
     username: string,
-    files: string[]
+    files: string[],
   ): Promise<string> => {
     return apiClient.delete<string>(`${BASE_URL}/upload/deleteMedia`, {
       params: {
@@ -89,7 +110,7 @@ export const FileService = {
 
   enableAutoDelete: async (
     checked: boolean,
-    userId: number
+    userId: number,
   ): Promise<boolean> => {
     return apiClient.post<boolean>(`${BASE_URL}/upload/enableAutoDelete`, {
       checked,
