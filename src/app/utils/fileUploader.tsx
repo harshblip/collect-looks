@@ -6,7 +6,8 @@ export async function handleUpload(
     setFiles: React.Dispatch<React.SetStateAction<File[]>>,
     setUploading: React.Dispatch<React.SetStateAction<boolean>>,
     setProgress: React.Dispatch<React.SetStateAction<number>>,
-    accessToken: string
+    accessToken: string,
+    username: string
 ) {
     if (!files.length) return;
 
@@ -15,7 +16,7 @@ export async function handleUpload(
 
     const formData = new FormData();
     files.forEach((file) => formData.append('file', file));
-    formData.append('username', 'mihir')
+    formData.append('username', username)
     try {
         await axios.post(`${BASE_URL}/upload`, formData, {
             onUploadProgress: (progressEvent) => {

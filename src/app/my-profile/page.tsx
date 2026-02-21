@@ -14,7 +14,8 @@ import { useGetUserData } from "../hooks/useUser";
 
 export default function MyProfile() {
   const id = useAppSelector((state) => state.user.EUID.userId);
-  const { data } = useGetUserData(3);
+  const userId = useAppSelector((state) => state.user.EUID.userId)
+  const { data } = useGetUserData(userId);
   console.log(id, data);
 
   return (

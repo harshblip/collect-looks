@@ -39,7 +39,7 @@ export default function Dashboard() {
   const viewFolder = useAppSelector((state) => state.folders.viewFolder);
   const folderItemsArray = useAppSelector((state) => state.folders.folderItems);
   const userId = useAppSelector((state) => state.user.EUID.userId);
-  const access_token = localStorage.getItem("access_token")
+  const access_token = localStorage.getItem("access_token");
   const check = useAppSelector((state) => state.utility.demoCheck);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -55,19 +55,19 @@ export default function Dashboard() {
   const { data: allFiles, error: getAllFilesError } = useGetAllFiles(
     userId,
     currentPage,
-    access_token ? access_token : ''
+    access_token ? access_token : "",
   );
   const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(
     userId,
-    selectedFolderId
+    selectedFolderId,
   );
   const globalError: any = getAllFilesError || getFolderItemsError;
 
-  console.log("error", globalError);
+  console.log("error", globalError, allFiles);
   useEffect(() => {
-    if (!access_token) {  
+    if (!access_token) {
       setShowError(true);
-      dispatch(resetEUID())
+      dispatch(resetEUID());
       const timeout = setTimeout(() => {
         router.push("/");
       }, 2000);
@@ -123,9 +123,12 @@ export default function Dashboard() {
   }, [viewFolder]);
 
   const openFiles = useAppSelector((state) => state.files.viewMediaFiles);
+  const getPageCount = (itemCount: number) =>
+    Math.max(1, Math.ceil(itemCount / 15));
+
   const pages = viewFolder
-    ? folderItems && Math.max(1, Math.ceil(folderItems.length / 15))
-    : allFiles && Math.max(1, Math.ceil(allFiles[0].total_count / 15));
+    ? getPageCount(folderItems?.length ?? 0)
+    : getPageCount(allFiles?.[0]?.total_count ?? 0);
 
   useEffect(() => {
     !userId ? setShowError(true) : setShowError(false);
