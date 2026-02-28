@@ -34,7 +34,17 @@ export const useGetAllFiles = (
     queryFn: () => FileService.getAll(user_id, page),
     enabled: !!user_id,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
+  });
+};
+
+export const useGetTrashStatus = (userId: number) => {
+  return useQuery({
+    queryKey: ["trashStatus", userId],
+    queryFn: () => FileService.getTrashStatus(userId),
+    enabled: !!userId,
+    staleTime: 1000 * 5,
+    retry: 5,
   });
 };
 
@@ -42,7 +52,7 @@ export const useUploadFile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       files,
       accessToken,
       username,
@@ -54,8 +64,15 @@ export const useUploadFile = () => {
       username: string;
       userId: number;
       setProgress: React.Dispatch<React.SetStateAction<number>>;
-    }) =>
-      FileService.uploadFile(files, accessToken, username, userId, setProgress),
+    }) => {
+      return await FileService.uploadFile(
+        files,
+        accessToken,
+        username,
+        userId,
+        setProgress,
+      );
+    },
     onSuccess: ({
       setProgress,
     }: {
@@ -82,15 +99,27 @@ export const useEnableAutoDelete = () => {
   return useMutation({
     mutationFn: ({ checked, userId }: { checked: boolean; userId: number }) =>
       FileService.enableAutoDelete(checked, userId),
-    onMutate: async (id) => {
-      console.log(`auto delete enabled`);
+    onMutate: async ({
+      userId,
+      checked,
+    }: {
+      checked: boolean;
+      userId: number;
+    }) => {
+      await queryClient.cancelQueries({ queryKey: ["trashStatus", userId] });
+      queryClient.setQueryData(["trashStatus", userId], checked);
+      // return { getData };
     },
     onError: (error) => {
       console.error("Failed to enable:", error);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
-    },
+    onSuccess: async ({
+      userId,
+      checked,
+    }: {
+      checked: boolean;
+      userId: number;
+    }) => {},
   });
 };
 
@@ -161,7 +190,7 @@ export const useGetStarredFiles = (userId: number) => {
     queryFn: () => FileService.getStarFile(userId),
     enabled: !!userId,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -176,7 +205,7 @@ export const useGetSuggestions = (
     queryFn: () => SearchService.getSuggestions(word, userId, filter),
     enabled: false,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -186,7 +215,7 @@ export const useGetSearchResults = (word: string, userId: number) => {
     queryFn: () => SearchService.getSearchResults(word, userId),
     enabled: false,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -196,7 +225,7 @@ export const prefetchInfo = (user_id: number, id: number) => {
     queryFn: () => FileService.getFileInfo(user_id, id),
     enabled: false,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -206,7 +235,7 @@ export const useGetFileInfo = (user_id: number, id: number) => {
     queryFn: () => FileService.getFileInfo(user_id, id),
     enabled: !!user_id,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -216,7 +245,7 @@ export const useGetTrashedFiles = (user_id: number) => {
     queryFn: () => FileService.getTrashedFiles(user_id),
     enabled: !!user_id,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 
@@ -226,7 +255,7 @@ export const useGetLastSeen = (userId: number) => {
     queryFn: () => FileService.getLastSeen(userId),
     enabled: !!userId,
     staleTime: 1000 * 5,
-    retry: 2,
+    retry: 5,
   });
 };
 

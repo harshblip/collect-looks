@@ -35,7 +35,7 @@ export default function Card({ data }: {
         <>
             <div
                 onClick={() => addOrRemove(data)}
-                className={`${files && files.includes(data) ? `bg-[#f8f9fa] m-2` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-3 gap-6 px-4 py-4 items-center`}>
+                className={`${files && files.includes(data) ? `bg-[#f8f9fa] m-1` : `bg-white`} rounded-lg p-3 space-x-4 font-product transition hover text-primary grid grid-cols-4 gap-6 px-4 py-4 items-center`}>
                 <div className="flex space-x-4 items-center">
                     {
                         data.file_type === "image" ? <PhotoIcon className="text-emerald-500 w-6" /> :
@@ -49,6 +49,9 @@ export default function Card({ data }: {
                 </div>
                 <div className="flex justify-end">
                     <p className="text-lg font-medium"> {data.created_at && data.created_at.substring(0, 10)} </p>
+                </div>
+                <div className="flex justify-end mr-24">
+                    <p className="text-lg font-medium"> 29 Days </p>
                 </div>
                 <div className="flex items-center space-x-4 justify-end">
                     <p className="text-lg font-medium">

@@ -30,7 +30,7 @@ export const FileService = {
       onUploadProgress: (progressEvent) => {
         const total = progressEvent.total ?? 1;
         const percent = Math.round((progressEvent.loaded * 100) / total);
-        setProgress(percent)
+        setProgress(percent);
       },
     });
   },
@@ -39,6 +39,14 @@ export const FileService = {
     return apiClient.post<string>(`${BASE_URL}/upload/starFile`, {
       userId,
       id,
+    });
+  },
+
+  getTrashStatus: async (userId: number): Promise<boolean> => {
+    return apiClient.get<boolean>(`${BASE_URL}/upload/getTrashStatus`, {
+      params: {
+        userId,
+      },
     });
   },
 
