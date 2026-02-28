@@ -15,6 +15,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
+import { CircleDashed } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -34,6 +35,7 @@ export default function MoreDialog({
     file_url,
     size,
     starred,
+    is_trashed
   } = cardInfo;
   const dispatch = useDispatch();
   const { mutate: starFile } = useStarFile();
@@ -42,7 +44,7 @@ export default function MoreDialog({
   const { data, refetch } = prefetchInfo(3, id);
 
   const files: Files[] = [];
-  console.log("typee", file_type);
+  console.log("typee", cardInfo);
   useEffect(() => {
     data && dispatch(setInfoData(data));
   }, [data]);
@@ -55,10 +57,10 @@ export default function MoreDialog({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.1, ease: "easeInOut" }}
-          className="bg-white font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-42 z-10"
+          className="bg-white font-product font-medium rounded-lg shadow-lg p-3 flex flex-col space-y-2 w-38 z-10"
         >
-          <div
-            className="flex justify-center hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-full -ml-2"
+          <button
+            className="flex hover hover:bg-gray-100 rounded-lg space-x-2 items-center text-secondary p-2 active:scale-95 w-full"
             onClick={() => {
               starFile({ userId: 3, fileId: id, starOrWhat: starred });
               showMe(false);
@@ -66,9 +68,9 @@ export default function MoreDialog({
           >
             <StarIcon className="w-5 text-amber-400" />
             {starred ? <p>de-star</p> : <p> star </p>}
-          </div>
+          </button>
           <button
-            className="flex justify-center hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-full -ml-2"
+            className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-full"
             onClick={() => {
               dispatch(setViewInfo(true));
               showMe(false);
@@ -91,13 +93,19 @@ export default function MoreDialog({
               dispatch(setViewLockModal(true));
               showMe(false);
             }}
-            className="flex justify-center hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-full -ml-2"
+            className="flex hover hover:bg-gray-100 rounded-lg space-x-2 p-2 items-center text-secondary active:scale-95 w-full"
           >
             <LockClosedIcon className="w-5 mr-2" />
             {is_locked ? `unlock` : `lock`}
           </button>
-          <div
-            className="flex justify-center hover hover:bg-red-400 hover:text-white rounded-lg space-x-2 p-2 items-center active:scale-95 w-full"
+          {
+            is_trashed && <button className="flex hover hover:bg-cyan-100 hover:text-cyan-600 rounded-lg space-x-2 items-center active:scale-95 w-full p-2">
+               <CircleDashed className="w-5"/>
+               <p>recover</p> 
+            </button>
+          }
+          <button
+            className="flex hover hover:bg-red-100 hover:text-red-400 rounded-lg space-x-2 items-center p-2 active:scale-95 w-full"
             onClick={() => {
               trashMedia({
                 files: [
@@ -116,7 +124,7 @@ export default function MoreDialog({
           >
             <TrashIcon className="w-5" />
             <p> delete </p>
-          </div>
+          </button>
         </motion.div>
       </AnimatePresence>
     </>
