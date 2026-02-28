@@ -18,9 +18,12 @@ export default function Error({
   const router = useRouter();
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4 bg-gray-50 text-center">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+    <div
+      className="font-product flex h-screen w-full flex-col items-center justify-center gap-4 
+    bg-[url('/sample-bg.png')] bg-no-repeat bg-center bg-cover text-center"
+    >
+      <div className="flex flex-col items-center space-y-4">
+        <h2 className="text-3xl text-primary tracking-tighter sm:text-4xl">
           Something went wrong!
         </h2>
         <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -29,7 +32,7 @@ export default function Error({
       </div>
 
       <div className="flex gap-4">
-        <Button onClick={() => reset()} variant="default">
+        <Button onClick={() => router.refresh()} variant="default">
           Try Again
         </Button>
         <Button onClick={() => router.back()} variant="outline">
