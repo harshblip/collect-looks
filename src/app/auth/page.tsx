@@ -58,7 +58,7 @@ export default function Auth() {
           username: decoded.username,
           userId: decoded.id,
           authToken: accessKey,
-        })
+        }),
       );
 
       const timeout = setTimeout(() => {
@@ -162,13 +162,14 @@ export default function Auth() {
                       visible={visible}
                       setVisible={setVisible}
                       setChecked={setChecked}
-                      submit={() =>
+                      submit={() => {
                         signupUser({
                           username: username,
                           email: email,
                           password: password,
-                        })
-                      }
+                        });
+                        setMode("Sign in");
+                      }}
                     />
                   </div>
                 ) : (

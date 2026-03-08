@@ -42,7 +42,7 @@ export default function SearchBar() {
     date: undefined,
   });
   const debouncedQuery = useDebounce(searchQuery, 500)
-  const { refetch, data } = useGetSuggestions(searchQuery, 3, filter);
+  const { refetch, data } = useGetSuggestions(debouncedQuery, 3, filter);
   // console.log({data}, {searchSuggestions}, searchQuery);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -137,7 +137,7 @@ export default function SearchBar() {
             <FilterGroup filter={filter} setFilter={setFilter} />
           )}
           <AnimatePresence>
-            {!searchQuery ? (
+            {!debouncedQuery ? (
               visible && searchSuggestions.length ? (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}

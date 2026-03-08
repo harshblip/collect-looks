@@ -6,9 +6,9 @@ export const UserService = {
   loginUser: async (
     email: string,
     password: string,
-    checked: boolean
-  ): Promise<any> => {
-    return apiClient.get<any>(`${BASE_URL}/user/login`, {
+    checked: boolean,
+  ): Promise<string> => {
+    return apiClient.get<string>(`${BASE_URL}/user/login`, {
       params: {
         email: email,
         password: password,
@@ -20,15 +20,21 @@ export const UserService = {
   signupUser: async (
     username: string,
     email: string,
-    password: string
-  ): Promise<any> => {
-    const signup = await apiClient.post<any>(`${BASE_URL}/user/signup`, {
-      username,
-      email,
-      password,
-    });
-
-    return signup;
+    password: string,
+  ): Promise<string> => {
+    return apiClient.post<string>(
+      `${BASE_URL}/user/signup`,
+      {
+        username,
+        email,
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      },
+    );
   },
 
   getUserData: async (id: number): Promise<User> => {
@@ -42,7 +48,7 @@ export const UserService = {
   updateUserData: async (
     username: string,
     email: string,
-    id: number
+    id: number,
   ): Promise<string> => {
     return apiClient.patch<string>(`${BASE_URL}/user/update`, {
       username,
