@@ -5,8 +5,6 @@ import { motion } from "framer-motion"
 
 import { useState } from "react"
 
-
-
 export default function LockScreen({
     password,
     setLocked
@@ -47,7 +45,7 @@ export default function LockScreen({
                         transition={{ duration: 0.2 }}
                         className="flex flex-col justify-center items-center"
                     >
-                        <p className={`font-pixel text-4xl`}> Protected folder </p>
+                        <p className={`font-pixel text-secondary text-4xl`}> Protected folder </p>
                         <form
                             className="flex items-center space-x-6 mt-16"
                             onSubmit={(e) => verify(e)}

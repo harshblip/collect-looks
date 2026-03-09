@@ -10,6 +10,7 @@ export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -17,6 +18,9 @@ axiosInstance.interceptors.request.use(
     const token = localStorage.getItem("access_token");
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    if (!config.headers["Content-Type"]) {
+      config.headers["Content-Type"] = "application/json";
     }
     return config;
   },
@@ -29,7 +33,7 @@ axiosInstance.interceptors.response.use(
   },
   (error: AxiosError<{ message: string }>) => {
     console.error("error -> ", error.response?.status);
-    if (error.response?.status) {
+    if (error.response?.status === 401) {
       localStorage.removeItem("access_token");
     }
     const message =

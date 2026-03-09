@@ -93,6 +93,10 @@
     font-family: var(--font-gochi);
 }
 
+.font-pixel {
+    font-family: var(--font-pixel);
+}
+
 .off-white {
     color: var(--off-white)
 }
