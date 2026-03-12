@@ -63,7 +63,7 @@ export default function Dashboard() {
   );
   const globalError: any = getAllFilesError || getFolderItemsError;
 
-  console.log("error", globalError, allFiles);
+  console.log("error", globalError, access_token);
   useEffect(() => {
     if (!access_token) {
       setShowError(true);
@@ -72,6 +72,8 @@ export default function Dashboard() {
         router.push("/");
       }, 2000);
       return () => clearTimeout(timeout);
+    } else {
+      setShowError(false);
     }
   }, []);
 
@@ -122,17 +124,12 @@ export default function Dashboard() {
       : allFiles && dispatch(setViewMediaFiles(allFiles));
   }, [viewFolder]);
 
-  const openFiles = useAppSelector((state) => state.files.viewMediaFiles);
   const getPageCount = (itemCount: number) =>
     Math.max(1, Math.ceil(itemCount / 15));
 
   const pages = viewFolder
     ? getPageCount(folderItems?.length ?? 0)
     : getPageCount(allFiles?.[0]?.total_count ?? 0);
-
-  useEffect(() => {
-    !userId ? setShowError(true) : setShowError(false);
-  }, [userId]);
 
   const [btns, setBtns] = useState<number[]>([]);
   useEffect(() => {

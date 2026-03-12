@@ -32,6 +32,7 @@
     "next": "15.2.4",
     "nodemailer": "^6.10.1",
     "pdfjs-dist": "^3.4.120",
+    "radix-ui": "^1.4.3",
     "react": "^19.0.0",
     "react-audio-play": "^1.0.4",
     "react-audio-player-component": "^1.2.4",

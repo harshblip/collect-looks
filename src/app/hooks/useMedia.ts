@@ -27,7 +27,6 @@ export const useDeleteMedia = (
 export const useGetAllFiles = (
   user_id: number,
   page: number,
-  authToken: string,
 ) => {
   return useQuery({
     queryKey: ["allFiles", user_id, page],
