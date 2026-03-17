@@ -55,7 +55,6 @@ export default function Dashboard() {
   const { data: allFiles, error: getAllFilesError } = useGetAllFiles(
     userId,
     currentPage,
-    access_token ? access_token : "",
   );
   const { data: folderItems, error: getFolderItemsError } = useGetFolderItems(
     userId,
@@ -212,7 +211,7 @@ export default function Dashboard() {
                             <MotionDiv
                               key={i}
                               onDoubleClick={() =>
-                                x.file_type === null
+                                x.file_type === 'folder'
                                   ? openFolder(x)
                                   : openMedia(i, "folderFiles")
                               }
@@ -225,7 +224,7 @@ export default function Dashboard() {
                             <MotionDiv
                               key={i}
                               onDoubleClick={() =>
-                                x.file_type === null
+                                x.file_type === 'folder'
                                   ? openFolder(x)
                                   : openMedia(i, "allFiles")
                               }

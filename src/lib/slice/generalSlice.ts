@@ -1,5 +1,5 @@
-import { Files, InfoData } from "@/types/mediaTypes"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Files, InfoData } from "@/types/mediaTypes";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface GeneralState {
     mode: string
@@ -13,93 +13,95 @@ export interface GeneralState {
 }
 
 const initialState: GeneralState = {
-    viewMedia: false,
-    viewInfo: false,
-    infoData: {
-        filePath: [],
-        file: {
-            id: 0,
-            user_id: 0,
-            file_name: "",
-            file_url: "",
-            file_type: "",
-            size: "",
-            created_at: "",
-            starred: false,
-            is_trashed: "",
-            folder_id: 0,
-            description: "",
-            is_locked: false,
-            password: "",
-            updated_at: "",
-            total_count: 0
-        }
+  viewMedia: false,
+  viewInfo: false,
+  infoData: {
+    filePath: [],
+    file: {
+      id: 0,
+      user_id: 0,
+      file_name: "",
+      file_url: "",
+      file_type: "",
+      size: "",
+      created_at: "",
+      starred: false,
+      is_trashed: false,
+      folder_id: 0,
+      description: "",
+      is_locked: false,
+      password: "",
+      updated_at: "",
+      total_count: 0,
+      trashed_at: "",
     },
-    viewLockModal: false,
-    searchQuery: '',
-    searchSuggestions: [
-        {
-            id: 0,
-            user_id: 0,
-            file_name: "",
-            file_url: "",
-            file_type: "",
-            size: "",
-            created_at: "",
-            starred: false,
-            is_trashed: "",
-            folder_id: 0,
-            description: "",
-            is_locked: false,
-            password: "",
-            updated_at: "",
-            total_count: 0
-        }
-    ],
-    demoCheck: true,
-    mode: "signup",
-}
+  },
+  viewLockModal: false,
+  searchQuery: "",
+  searchSuggestions: [
+    {
+      id: 0,
+      user_id: 0,
+      file_name: "",
+      file_url: "",
+      file_type: "",
+      size: "",
+      created_at: "",
+      starred: false,
+      is_trashed: false,
+      folder_id: 0,
+      description: "",
+      is_locked: false,
+      password: "",
+      updated_at: "",
+      total_count: 0,
+      trashed_at: "",
+    },
+  ],
+  demoCheck: true,
+  mode: "signup",
+};
 
 export const generalSlice = createSlice({
-    name: "utility",
-    initialState,
-    reducers: {
-        setSearchSuggestions: (state, action: PayloadAction<(string | Files)[]>) => {
-            state.searchSuggestions = action.payload
-        },
-        setMode: (state, action: PayloadAction<string>) => {
-            state.mode = action.payload
-        },
-        setViewLockModal: (state, action: PayloadAction<boolean>) => {
-            state.viewLockModal = action.payload
-        },
-        setViewInfo: (state, action: PayloadAction<boolean>) => {
-            state.viewInfo = action.payload
-        },
-        setInfoData: (state, action: PayloadAction<InfoData>) => {
-            state.infoData = action.payload
-        },
-        setViewMedia: (state, action: PayloadAction<boolean>) => {
-            state.viewMedia = action.payload
-        },
-        setSearchQuery: (state, action: PayloadAction<string>) => {
-            state.searchQuery = action.payload
-        },
-        setDemoCheck: (state, action: PayloadAction<boolean>) => {
-            state.demoCheck = action.payload
-        },
-    }
-})
+  name: "utility",
+  initialState,
+  reducers: {
+    setSearchSuggestions: (state, action: PayloadAction<(string | Files)[]>) => {
+      state.searchSuggestions = action.payload;
+    },
+    setMode: (state, action: PayloadAction<string>) => {
+      state.mode = action.payload;
+    },
+    setViewLockModal: (state, action: PayloadAction<boolean>) => {
+      state.viewLockModal = action.payload;
+    },
+    setViewInfo: (state, action: PayloadAction<boolean>) => {
+      state.viewInfo = action.payload;
+    },
+    setInfoData: (state, action: PayloadAction<InfoData>) => {
+      state.infoData = action.payload;
+    },
+    setViewMedia: (state, action: PayloadAction<boolean>) => {
+      state.viewMedia = action.payload;
+    },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+    },
+    setDemoCheck: (state, action: PayloadAction<boolean>) => {
+      state.demoCheck = action.payload;
+    },
+  },
+});
 
 export const {
-    setMode,
-    setSearchSuggestions,
-    setViewMedia,
-    setViewInfo,
-    setInfoData,
-    setViewLockModal,
-    setSearchQuery,
-    setDemoCheck
-} = generalSlice.actions
+  setMode,
+  setSearchSuggestions,
+  setViewMedia,
+  setViewInfo,
+  setInfoData,
+  setViewLockModal,
+  setSearchQuery,
+  setDemoCheck,
+} = generalSlice.actions;
 
 export const generalReducer = generalSlice.reducer;

@@ -4,7 +4,7 @@ export interface Files {
     user_id: number,
     file_name: string,
     file_url?: string,
-    file_type: 'image' | 'video' | 'audio' | 'document' | '',
+    file_type: 'image' | 'video' | 'audio' | 'document' | 'folder' | '',
     size: string,
     created_at: string,
     starred: boolean,

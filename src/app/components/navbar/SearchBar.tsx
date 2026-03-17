@@ -41,14 +41,14 @@ export default function SearchBar() {
     starred: null,
     date: undefined,
   });
-  const debouncedQuery = useDebounce(searchQuery, 500)
+  const debouncedQuery = useDebounce(searchQuery, 500);
   const { refetch, data } = useGetSuggestions(debouncedQuery, 3, filter);
   // console.log({data}, {searchSuggestions}, searchQuery);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    refetch()
-  }, [debouncedQuery])
+    refetch();
+  }, [debouncedQuery]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
