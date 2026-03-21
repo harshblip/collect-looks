@@ -12,7 +12,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import FilterModal from "../files/FilterModal";
 import SuggestionButtons from "./SuggestionButtons";
@@ -83,6 +83,14 @@ export default function SearchBar() {
 
   const isFilterThere =
     filter.type || formatDate(filter.date) || filter.locked || filter.starred;
+  const lowerQuery = searchQuery.toLowerCase();
+  const lowerFile =
+    data && data.length > 0 ? data[0].file_name.toLowerCase() : "";
+  let suggestion = lowerFile.startsWith(lowerQuery)
+    ? data && data.length > 0
+      ? data[0].file_name
+      : ""
+    : "";
   return (
     <>
       {show && (
@@ -118,8 +126,14 @@ export default function SearchBar() {
               if (e.key === "Enter") {
                 updateSuggestions();
                 setVisible(true);
-                refetch();
-                navigate.push("/dashboard/search");
+              }
+
+              if (e.key === "Tab" && suggestion && suggestion !== searchQuery) {
+                e.preventDefault();
+                const completed = suggestion;
+                setSearchQuerY(completed);
+                dispatch(setSearchQuery(completed));
+                setVisible(true);
               }
             }}
             onChange={(e) => {
@@ -133,6 +147,14 @@ export default function SearchBar() {
             value={searchQuery}
             onClick={() => setVisible(!visible)}
           />
+          {suggestion && suggestion.length > searchQuery.length && (
+            <span className="absolute left-0 top-2 w-full h-14 pl-14 pr-10 py-2 pointer-events-none font-product text-primary">
+              <span className="text-transparent">{searchQuery}</span>
+              <span className="text-gray-300 italic">
+                {searchQuery && suggestion.slice(searchQuery.length)}
+              </span>
+            </span>
+          )}
           {isFilterThere && (
             <FilterGroup filter={filter} setFilter={setFilter} />
           )}
