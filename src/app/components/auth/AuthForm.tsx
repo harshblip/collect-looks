@@ -75,7 +75,7 @@ function AuthForm({
             label="Password"
             type={`${see ? `text` : `password`}`}
             value={password}
-            placeholder="number16"
+            placeholder="******"
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Tab") {

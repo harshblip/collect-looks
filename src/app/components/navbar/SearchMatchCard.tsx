@@ -22,20 +22,20 @@ export default function SearchMatchCard({ result }: { result: Files }) {
     return (
         <>
             <div className="bg-white shadow-md text-secondary rounded-md p-2">
-                <div className="p-4 rounded-md flex space-x-8 border border-gray-400">
+                <div className="p-4 rounded-md flex items-center space-x-8 border border-gray-400">
+                    <div className="h-xl">
                     {
                         result.file_type === 'image' ? <Image
-                            src={`${result.file_url}`}
-                            alt={`${result.file_name}`}
-                            height={0}
-                            width={150}
-                            className="rounded-lg"
-                        /> : <div className="w-28 h-30 bg-red-100 flex items-center justify-center rounded-md">
-                            <PlayIcon
-                                className="w-12 text-red-300"
-                            />
+                        src={`${result.file_url}`}
+                        alt={`${result.file_name}`}
+                        height={0}
+                        width={150}
+                        className="rounded-lg object-cover h-44 w-42 shadow-md"
+                        /> : <div className="w-32 flex items-center justify-center rounded-md">
+                            <p className="text-3xl leading-10 font-glook" style={{ whiteSpace: 'pre-line' }}> {result.file_name.replace(/ /g, '\n')} </p>
                         </div>
                     }
+                    </div>
                     <div className="flex flex-col space-y-2 justify-center">
                         <p className="mt-2 text-xs text-gray-400"> <i>matches 100% with your query</i> </p>
                         <div className="flex space-x-2 mt-4 items-center">

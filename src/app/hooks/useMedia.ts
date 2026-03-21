@@ -24,15 +24,12 @@ export const useDeleteMedia = (
   });
 };
 
-export const useGetAllFiles = (
-  user_id: number,
-  page: number,
-) => {
+export const useGetAllFiles = (user_id: number, page: number) => {
   return useQuery({
     queryKey: ["allFiles", user_id, page],
     queryFn: () => FileService.getAll(user_id, page),
     enabled: !!user_id,
-    staleTime: 1000 * 5,
+    staleTime: 1000 * 60 * 5,
     retry: 5,
   });
 };
@@ -49,7 +46,6 @@ export const useGetTrashStatus = (userId: number) => {
 
 export const useUploadFile = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async ({
       files,
@@ -72,20 +68,21 @@ export const useUploadFile = () => {
         setProgress,
       );
     },
-    onSuccess: ({
-      setProgress,
-    }: {
-      setProgress: React.Dispatch<React.SetStateAction<number>>;
-    }) => {
-      setProgress(0);
-      queryClient.invalidateQueries({ queryKey: ["files"] });
-    },
     onMutate: ({
+      files,
       setProgress,
+      userId,
     }: {
+      userId: number;
       setProgress: React.Dispatch<React.SetStateAction<number>>;
+      files: File[];
     }) => {
       setProgress(0);
+      queryClient.invalidateQueries({ queryKey: ["allFiles", userId] });
+      queryClient.setQueriesData(
+        { queryKey: ["allFiles", userId], type: "active" },
+        (old: any) => (old ? [...old, files] : old),
+      );
     },
     onError: (error) => {
       console.error("Upload error:", error);
@@ -96,8 +93,15 @@ export const useUploadFile = () => {
 export const useEnableAutoDelete = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ checked, userId }: { checked: boolean; userId: number }) =>
-      FileService.enableAutoDelete(checked, userId),
+    mutationFn: async ({
+      checked,
+      userId,
+    }: {
+      checked: boolean;
+      userId: number;
+    }) => {
+      return await FileService.enableAutoDelete(checked, userId);
+    },
     onMutate: async ({
       userId,
       checked,
@@ -112,13 +116,6 @@ export const useEnableAutoDelete = () => {
     onError: (error) => {
       console.error("Failed to enable:", error);
     },
-    onSuccess: async ({
-      userId,
-      checked,
-    }: {
-      checked: boolean;
-      userId: number;
-    }) => {},
   });
 };
 
@@ -200,7 +197,7 @@ export const useGetSuggestions = (
 ) => {
   console.log("came here1", word);
   return useQuery({
-    queryKey: ["suggestions", userId],
+    queryKey: ["suggestions", userId, word, filter],
     queryFn: () => SearchService.getSuggestions(word, userId, filter),
     enabled: false,
     staleTime: 1000 * 5,
@@ -210,7 +207,7 @@ export const useGetSuggestions = (
 
 export const useGetSearchResults = (word: string, userId: number) => {
   return useQuery({
-    queryKey: ["search", userId],
+    queryKey: ["search", userId, word],
     queryFn: () => SearchService.getSearchResults(word, userId),
     enabled: false,
     staleTime: 1000 * 5,

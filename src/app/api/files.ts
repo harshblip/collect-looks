@@ -1,6 +1,5 @@
 import { Files, InfoData } from "@/types/mediaTypes";
 import { BASE_URL } from "@/lib/constants";
-import axios from "axios";
 import { apiClient } from "@/lib/apiClient";
 
 export const FileService = {
@@ -25,7 +24,6 @@ export const FileService = {
     return apiClient.post<string>(`${BASE_URL}/upload`, formData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "multipart/form-data",
       },
       onUploadProgress: (progressEvent) => {
         const total = progressEvent.total ?? 1;
