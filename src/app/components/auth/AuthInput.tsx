@@ -4,12 +4,16 @@ function AuthInput({
     label,
     type = "text",
     value,
-    onChange
+    onChange,
+    onKeyDown,
+    placeholder
 }: {
     label: string,
     type: string,
     value: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    placeholder?: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }) {
     return (
         <>
@@ -19,7 +23,9 @@ function AuthInput({
                     type={type}
                     value={value}
                     onChange={onChange}
-                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md font-product text-secondary`}
+                    onKeyDown={onKeyDown}
+                    placeholder={placeholder}
+                    className={`h-10 md:w-[20rem] text-md p-2 border border-none bg-white outline-none transition-all duration-300 ease-in-out focus:shadow-md mt-2 rounded-md font-product text-secondary placeholder:italics placeholder:font-medium`}
                 />
             </div>
         </>
