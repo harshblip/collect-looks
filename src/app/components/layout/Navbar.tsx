@@ -8,6 +8,7 @@ import KeyboardShortcuts from "../navbar/KeyboardShortcuts";
 import Menu from "../navbar/Menu";
 import ProfileCard from "../navbar/ProfileCard";
 import SearchBar from "../navbar/SearchBar";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 export default function Navbar() {
     const [toggle, setToggle] = useState<'settings' | 'menu' | 'profile' | ''>('')
@@ -27,7 +28,8 @@ export default function Navbar() {
                 </div>
                 <SearchBar />
                 <div className="flex space-x-8">
-                    <button
+                    <DarkModeToggle />
+    <button
                         className="w-10 h-10 hover hover:bg-gray-200 rounded-lg p-2 transition-all text-primary active:scale-95"
                         onClick={() => setToggle(toggle === 'settings' ? '' : 'settings')}
                     >
@@ -37,7 +39,7 @@ export default function Navbar() {
                         toggle === 'settings' && <KeyboardShortcuts />
                     }
                     <button
-                        className="w-10 h-10 hover rounded-lg p-2 text-primary "> <CubeTransparentIcon
+                        className="w-10 h-10 hover rounded-lg p-2 text-primary hover:bg-gray-200 transition-all"> <CubeTransparentIcon
                             onClick={() => setToggle(toggle === 'menu' ? '' : 'menu')}
                         />
                     </button>

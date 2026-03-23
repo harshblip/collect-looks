@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface GeneralState {
     mode: string
+    theme: 'light' | 'dark'
     searchSuggestions: (string | Files)[]
     viewInfo: boolean
     infoData: InfoData
@@ -15,6 +16,7 @@ export interface GeneralState {
 const initialState: GeneralState = {
   viewMedia: false,
   viewInfo: false,
+  theme: 'light',
   infoData: {
     filePath: [],
     file: {
@@ -69,6 +71,9 @@ export const generalSlice = createSlice({
     setSearchSuggestions: (state, action: PayloadAction<(string | Files)[]>) => {
       state.searchSuggestions = action.payload;
     },
+    setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
+      state.theme = action.payload;
+    },
     setMode: (state, action: PayloadAction<string>) => {
       state.mode = action.payload;
     },
@@ -95,6 +100,7 @@ export const generalSlice = createSlice({
 
 export const {
   setMode,
+  setTheme,
   setSearchSuggestions,
   setViewMedia,
   setViewInfo,
