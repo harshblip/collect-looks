@@ -56,20 +56,6 @@ export const FileService = {
     });
   },
 
-  deleteFiles: async (
-    id: number,
-    username: string,
-    files: string[],
-  ): Promise<string> => {
-    return apiClient.delete<string>(`${BASE_URL}/upload/deleteMedia`, {
-      params: {
-        username,
-        id,
-        files,
-      },
-    });
-  },
-
   getFileInfo: async (user_id: number, id: number): Promise<InfoData> => {
     return apiClient.get<InfoData>(`${BASE_URL}/upload/getFileInfo`, {
       params: {
@@ -102,6 +88,13 @@ export const FileService = {
 
   trashMedia: async (files: any): Promise<string> => {
     return apiClient.post<string>(`${BASE_URL}/upload/trashMedia`, {
+      files,
+    });
+  },
+
+  recoverMedia: async (files: any): Promise<string> => {
+    console.log("files: ", files)
+    return apiClient.post<string>(`${BASE_URL}/upload/recoverMedia`, {
       files,
     });
   },

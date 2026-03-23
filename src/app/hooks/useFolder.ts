@@ -26,7 +26,7 @@ export const useCreateFolder = () => {
         is_locked,
         password,
         id,
-        parent_id
+        parent_id,
       );
     },
     onMutate: async (newFolder) => {
@@ -58,7 +58,7 @@ export const useCreateFolder = () => {
               parent_id: newFolder.parent_id,
               user_id: newFolder.id,
             },
-          ]
+          ],
         );
       }
 
@@ -71,12 +71,104 @@ export const useCreateFolder = () => {
       if (context?.prevFolderItems)
         queryClient.setQueryData(
           ["folderItems", newFolder.parent_id],
-          context.prevFolderItems
+          context.prevFolderItems,
         );
     },
     onSettled: (data, newFolder) => {
       queryClient.invalidateQueries({ queryKey: ["allFiles"] });
       queryClient.invalidateQueries({ queryKey: ["folderItems"] });
+    },
+  });
+};
+
+export const useTrashFolder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      folderId,
+      userId,
+    }: {
+      folderId: number;
+      userId: number;
+    }) => {
+      return await FolderService.trashFolder(userId, folderId);
+    },
+    onMutate: async ({
+      folderId,
+      userId,
+    }: {
+      folderId: number;
+      userId: number;
+    }) => {
+      console.log(`folder with id ${folderId} deleted`);
+      await queryClient.cancelQueries({ queryKey: ["allFiles", userId] });
+      const prevFolders = queryClient.getQueryData(["allFiles", userId]);
+      queryClient.setQueriesData(
+        { queryKey: ["allFiles"], type: "active" },
+        (old: any) =>
+          old
+            ? old.filter(
+                (folder: any) =>
+                  (folder.file_type === "folder" && folder.id !== folderId) ||
+                  (folder.file_type !== "folder" &&
+                    folder.folder_id !== folderId),
+              )
+            : old,
+      );
+      return { prevFolders };
+    },
+    onError: (error) => {
+      console.error("Failed to delete folder:", error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
+    },
+  });
+};
+
+export const useRestoreFolder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      folderId,
+      userId,
+    }: {
+      folderId: number;
+      userId: number;
+    }) => {
+      return await FolderService.restoreFolder(userId, folderId);
+    },
+    onMutate: async ({
+      folderId,
+      userId,
+    }: {
+      folderId: number;
+      userId: number;
+    }) => {
+      console.log(`folder with id ${folderId} restored`);
+      await queryClient.cancelQueries({ queryKey: ["trashedFiles", userId] });
+      const prevTrashedFolders = queryClient.getQueryData([
+        "trashedFiles",
+        userId,
+      ]);
+      queryClient.setQueriesData(
+        { queryKey: ["trashedFiles"], type: "active" },
+        (old: any) =>
+          old
+            ? old.filter(
+                (folder: any) =>
+                  (folder.file_type === "folder" && folder.id !== folderId) ||
+                  (folder.file_type !== "folder" &&
+                    folder.folder_id !== folderId),
+              )
+            : old,
+      );
+    },
+    onError: (error) => {
+      console.error("Failed to restore folder:", error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
     },
   });
 };
@@ -164,9 +256,9 @@ export const useLockFolder = () => {
             ? old.map((file: any) =>
                 file.id === folderId
                   ? { ...file, is_locked: true, password }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       queryClient.setQueriesData(
@@ -176,9 +268,9 @@ export const useLockFolder = () => {
             ? old.map((file: any) =>
                 file.id === folderId
                   ? { ...file, is_locked: true, password }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       return { allFolderItems, prevFolderItems };
@@ -227,9 +319,9 @@ export const useUnlockFolder = () => {
             ? old.map((file: any) =>
                 file.id === folderId
                   ? { ...file, is_locked: false, password: "" }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       queryClient.setQueriesData(
@@ -239,9 +331,9 @@ export const useUnlockFolder = () => {
             ? old.map((file: any) =>
                 file.id === folderId
                   ? { ...file, is_locked: false, password: "" }
-                  : file
+                  : file,
               )
-            : old
+            : old,
       );
 
       return { allFolderItems, prevFolderItems };

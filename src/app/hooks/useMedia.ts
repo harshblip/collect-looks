@@ -3,26 +3,16 @@ import { FileService } from "../api/files";
 import { useEffect, useState } from "react";
 import { SearchService } from "../api/search";
 import { Filter } from "@/types/mediaTypes";
+import { FolderService } from "../api/folder";
 
-export const useDeleteMedia = (
-  images: string[],
-  username: string,
-  id: number,
-) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: () => FileService.deleteFiles(id, username, images),
-    onMutate: async (id) => {
-      console.log(`${username}, files were successfully deleted`);
-    },
-    onError: (error) => {
-      console.error("Failed to delete file:", error);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
-    },
-  });
-};
+interface RecoverFile {
+  fileName: string;
+  url: string;
+  size: string;
+  type: string;
+  fileId: number;
+  id: number;
+}
 
 export const useGetAllFiles = (user_id: number, page: number) => {
   return useQuery({
@@ -360,7 +350,7 @@ export const useUnlockFile = () => {
   });
 };
 
-export const useDeleteFile = () => {
+export const useTrashFile = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ files }: { files: any }) => {
@@ -371,6 +361,40 @@ export const useDeleteFile = () => {
     },
     onError: (error) => {
       console.error("Failed to delete file:", error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
+    },
+  });
+};
+
+export const useRestoreFile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ files }: { files: RecoverFile[] }) => {
+      return await FileService.recoverMedia(files);
+    },
+    onMutate: async ({ files }: { files: RecoverFile[] }) => {
+      console.log(`${files} : list of files to be restored`);
+      await queryClient.cancelQueries({
+        queryKey: ["trashedFiles", files[0].id],
+      });
+      queryClient.setQueriesData(
+        { queryKey: ["trashedFiles"], type: "active" },
+        (old: any) =>
+          old
+            ? old.filter(
+                (file: any) =>
+                  !files.some(
+                    (recoveredFile: RecoverFile) =>
+                      recoveredFile.fileId === file.id,
+                  ),
+              )
+            : old,
+      );
+    },
+    onError: (error) => {
+      console.error("Failed to restore file:", error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allFiles"] });

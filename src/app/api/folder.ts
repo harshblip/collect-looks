@@ -9,7 +9,7 @@ export const FolderService = {
     is_locked: boolean,
     password: string,
     id: number,
-    parent_id: number | null
+    parent_id: number | null,
   ): Promise<string> => {
     return apiClient.post<string>(`${BASE_URL}/upload/createFolder`, {
       name,
@@ -23,7 +23,7 @@ export const FolderService = {
 
   addFilesToFolder: async (
     files: Files[],
-    folderId: number
+    folderId: number,
   ): Promise<string> => {
     return apiClient.post<string>(`${BASE_URL}/upload/addFilestoFolder`, {
       files,
@@ -41,7 +41,7 @@ export const FolderService = {
 
   getFolderItems: async (
     userId: number,
-    folderId: number
+    folderId: number,
   ): Promise<Files[]> => {
     return apiClient.get<Files[]>(`${BASE_URL}/upload/folderItems`, {
       params: {
@@ -53,7 +53,7 @@ export const FolderService = {
 
   setFolderLock: async (
     password: string,
-    folderId: number
+    folderId: number,
   ): Promise<string> => {
     return apiClient.post<string>(`${BASE_URL}/upload/lockfolder`, {
       password,
@@ -63,6 +63,21 @@ export const FolderService = {
 
   unlockFolder: async (folderId: number): Promise<string> => {
     return apiClient.post<string>(`${BASE_URL}/upload/unlockfolder`, {
+      folderId,
+    });
+  },
+
+  trashFolder: async (userId: number, folderId: number): Promise<string> => {
+    return apiClient.post<string>(`${BASE_URL}/upload/trashFolder`, {
+      userId,
+      folderId,
+    });
+  },
+
+  restoreFolder: async (userId: number, folderId: number): Promise<string> => {
+    console.log(`restoring folder with id ${folderId} for user ${userId}`);
+    return apiClient.post<string>(`${BASE_URL}/upload/recoverFolder`, {
+      userId,
       folderId,
     });
   },

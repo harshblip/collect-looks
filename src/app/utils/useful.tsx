@@ -53,7 +53,7 @@ export function getDeletionCountdown(trashedAt: string): string {
   ).getTime();
   const currentDate = Date.now();
   const diffMs = deletionDate - currentDate;
-  console.log("normalized -> ", new Date());
+  // console.log("normalized -> ", new Date());
 
   if (diffMs <= 0) {
     return "deleted";
@@ -81,3 +81,34 @@ export function getDeletionCountdown(trashedAt: string): string {
 
   return "less than 1min";
 }
+
+export const normalizeResponse = (data: any): any => {
+  if (data === null || data === undefined) {
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => normalizeResponse(item));
+  }
+
+  if (typeof data === 'object') {
+    const normalized: any = {};
+    for (const [key, value] of Object.entries(data)) {
+      if ((key === 'id' || key.endsWith('_id')) && typeof value === 'string' && /^\d+$/.test(value)) {
+        normalized[key] = Number(value);
+      } else if (typeof value === 'object') {
+        normalized[key] = normalizeResponse(value);
+      } else {
+        normalized[key] = value;
+      }
+    }
+    return normalized;
+  }
+
+  return data;
+};
+
+export const normalizeFileData = (data: any) => {
+  console.log("normalizing data -> ", data);
+  return normalizeResponse(data);
+};

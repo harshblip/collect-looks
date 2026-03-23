@@ -4,6 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { BASE_URL } from "./constants";
+import { normalizeResponse } from "@/app/utils/useful";
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -29,7 +30,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response): AxiosResponse<any, any> => {
-    return response.data;
+    return normalizeResponse(response.data);
   },
   (error: AxiosError<{ message: string }>) => {
     console.error("error -> ", error.response?.status);
