@@ -58,7 +58,7 @@ export const useUploadFile = () => {
         setProgress,
       );
     },
-    onMutate: ({
+    onMutate: async ({
       files,
       setProgress,
       userId,
@@ -68,7 +68,8 @@ export const useUploadFile = () => {
       files: File[];
     }) => {
       setProgress(0);
-      queryClient.invalidateQueries({ queryKey: ["allFiles", userId] });
+      await queryClient.cancelQueries({ queryKey: ["allFiles", userId] });
+
       queryClient.setQueriesData(
         { queryKey: ["allFiles", userId], type: "active" },
         (old: any) => (old ? [...old, files] : old),

@@ -8,9 +8,6 @@ import { normalizeResponse } from "@/app/utils/useful";
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
   withCredentials: true,
 });
 
@@ -20,7 +17,9 @@ axiosInstance.interceptors.request.use(
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    if (!config.headers["Content-Type"]) {
+    if (config.data instanceof FormData) {
+      delete config.headers["Content-Type"];
+    } else if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";
     }
     return config;
