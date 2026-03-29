@@ -5,7 +5,7 @@ import { Files, Folders, FoldersArray } from "@/types/mediaTypes";
 export interface StateManager {
   files: Files[];
   fileModal: boolean;
-  viewMediaFiles: (string | Files)[];
+  viewMediaFiles: (Files)[];
 }
 
 const initialState: StateManager = {
@@ -43,7 +43,7 @@ export const filesSlice = createSlice({
     setFileModal: (state, action: PayloadAction<boolean>) => {
       state.fileModal = action.payload;
     },
-    setViewMediaFiles: (state, action: PayloadAction<(string | Files)[]>) => {
+    setViewMediaFiles: (state, action: PayloadAction<(Files)[]>) => {
       state.viewMediaFiles = action.payload;
     },
   },

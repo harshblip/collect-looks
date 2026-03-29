@@ -10,7 +10,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { byteToSize } from "@/app/utils/useful";
 import {
   CubeIcon,
@@ -22,7 +22,7 @@ import {
 } from "@heroicons/react/24/outline";
 import InfoBanner from "../ui/placeholders/InfoBanner";
 
-export default function InfoCard({ data }: { data: InfoData }) {
+const InfoCard = ({ data }: { data: InfoData }) => {
   const file = data.file;
   const filePath = data.filePath;
 
@@ -33,6 +33,7 @@ export default function InfoCard({ data }: { data: InfoData }) {
     <>
       <AnimatePresence>
         <motion.div
+          key={file.id * 2}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
@@ -212,3 +213,5 @@ export default function InfoCard({ data }: { data: InfoData }) {
     </>
   );
 }
+
+export default React.memo(InfoCard);

@@ -72,8 +72,11 @@ export const useUploadFile = () => {
 
       queryClient.setQueriesData(
         { queryKey: ["allFiles", userId], type: "active" },
-        (old: any) => (old ? [...old, files] : old),
+        (old: any) => (old ? [...old, ...files] : [...files]),
       );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["allFiles"] });
     },
     onError: (error) => {
       console.error("Upload error:", error);

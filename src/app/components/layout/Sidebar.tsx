@@ -74,7 +74,7 @@ export default function Sidebar() {
           {showCreateFolder && <CreateFolder />}
           {showFileUpload && <FileUploader show={setShowFileUpload} />}
           {showFileModal && <FolderList show={showFileModal} />}
-          {!viewInfo || (infoData && <InfoCard data={infoData} />)}
+          {viewInfo && (infoData && <InfoCard data={infoData} />)}
           {viewMedia && <MediaViewer />}
           {viewLockModal && <LockModal />}
         </AnimatePresence>
