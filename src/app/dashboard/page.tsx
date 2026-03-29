@@ -1,6 +1,11 @@
 "use client";
 
-import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronRightIcon,
+  PhotoIcon,
+  PlayIcon,
+  SignalIcon,
+} from "@heroicons/react/24/solid";
 import { useAppSelector } from "@/lib/store";
 import { useEffect, useState } from "react";
 import { useGetAllFiles } from "../hooks/useMedia";
@@ -24,6 +29,8 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
+  DocumentTextIcon,
+  FolderIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { setViewMediaFiles } from "@/lib/slice/filesSlice";
@@ -33,6 +40,9 @@ import { resetEUID, setParentId } from "@/lib/slice/userSlice";
 import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel";
 import MotionDiv from "../components/ui/primitives/PageTransition";
 import ErrorPage from "../components/ui/placeholders/ErrorPage";
+import { cn } from "../utils/cn";
+import { Grid, List } from "lucide-react";
+import FilterItemsGroup from "../components/ui/widgets/FilterItemsGroup";
 
 export default function Dashboard() {
   const files = useAppSelector((state) => state.files.files);
@@ -51,6 +61,7 @@ export default function Dashboard() {
   const [showError, setShowError] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [locked, setLocked] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const { data: allFiles, error: getAllFilesError } = useGetAllFiles(
     userId,
@@ -184,18 +195,38 @@ export default function Dashboard() {
                 <MoreOptions />
               ) : (
                 <div className="flex flex-col">
-                  <MotionDiv
-                    className={`flex fixed space-x-4 text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 w-[75%] bg-white z-1 ${viewFolder && `-mt-12`}`}
-                    onClick={() => setShow(!show)}
-                  >
-                    <div
-                      className={`transition-transform duration-300 ease-in-out ${show ? "rotate-90" : "rotate-0"}`}
+                  <div className="flex justify-between items-center">
+                    <MotionDiv
+                      className={`flex items-center text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 h-12 w-[72%] bg-white z-1 ${viewFolder && `-mt-12`}`}
+                      onClick={() => setShow(!show)}
                     >
-                      <ChevronRightIcon className="w-6" />
-                    </div>
-
-                    <p className="text-xl text-primary"> Your files </p>
-                  </MotionDiv>
+                      <div className="fixed flex space-x-4">
+                        <div
+                          className={`transition-transform duration-300 ease-in-out ${show ? "rotate-90" : "rotate-0"}`}
+                        >
+                          <ChevronRightIcon className="w-6" />
+                        </div>
+                        <p className="text-xl text-primary"> Your files </p>
+                      </div>
+                    </MotionDiv>
+                    <MotionDiv className="flex space-x-8 justify-end items-center z-1">
+                      <FilterItemsGroup />
+                      <div className="flex space-x-2 justify-end items-center">
+                        <button
+                          onClick={() => setViewMode("grid")}
+                          className="border border-gray-400 rounded-md p-2 text-secondary hover active:scale-95"
+                        >
+                          <Grid />
+                        </button>
+                        <button
+                          onClick={() => setViewMode("list")}
+                          className="border border-gray-400 rounded-md p-2 text-secondary hover active:scale-95"
+                        >
+                          <List />
+                        </button>
+                      </div>
+                    </MotionDiv>
+                  </div>
                   {!show && <KeyFeaturesPanel />}
                 </div>
               )}
@@ -205,31 +236,40 @@ export default function Dashboard() {
                     {/* Column Headers */}
                     <ColumnHeaders />
 
-                    <div className="flex flex-col divide-y divide-gray-100 mt-4">
+                    <div
+                      className={cn([
+                        viewMode === "grid" && "grid grid-cols-3 gap-4",
+                        viewMode === "list" &&
+                          "flex flex-col divide-y divide-gray-100 mt-4",
+                      ])}
+                    >
                       {viewFolder
                         ? folderItemsArray?.map((x, i) => (
                             <MotionDiv
                               key={i}
                               onDoubleClick={() =>
-                                x.file_type === 'folder'
+                                x.file_type === "folder"
                                   ? openFolder(x)
                                   : openMedia(i, "folderFiles")
                               }
-                              className="-mt-0"
+                              className={cn([
+                                "-mt-0",
+                                `${viewMode === "grid" && `grid gap-6 px-4 py-4 items-center grid-cols-3`}`,
+                              ])}
                             >
-                              <Card data={x} />
+                              <Card data={x} viewMode={viewMode} />
                             </MotionDiv>
                           ))
                         : allFiles?.map((x, i) => (
                             <MotionDiv
                               key={i}
                               onDoubleClick={() =>
-                                x.file_type === 'folder'
+                                x.file_type === "folder"
                                   ? openFolder(x)
                                   : openMedia(i, "allFiles")
                               }
                             >
-                              <Card data={x} />
+                              <Card data={x} viewMode={viewMode} />
                             </MotionDiv>
                           ))}
                     </div>
