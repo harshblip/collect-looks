@@ -70,14 +70,12 @@ export default function Sidebar() {
         {show && (
           <UploadModal setShow={setShow} showFileUploader={setShowFileUpload} />
         )}
-        <AnimatePresence mode="wait">
           {showCreateFolder && <CreateFolder />}
           {showFileUpload && <FileUploader show={setShowFileUpload} />}
           {showFileModal && <FolderList show={showFileModal} />}
           {viewInfo && (infoData && <InfoCard data={infoData} />)}
           {viewMedia && <MediaViewer />}
           {viewLockModal && <LockModal />}
-        </AnimatePresence>
         <div className="mt-0" />
         <SidebarButton
           label="Home"

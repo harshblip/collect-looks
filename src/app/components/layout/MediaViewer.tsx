@@ -60,7 +60,9 @@ const MediaViewer = () => {
     <>
       <div className="font-product absolute bg-black/20 flex flex-col justify-center items-center w-full top-0 bottom-0 -ml-8 z-10">
         <div className="absolute w-full top-10 flex justify-center">
-          {show && openFiles[updateI].is_locked && <MediaHeader updateI={updateI} />}
+          {(show || !openFiles[updateI].is_locked) && (
+            <MediaHeader updateI={updateI} />
+          )}
         </div>
         <div className="flex space-x-4">
           <ArrowLeftIcon
