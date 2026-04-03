@@ -15,7 +15,7 @@ export default function MoreOptions() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.2 }}
-                className="fixed transition-all rounded-lg hover p-3 w-[75%] bg-gray-100 text-white z-1">
+                className="fixed transition-all rounded-lg hover p-3 w-[75%] bg-gray-100 text-white z-1 -mt-4">
                 <div className="flex justify-between space-x-4 bg-gray-400 p-2 rounded-md">
                     <div className="flex space-x-2">
                         <button onClick={() => dispatch(setFiles([]))}>

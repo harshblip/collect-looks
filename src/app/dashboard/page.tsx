@@ -195,7 +195,7 @@ export default function Dashboard() {
                 <MoreOptions />
               ) : (
                 <div className="flex flex-col">
-                  <div className="flex justify-between items-center">
+                  <div className="fixed w-[75%] flex justify-between items-center">
                     <MotionDiv
                       className={`flex items-center text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 h-12 w-[72%] bg-white z-1 ${viewFolder && `-mt-12`}`}
                       onClick={() => setShow(!show)}
@@ -209,7 +209,7 @@ export default function Dashboard() {
                         <p className="text-xl text-primary"> Your files </p>
                       </div>
                     </MotionDiv>
-                    <MotionDiv className="flex space-x-8 justify-end items-center z-1">
+                    <MotionDiv className=" flex space-x-8 justify-end w-[75%] z-1">
                       <FilterItemsGroup />
                       <div className="flex space-x-2 justify-end items-center">
                         <button
@@ -232,7 +232,7 @@ export default function Dashboard() {
               )}
               <AnimatePresence>
                 {show && (
-                  <MotionDiv className={`${viewFolder && `-mt-10`} p-6`}>
+                  <MotionDiv className={`${viewFolder && `-mt-10`} -mt-0 p-6`}>
                     {/* Column Headers */}
                     <ColumnHeaders />
 
