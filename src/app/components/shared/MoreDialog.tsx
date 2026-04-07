@@ -106,6 +106,7 @@ export default function MoreDialog({
                   id: id,
                   type: file_type || "folder",
                   password: password || "",
+                  file_name: file_name || "",
                 }),
               );
               dispatch(setViewLockModal(true));

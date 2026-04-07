@@ -2,16 +2,11 @@ import { Files, Folders, FoldersArray } from "@/types/mediaTypes";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type LockModal = {lock: boolean, id: number, type: string, password: string}
+type LockModal = {lock: boolean, id: number, type: string, password: string; file_name: string}
 export interface States {
     index: number,
     folders: Folders[],
-    lockModal: {
-        lock: boolean, 
-        id: number,
-        type: string,
-        password: string
-    },
+    lockModal: LockModal,
     viewFolder: boolean,
     selectedFolders: FoldersArray[],
     folderItems: Files[],
@@ -28,7 +23,8 @@ const initialState: States = {
         lock: false,
         id: 0,
         type: '',
-        password: ''
+        password: '',
+        file_name: '',
     },
     viewCreateFolder: false,
 };

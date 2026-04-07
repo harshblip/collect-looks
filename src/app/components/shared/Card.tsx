@@ -57,8 +57,12 @@ export default function Card({
         ])}
       >
         {viewMode === "grid" ? (
-          <div className="border border-gray-400 rounded-md p-0 flex h-32 justify-center flex-col gap-4">
-            <p className="text-lg font-medium"> {data.file_name} </p>
+          <div className="border border-gray-400 rounded-md p-0 flex h-32 justify-center items-center flex-col gap-4">
+            <div className="flex">
+              <div className="rounded-md p-2 flex items-center">
+                <p className="text-lg font-medium"> {data.file_name} </p>
+              </div>
+            </div>
           </div>
         ) : (
           <div
