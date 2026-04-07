@@ -156,7 +156,7 @@ export default function Dashboard() {
       {showError ? (
         <ErrorPage />
       ) : check ? (
-        <div className="font-product flex flex-col items-center justify-center z-1 mt-[2.5%]">
+        <div className="font-product flex flex-col items-center justify-center z-10 mt-[2.5%]">
           <p className={`font-pixel text-secondary text-2xl`}>
             {" "}
             welcome to{" "}
@@ -234,11 +234,11 @@ export default function Dashboard() {
                 {show && (
                   <MotionDiv className={`${viewFolder && `-mt-10`} -mt-0 p-6`}>
                     {/* Column Headers */}
-                    <ColumnHeaders />
+                    {viewMode === "list" && <ColumnHeaders />}
 
                     <div
                       className={cn([
-                        viewMode === "grid" && "grid grid-cols-3 gap-4",
+                        viewMode === "grid" && "grid grid-cols-3 gap-4 mt-8",
                         viewMode === "list" &&
                           "flex flex-col divide-y divide-gray-100 mt-4",
                       ])}

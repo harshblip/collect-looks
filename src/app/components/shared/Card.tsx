@@ -57,10 +57,46 @@ export default function Card({
         ])}
       >
         {viewMode === "grid" ? (
-          <div className="border border-gray-400 rounded-md p-0 flex h-32 justify-center items-center flex-col gap-4">
-            <div className="flex">
-              <div className="rounded-md p-2 flex items-center">
+          <div className="border border-gray-400 rounded-md flex h-[14rem] flex-col gap-4 p-2">
+            <div className="text-sm bg-gray-100 z-1 flex rounded-md w-fit ml-2 p-2 pl-4 pr-4">
+              {data.file_type === "image" ? (
+                <p>image</p>
+              ) : data.file_type === "video" ? (
+                <p>video</p>
+              ) : data.file_type === "audio" ? (
+                <p>audio</p>
+              ) : data.file_type === "document" ? (
+                <p>document</p>
+              ) : (
+                <p>folder</p>
+              )}
+            </div>
+            <div className="bg-gray-50 w-full -mt-14 h-52 rounded-md flex justify-center items-center">
+              <div className="">
+                {data.file_type === "image" ? (
+                  <PhotoIcon className="text-emerald-500 w-12" />
+                ) : data.file_type === "video" ? (
+                  <PlayIcon className="w-12 text-red-500" />
+                ) : data.file_type === "audio" ? (
+                  <SignalIcon className="w-12 text-cyan-500" />
+                ) : data.file_type === "document" ? (
+                  <DocumentTextIcon className="w-12 text-orange-600" />
+                ) : (
+                  <FolderIcon className="w-12 text-indigo-500" />
+                )}
+              </div>
+            </div>
+            <hr className="border border-gray-200 rounded-full ml-6 mr-6" />
+            <div className="flex flex-col justify-start">
+              <div className="rounded-md ml-2 flex items-start">
                 <p className="text-lg font-medium"> {data.file_name} </p>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-400 ml-2">
+                <p>{byteToSize(parseInt(data.size))}</p>
+                <p className="text-gray-300 text-xl">•</p>
+                <p>{data.created_at && data.created_at.substring(0, 10)}</p>
+                <p className="text-gray-300 text-xl">•</p>
+                <p>{data.is_locked ? "protected" : "open"}</p>
               </div>
             </div>
           </div>
