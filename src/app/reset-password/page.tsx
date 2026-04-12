@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { KeyIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
@@ -7,46 +7,53 @@ import ResetForm from "../components/auth/ResetForm";
 import { useUpdatePassword } from "../hooks/useUser";
 
 export default function ResetPassword() {
-    const [see, setSee] = useState<boolean>(false)
-    const [a, setA] = useState<string>('')
-    const [b, setB] = useState<string>('')
-    const [error, setError] = useState<string>('')
-    const { mutate: updatePassword } = useUpdatePassword()
+  const [see, setSee] = useState<boolean>(false);
+  const [a, setA] = useState<string>("");
+  const [b, setB] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const { mutate: updatePassword, error: updatePasswordError } =
+    useUpdatePassword();
 
-    const email = useAppSelector(state => state.user.EUID.email)
+  const email = useAppSelector((state) => state.user.resetMail);
+  console.log("yoyooy", email);
 
-    function submit() {
-        if (a != b) {
-            setError('passwords don\'t match. try again')
-        } else {
-            updatePassword({ email: email, password: a })
-        }
+  function submit() {
+    if (a != b) {
+      setError("passwords don't match. try again");
+    } else if (updatePasswordError) {
+      setError(updatePasswordError.message);
+    } else {
+      updatePassword({ email: email, password: a });
     }
+  }
 
-    return (
-        <>
-            <div className="primary-bg h-screen flex justify-center items-center w-full">
-                <div className="flex justify-center items-center flex-col space-y-6 -mt-44">
-                    <div className="flex items-center space-x-4">
-                        <KeyIcon
-                            className={`w-20 ${error ? `bg-red-200` : `bg-gray-200`} ${error ? `text-red-500` : `text-gray-500`} transition-all duration-150 ease-in-out rounded-full p-6`}
-                        />
-                        {
-                            error && <p className="font-glook text-2xl text-red-500 transition-transform duration-150">
-                                {error}
-                            </p>
-                        }
-                    </div>
-                    <p className="font-glook text-4xl text-primary "> Change your password </p>
-                    <ResetForm
-                        setA={setA}
-                        setB={setB}
-                        setSee={setSee}
-                        see={see}
-                        submit={submit}
-                    />
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div className="primary-bg h-screen flex justify-center items-center w-full">
+        <div className="flex justify-center items-center flex-col space-y-6 -mt-44">
+          <div className="flex items-center space-x-4">
+            <KeyIcon
+              className={`w-20 ${error ? `bg-red-200` : `bg-gray-200`} ${error ? `text-red-500` : `text-gray-500`} transition-all duration-150 ease-in-out rounded-full p-6`}
+            />
+            {error && (
+              <p className="font-glook text-2xl text-red-500 transition-transform duration-150">
+                {error}
+              </p>
+            )}
+          </div>
+          <p className="font-glook text-4xl text-primary ">
+            {" "}
+            Change your password{" "}
+          </p>
+          <ResetForm
+            setA={setA}
+            setB={setB}
+            setSee={setSee}
+            see={see}
+            submit={submit}
+          />
+        </div>
+      </div>
+    </>
+  );
 }

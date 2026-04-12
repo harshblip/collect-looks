@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
-import { BASE_URL } from "@/lib/constants";
+import { BASE_URL, FE_URL } from "@/lib/constants";
 import { User } from "@/types/userTypes";
 
 export const UserService = {
@@ -65,7 +65,7 @@ export const UserService = {
   },
 
   forgotPassword: async (email: string): Promise<string> => {
-    return apiClient.post("/api/forgot-password", {
+    return apiClient.post(`${FE_URL}/api/forgot-password`, {
       email,
     });
   },

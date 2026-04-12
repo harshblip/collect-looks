@@ -91,7 +91,7 @@ export default function Auth() {
       )}
       <div className="font-product primary md:mt-0 mt-24 lg:items-center justify-center items-center flex flex-col h-screen">
         {visible && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-1">
             <ForgotModal setVisible={setVisible} />
           </div>
         )}
