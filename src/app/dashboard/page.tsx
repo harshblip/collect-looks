@@ -1,48 +1,41 @@
 "use client";
 
 import {
-  ChevronRightIcon,
-  PhotoIcon,
-  PlayIcon,
-  SignalIcon,
-} from "@heroicons/react/24/solid";
-import { useAppSelector } from "@/lib/store";
-import { useEffect, useState } from "react";
-import { useGetAllFiles } from "../hooks/useMedia";
-import { motion, AnimatePresence } from "framer-motion";
-import Card from "../components/shared/Card";
-import MoreOptions from "../components/ui/widgets/MoreOptions";
-import ColumnHeaders from "../components/ui/primitives/ColumnHeaders";
-import ToggleHeading from "../components/ui/widgets/ToggleHeading";
-import {
-  setSelectedFolders,
   setFolderItems,
+  setSelectedFolders,
   setViewFolder,
 } from "@/lib/slice/folderSlice";
+import { useAppSelector } from "@/lib/store";
 import { Files } from "@/types/mediaTypes";
-import { useGetFolderItems } from "../hooks/useFolder";
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Card from "../components/shared/Card";
+import ColumnHeaders from "../components/ui/primitives/ColumnHeaders";
+import MoreOptions from "../components/ui/widgets/MoreOptions";
+import ToggleHeading from "../components/ui/widgets/ToggleHeading";
+import { useGetFolderItems } from "../hooks/useFolder";
+import { useGetAllFiles } from "../hooks/useMedia";
 
-import LockScreen from "../components/shared/LockScreen";
+import { setViewMediaFiles } from "@/lib/slice/filesSlice";
 import { setIndex } from "@/lib/slice/folderSlice";
+import { setViewMedia } from "@/lib/slice/generalSlice";
+import { resetEUID, setParentId } from "@/lib/slice/userSlice";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronLeftIcon,
-  DocumentTextIcon,
-  FolderIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import { setViewMediaFiles } from "@/lib/slice/filesSlice";
-import { setDemoCheck, setViewMedia } from "@/lib/slice/generalSlice";
+import LockScreen from "../components/shared/LockScreen";
 import Status from "../components/shared/Status";
-import { resetEUID, setParentId } from "@/lib/slice/userSlice";
+import ErrorPage from "../components/ui/placeholders/ErrorPage";
 import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel";
 import MotionDiv from "../components/ui/primitives/PageTransition";
-import ErrorPage from "../components/ui/placeholders/ErrorPage";
+import SwitchView from "../components/ui/widgets/SwitchView";
 import { cn } from "../utils/cn";
-import { CheckIcon, Grid, List } from "lucide-react";
-import FilterItemsGroup from "../components/ui/widgets/FilterItemsGroup";
+import PageNumber from "../components/ui/widgets/PageNumber";
 
 export default function Dashboard() {
   const files = useAppSelector((state) => state.files.files);
@@ -115,7 +108,7 @@ export default function Dashboard() {
   }
 
   // console.log("parent_id", selectedFolderId);
-  console.log(viewFolder)
+  console.log(viewFolder);
 
   function openMedia(x: number, type: string) {
     dispatch(setIndex(x));
@@ -187,50 +180,18 @@ export default function Dashboard() {
                         <p className="text-xl text-primary"> Your files </p>
                       </div>
                     </MotionDiv>
-                    <MotionDiv className={`flex space-x-8 justify-end w-[75%] z-1 ${viewFolder && `-mt-11`}`}>
-                      {/* <FilterItemsGroup /> */}
-                      <div className="flex space-x-2 justify-end items-center">
-                        <button
-                          onClick={() => setViewMode("grid")}
-                          className={cn([
-                            "border border-gray-200 rounded-md p-2 text-secondary hover active:scale-95",
-                            viewMode === "grid" && "bg-gray-200",
-                          ])}
-                        >
-                          {viewMode === "grid" ? (
-                            <div className="flex gap-2 items-center">
-                              <Grid />
-                              <CheckIcon width={18} />
-                            </div>
-                          ) : (
-                            <Grid />
-                          )}
-                        </button>
-                        <button
-                          onClick={() => setViewMode("list")}
-                          className={cn([
-                            "border border-gray-200 rounded-md p-2 text-secondary hover active:scale-95",
-                            viewMode === "list" && "bg-gray-200",
-                          ])}
-                        >
-                          {viewMode === "list" ? (
-                            <div className="flex gap-2 items-center">
-                              <List />
-                              <CheckIcon width={18} />
-                            </div>
-                          ) : (
-                            <List />
-                          )}
-                        </button>
-                      </div>
-                    </MotionDiv>
+                    <SwitchView
+                      viewFolder={viewFolder}
+                      viewMode={viewMode}
+                      setViewMode={setViewMode}
+                    />
                   </div>
                   {!show && <KeyFeaturesPanel />}
                 </div>
               )}
               <AnimatePresence>
                 {show && (
-                  <MotionDiv className={`${viewFolder && `-mt-2`} -mt-0 p-6`}>
+                  <MotionDiv className={`${viewFolder && `-mt-2`} mt-6 p-6`}>
                     {/* Column Headers */}
                     {viewMode === "list" && <ColumnHeaders />}
 
@@ -272,31 +233,7 @@ export default function Dashboard() {
                 )}
               </AnimatePresence>
               {show && (
-                <div className="flex space-x-2 justify-center items-center bg-white shadow-md rounded-md p-2 text-secondary absolute right-25 bottom-15">
-                  <ChevronDoubleLeftIcon className="w-4 hover" />
-                  <ChevronLeftIcon
-                    onClick={() =>
-                      setCurrentPage((cr) => (cr > 0 ? cr - 1 : cr))
-                    }
-                    className="w-4 hover"
-                  />
-                  {btns.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i + 1)}
-                      className="bg-transparent outline-none p-1 pr-2 pl-2 hover hover:bg-gray-200 rounded-sm"
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                  <ChevronRightIcon
-                    onClick={() =>
-                      setCurrentPage((cr) => (cr < btns.length ? cr + 1 : cr))
-                    }
-                    className="w-4 hover"
-                  />
-                  <ChevronDoubleRightIcon className="w-4 hover" />
-                </div>
+                <PageNumber setCurrentPage={setCurrentPage} btns={btns} />
               )}
             </div>
           )}

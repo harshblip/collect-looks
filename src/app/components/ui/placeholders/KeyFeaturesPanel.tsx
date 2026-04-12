@@ -1,8 +1,5 @@
 import { FingerPrintIcon, FolderOpenIcon, MagnifyingGlassIcon, SparklesIcon, StarIcon } from "@heroicons/react/24/outline"
 
-
-
-
 export default function KeyFeaturesPanel() {
     return (
         <>
