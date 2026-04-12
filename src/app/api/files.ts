@@ -21,7 +21,7 @@ export const FileService = {
     formData.append("username", username);
     formData.append("userId", userId.toString());
     console.log(formData);
-    return apiClient.post<string>(`${BASE_URL}/upload`, formData, {
+    return apiClient.post<string>(`/upload`, formData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -34,14 +34,14 @@ export const FileService = {
   },
 
   starFile: async (userId: number, id: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/starFile`, {
+    return apiClient.post<string>(`/upload/starFile`, {
       userId,
       id,
     });
   },
 
   getTrashStatus: async (userId: number): Promise<boolean> => {
-    return apiClient.get<boolean>(`${BASE_URL}/upload/getTrashStatus`, {
+    return apiClient.get<boolean>(`/upload/getTrashStatus`, {
       params: {
         userId,
       },
@@ -49,7 +49,7 @@ export const FileService = {
   },
 
   getStarFile: async (userId: number): Promise<Files[]> => {
-    return apiClient.get<Files[]>(`${BASE_URL}/upload/getStars`, {
+    return apiClient.get<Files[]>(`/upload/getStars`, {
       params: {
         userId,
       },
@@ -57,7 +57,7 @@ export const FileService = {
   },
 
   getFileInfo: async (user_id: number, id: number): Promise<InfoData> => {
-    return apiClient.get<InfoData>(`${BASE_URL}/upload/getFileInfo`, {
+    return apiClient.get<InfoData>(`/upload/getFileInfo`, {
       params: {
         user_id,
         id,
@@ -66,20 +66,20 @@ export const FileService = {
   },
 
   setFileLock: async (password: string, fileId: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/lockfile`, {
+    return apiClient.post<string>(`/upload/lockfile`, {
       password,
       fileId,
     });
   },
 
   unlockFile: async (fileId: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/unlockfile`, {
+    return apiClient.post<string>(`/upload/unlockfile`, {
       fileId,
     });
   },
 
   getLastSeen: async (userId: number): Promise<Files[]> => {
-    return apiClient.get<Files[]>(`${BASE_URL}/upload/getRecentlyOpened`, {
+    return apiClient.get<Files[]>(`/upload/getRecentlyOpened`, {
       params: {
         userId: userId,
       },
@@ -87,20 +87,20 @@ export const FileService = {
   },
 
   trashMedia: async (files: any): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/trashMedia`, {
+    return apiClient.post<string>(`/upload/trashMedia`, {
       files,
     });
   },
 
   recoverMedia: async (files: any): Promise<string> => {
     console.log("files: ", files)
-    return apiClient.post<string>(`${BASE_URL}/upload/recoverMedia`, {
+    return apiClient.post<string>(`/upload/recoverMedia`, {
       files,
     });
   },
 
   getTrashedFiles: async (userId: number): Promise<Files[]> => {
-    return apiClient.get(`${BASE_URL}/upload/getTrashedFiles`, {
+    return apiClient.get(`/upload/getTrashedFiles`, {
       params: {
         userId: userId,
       },
@@ -111,7 +111,7 @@ export const FileService = {
     checked: boolean,
     userId: number,
   ): Promise<boolean> => {
-    return apiClient.post<boolean>(`${BASE_URL}/upload/enableAutoDelete`, {
+    return apiClient.post<boolean>(`/upload/enableAutoDelete`, {
       checked,
       userId,
     });

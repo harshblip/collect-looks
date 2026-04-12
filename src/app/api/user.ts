@@ -8,7 +8,7 @@ export const UserService = {
     password: string,
     checked: boolean,
   ): Promise<string> => {
-    return apiClient.get<string>(`${BASE_URL}/user/login`, {
+    return apiClient.get<string>(`/user/login`, {
       params: {
         email: email,
         password: password,
@@ -23,7 +23,7 @@ export const UserService = {
     password: string,
   ): Promise<string> => {
     return apiClient.post<string>(
-      `${BASE_URL}/user/signup`,
+      `/user/signup`,
       {
         username,
         email,
@@ -38,7 +38,7 @@ export const UserService = {
   },
 
   getUserData: async (id: number): Promise<User> => {
-    return apiClient.get<User>(`${BASE_URL}/user/getUserData`, {
+    return apiClient.get<User>(`/user/getUserData`, {
       params: {
         id: id,
       },
@@ -50,7 +50,7 @@ export const UserService = {
     email: string,
     id: number,
   ): Promise<string> => {
-    return apiClient.patch<string>(`${BASE_URL}/user/update`, {
+    return apiClient.patch<string>(`/user/update`, {
       username,
       email,
       id,
@@ -58,7 +58,7 @@ export const UserService = {
   },
 
   updateLastOpened: async (type: string, fileId: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/updateLastOpened`, {
+    return apiClient.post<string>(`/upload/updateLastOpened`, {
       type,
       fileId,
     });
@@ -71,7 +71,7 @@ export const UserService = {
   },
 
   updatePassword: async (email: string, password: string): Promise<string> => {
-    return apiClient.patch(`${BASE_URL}/user/reset-password`, {
+    return apiClient.patch(`/user/reset-password`, {
       email,
       password,
     });

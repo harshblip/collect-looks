@@ -11,7 +11,7 @@ export const FolderService = {
     id: number,
     parent_id: number | null,
   ): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/createFolder`, {
+    return apiClient.post<string>(`/upload/createFolder`, {
       name,
       description,
       password,
@@ -25,14 +25,14 @@ export const FolderService = {
     files: Files[],
     folderId: number,
   ): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/addFilestoFolder`, {
+    return apiClient.post<string>(`/upload/addFilestoFolder`, {
       files,
       folderId,
     });
   },
 
   getFolders: async (id: number): Promise<Folders[]> => {
-    return apiClient.get<Folders[]>(`${BASE_URL}/upload/getFolders`, {
+    return apiClient.get<Folders[]>(`/upload/getFolders`, {
       params: {
         id: id,
       },
@@ -43,7 +43,7 @@ export const FolderService = {
     userId: number,
     folderId: number,
   ): Promise<Files[]> => {
-    return apiClient.get<Files[]>(`${BASE_URL}/upload/folderItems`, {
+    return apiClient.get<Files[]>(`/upload/folderItems`, {
       params: {
         userId,
         folderId,
@@ -55,20 +55,20 @@ export const FolderService = {
     password: string,
     folderId: number,
   ): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/lockfolder`, {
+    return apiClient.post<string>(`/upload/lockfolder`, {
       password,
       folderId,
     });
   },
 
   unlockFolder: async (folderId: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/unlockfolder`, {
+    return apiClient.post<string>(`/upload/unlockfolder`, {
       folderId,
     });
   },
 
   trashFolder: async (userId: number, folderId: number): Promise<string> => {
-    return apiClient.post<string>(`${BASE_URL}/upload/trashFolder`, {
+    return apiClient.post<string>(`/upload/trashFolder`, {
       userId,
       folderId,
     });
@@ -76,7 +76,7 @@ export const FolderService = {
 
   restoreFolder: async (userId: number, folderId: number): Promise<string> => {
     console.log(`restoring folder with id ${folderId} for user ${userId}`);
-    return apiClient.post<string>(`${BASE_URL}/upload/recoverFolder`, {
+    return apiClient.post<string>(`/upload/recoverFolder`, {
       userId,
       folderId,
     });

@@ -9,7 +9,7 @@ export const SearchService = {
     filters: Filter,
   ): Promise<Files[]> => {
     const { type, locked, starred, date } = filters;
-    return apiClient.get<Files[]>(`${BASE_URL}/upload/getSuggestions`, {
+    return apiClient.get<Files[]>(`/upload/getSuggestions`, {
       params: {
         userId: userId,
         words: word,
@@ -22,7 +22,7 @@ export const SearchService = {
   },
 
   getSearchResults: async (word: string, userId: number): Promise<Files[]> => {
-    return apiClient.get<Files[]>(`${BASE_URL}/upload/searchResults`, {
+    return apiClient.get<Files[]>(`/upload/searchResults`, {
       params: {
         userId: userId,
         words: word,
