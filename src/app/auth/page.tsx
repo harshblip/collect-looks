@@ -41,7 +41,7 @@ export default function Auth() {
   const errorStatus = loginError || signupError;
 
   const message = signupStatus ? "Account created" : "Welcome";
-
+  console.log("errorStatus", errorStatus?.message, loginStatus);
   useEffect(() => {
     if (loginStatus) {
       console.log(data);
@@ -85,7 +85,7 @@ export default function Auth() {
       {successStatus ? (
         <Status type="SUCCESS" message={message} />
       ) : errorStatus ? (
-        <Status type="ERROR" message={errorStatus?.response.data.message} />
+        <Status type="ERROR" message={errorStatus?.message || "An unexpected error occurred"} />
       ) : (
         ""
       )}

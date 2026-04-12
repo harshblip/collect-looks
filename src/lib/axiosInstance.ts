@@ -32,12 +32,12 @@ axiosInstance.interceptors.response.use(
     return normalizeResponse(response.data);
   },
   (error: AxiosError<{ message: string }>) => {
-    console.error("error -> ", error.response?.status);
+    console.error("error -> ", error.response?.statusText);
     if (error.response?.status === 401) {
       localStorage.removeItem("access_token");
     }
     const message =
-      error.response?.data?.message || "An unexpected error occurred";
+      error.response?.data?.message || error.message;
     const customError = new Error(message);
 
     if (error.stack) {

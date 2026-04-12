@@ -32,7 +32,7 @@ export default function Error({
       </div>
 
       <div className="flex gap-4">
-        <Button onClick={() => router.refresh()} variant="default">
+        <Button onClick={() => reset()} variant="default">
           Try Again
         </Button>
         <Button onClick={() => router.back()} variant="outline">
