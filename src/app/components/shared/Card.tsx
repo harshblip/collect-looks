@@ -57,8 +57,8 @@ export default function Card({
         ])}
       >
         {viewMode === "grid" ? (
-          <div className="border border-gray-400 rounded-md flex h-[14rem] flex-col gap-4 p-2">
-            <div className="text-sm bg-gray-100 z-1 flex rounded-md w-fit ml-2 p-2 pl-4 pr-4">
+          <div className="shadow-md rounded-md flex h-[14rem] flex-col gap-4 p-2">
+            {/* <div className="text-sm bg-gray-100 relative z-0 flex rounded-md w-fit ml-2 p-2 pl-4 pr-4">
               {data.file_type === "image" ? (
                 <p>image</p>
               ) : data.file_type === "video" ? (
@@ -70,8 +70,8 @@ export default function Card({
               ) : (
                 <p>folder</p>
               )}
-            </div>
-            <div className="bg-gray-50 w-full -mt-14 h-52 rounded-md flex justify-center items-center">
+            </div> */}
+            <div className="bg-gray-50 w-full h-52 rounded-md flex justify-center items-center">
               <div className="">
                 {data.file_type === "image" ? (
                   <PhotoIcon className="text-emerald-500 w-12" />

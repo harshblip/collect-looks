@@ -41,7 +41,7 @@ import KeyFeaturesPanel from "../components/ui/placeholders/KeyFeaturesPanel";
 import MotionDiv from "../components/ui/primitives/PageTransition";
 import ErrorPage from "../components/ui/placeholders/ErrorPage";
 import { cn } from "../utils/cn";
-import { Grid, List } from "lucide-react";
+import { CheckIcon, Grid, List } from "lucide-react";
 import FilterItemsGroup from "../components/ui/widgets/FilterItemsGroup";
 
 export default function Dashboard() {
@@ -50,7 +50,6 @@ export default function Dashboard() {
   const folderItemsArray = useAppSelector((state) => state.folders.folderItems);
   const userId = useAppSelector((state) => state.user.EUID.userId);
   const access_token = localStorage.getItem("access_token");
-  const check = useAppSelector((state) => state.utility.demoCheck);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -61,7 +60,7 @@ export default function Dashboard() {
   const [showError, setShowError] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [locked, setLocked] = useState<boolean>(false);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
 
   const { data: allFiles, error: getAllFilesError } = useGetAllFiles(
     userId,
@@ -73,7 +72,7 @@ export default function Dashboard() {
   );
   const globalError: any = getAllFilesError || getFolderItemsError;
 
-  console.log("error", globalError, access_token);
+  // console.log("error", globalError, access_token);
   useEffect(() => {
     if (!access_token) {
       setShowError(true);
@@ -115,7 +114,8 @@ export default function Dashboard() {
     }
   }
 
-  // console.log("parent_id", selectedFolderId, folders);
+  // console.log("parent_id", selectedFolderId);
+  console.log(viewFolder)
 
   function openMedia(x: number, type: string) {
     dispatch(setIndex(x));
@@ -155,28 +155,6 @@ export default function Dashboard() {
       )}
       {showError ? (
         <ErrorPage />
-      ) : check ? (
-        <div className="font-product flex flex-col items-center justify-center z-10 mt-[2.5%]">
-          <p className={`font-pixel text-secondary text-2xl`}>
-            {" "}
-            welcome to{" "}
-            <span className="font-product text-primary text-3xl ml-1">
-              Collect
-            </span>{" "}
-          </p>
-          <div className="flex space-x-4 items-center mt-4">
-            <textarea
-              className={`font-pixel outline-none border border-gray-200 h-[26rem] w-[36rem] p-4 text-lg active:border-none active:shadow-md text-gray-600 rounded-md transition focus:shadow-md`}
-            />
-          </div>
-
-          <button
-            onClick={() => dispatch(setDemoCheck(false))}
-            className="border border-black w-[12rem] p-2 text-gray-600 hover hover:bg-gray-600 hover:text-white transition mt-10"
-          >
-            Lets get started
-          </button>
-        </div>
       ) : (
         <div className="flex flex-col space-y-0 mt-4 p-8 font-product">
           {viewFolder ? (
@@ -197,10 +175,10 @@ export default function Dashboard() {
                 <div className="flex flex-col">
                   <div className="fixed w-[75%] flex justify-between items-center">
                     <MotionDiv
-                      className={`flex items-center text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 h-12 w-[72%] bg-white z-1 ${viewFolder && `-mt-12`}`}
+                      className={`flex items-center text-primary hover:bg-gray-100 transition-all rounded-lg hover p-3 h-12 w-[160%] bg-white z-1 ${viewFolder && `-mt-12`}`}
                       onClick={() => setShow(!show)}
                     >
-                      <div className="fixed flex space-x-4">
+                      <div className="flex space-x-4">
                         <div
                           className={`transition-transform duration-300 ease-in-out ${show ? "rotate-90" : "rotate-0"}`}
                         >
@@ -209,20 +187,40 @@ export default function Dashboard() {
                         <p className="text-xl text-primary"> Your files </p>
                       </div>
                     </MotionDiv>
-                    <MotionDiv className=" flex space-x-8 justify-end w-[75%] z-1">
-                      <FilterItemsGroup />
+                    <MotionDiv className={`flex space-x-8 justify-end w-[75%] z-1 ${viewFolder && `-mt-11`}`}>
+                      {/* <FilterItemsGroup /> */}
                       <div className="flex space-x-2 justify-end items-center">
                         <button
                           onClick={() => setViewMode("grid")}
-                          className="border border-gray-400 rounded-md p-2 text-secondary hover active:scale-95"
+                          className={cn([
+                            "border border-gray-200 rounded-md p-2 text-secondary hover active:scale-95",
+                            viewMode === "grid" && "bg-gray-200",
+                          ])}
                         >
-                          <Grid />
+                          {viewMode === "grid" ? (
+                            <div className="flex gap-2 items-center">
+                              <Grid />
+                              <CheckIcon width={18} />
+                            </div>
+                          ) : (
+                            <Grid />
+                          )}
                         </button>
                         <button
                           onClick={() => setViewMode("list")}
-                          className="border border-gray-400 rounded-md p-2 text-secondary hover active:scale-95"
+                          className={cn([
+                            "border border-gray-200 rounded-md p-2 text-secondary hover active:scale-95",
+                            viewMode === "list" && "bg-gray-200",
+                          ])}
                         >
-                          <List />
+                          {viewMode === "list" ? (
+                            <div className="flex gap-2 items-center">
+                              <List />
+                              <CheckIcon width={18} />
+                            </div>
+                          ) : (
+                            <List />
+                          )}
                         </button>
                       </div>
                     </MotionDiv>
@@ -232,13 +230,13 @@ export default function Dashboard() {
               )}
               <AnimatePresence>
                 {show && (
-                  <MotionDiv className={`${viewFolder && `-mt-10`} -mt-0 p-6`}>
+                  <MotionDiv className={`${viewFolder && `-mt-2`} -mt-0 p-6`}>
                     {/* Column Headers */}
                     {viewMode === "list" && <ColumnHeaders />}
 
                     <div
                       className={cn([
-                        viewMode === "grid" && "grid grid-cols-3 gap-4 mt-8",
+                        viewMode === "grid" && "grid grid-cols-3 gap-4 mt-0",
                         viewMode === "list" &&
                           "flex flex-col divide-y divide-gray-100 mt-4",
                       ])}
@@ -252,10 +250,7 @@ export default function Dashboard() {
                                   ? openFolder(x)
                                   : openMedia(i, "folderFiles")
                               }
-                              className={cn([
-                                "-mt-0",
-                                `${viewMode === "grid" && `grid gap-6 px-4 py-4 items-center grid-cols-3`}`,
-                              ])}
+                              className="mt-"
                             >
                               <Card data={x} viewMode={viewMode} />
                             </MotionDiv>
